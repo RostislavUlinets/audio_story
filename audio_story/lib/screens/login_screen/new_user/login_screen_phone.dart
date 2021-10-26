@@ -1,5 +1,10 @@
+import 'dart:developer';
+
+import 'package:audio_story/models/auth.dart';
 import 'package:audio_story/screens/login_screen/new_user/final_screen.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -41,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 80),
+                      padding: const EdgeInsets.only(bottom: 80),
                       child: Material(
                         borderRadius: BorderRadius.circular(60.0),
                         elevation: 5,
@@ -66,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FinalScreen()),
+                              builder: (context) => const FinalScreen()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -78,19 +83,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    new GestureDetector(
-                      onTap: () {
-                        print("WORKING CORECTLY");
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          "Позже",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
+                    const Anonim(),
                   ],
                 ),
               ),
@@ -102,4 +95,38 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
+class Anonim extends StatefulWidget {
+  const Anonim({Key? key}) : super(key: key);
 
+  @override
+  _AnonimState createState() => _AnonimState();
+}
+
+class _AnonimState extends State<Anonim> {
+
+  final AuthService _auth = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        User? res = await _auth.signInAnon();
+        if (res != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        } else {
+          log("Error with anonim auth");
+        }
+      },
+      child: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(
+          "Позже",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+}

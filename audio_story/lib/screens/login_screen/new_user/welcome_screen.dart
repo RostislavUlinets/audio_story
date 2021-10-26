@@ -31,44 +31,42 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 150),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 40),
-                            child: Text(
-                              "Привет!",
-                              style: TextStyle(
-                                  fontSize: 24.0, fontWeight: FontWeight.bold),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 40),
+                          child: Text(
+                            "Привет!",
+                            style: TextStyle(
+                                fontSize: 24.0, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 40),
+                          child: Text(
+                            "Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        ElevatedButton(
+                          child: const Text("Продолжить"),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50),
+                            primary: Colors.deepOrange[200],
+                            onPrimary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0),
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 40),
-                            child: Text(
-                              "Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне",
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          ElevatedButton(
-                            child: const Text("Продолжить"),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(double.infinity, 50),
-                              primary: Colors.deepOrange[200],
-                              onPrimary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(32.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

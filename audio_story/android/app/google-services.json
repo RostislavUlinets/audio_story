@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "354755027256",
+    "project_id": "audiostorysl",
+    "storage_bucket": "audiostorysl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354755027256:android:f7c89aa5ab970909b661cd",
+        "android_client_info": {
+          "package_name": "com.example.audio_story"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354755027256-jbk58foq18bu7e7k1rj7esh5meppmf0g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.audio_story",
+            "certificate_hash": "3ed7f63e30654f5788af3b7a0405129875adc415"
+          }
+        },
+        {
+          "client_id": "354755027256-rn6qkrhqapb2840m1efjg7ml48if2ral.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqUKMawf6xqyjfGNDho3AcTPD0y1nFE_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354755027256-rn6qkrhqapb2840m1efjg7ml48if2ral.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

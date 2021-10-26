@@ -2,8 +2,6 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-GlobalKey<ScaffoldState> _scaffoldKEY = GlobalKey<ScaffoldState>();
-
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -25,25 +23,41 @@ class MainScreen extends StatelessWidget {
           ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
+            items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.house_rounded), label: "Главная"),
+                  icon: const Image(
+                    image: AssetImage('assets/Home.png'),
+                  ),
+                  label: "Главная"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.auto_awesome_mosaic_outlined),
+                  icon: const Image(
+                    image: AssetImage('assets/Category.png'),
+                  ),
                   label: 'Подборки'),
-              BottomNavigationBarItem(icon: Icon(Icons.mic), label: 'Запись'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.notes), label: 'Аудиозаписи'),
+                  icon: const Image(
+                    color: Colors.black,
+                    image: AssetImage('assets/Voice.png'),
+                  ),
+                  label: 'Запись'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle_outlined), label: 'Профиль'),
+                  icon: const Image(
+                    image: AssetImage('assets/Paper.png'),
+                  ),
+                  label: 'Аудиозаписи'),
+              BottomNavigationBarItem(
+                  icon: const Image(
+                    image: AssetImage('assets/Profile.png'),
+                  ),
+                  label: 'Профиль'),
             ],
           ),
         ),
       ),
-      drawer: Drawer(),
+      drawer: const Drawer(),
       body: Stack(
         children: [
-          MyCustomPaint(),
+          const MyCustomPaint(),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Column(
@@ -51,7 +65,7 @@ class MainScreen extends StatelessWidget {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.menu,
                         color: Colors.black,
                       ),
@@ -82,17 +96,18 @@ class MainScreen extends StatelessWidget {
                       Flexible(
                         child: Container(
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             "Здесь будет твой набор сказок",
                             style: TextStyle(fontSize: 24, color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                           decoration: BoxDecoration(
-                            color: Color(0xD971A59F),
+                            color: const Color(0xD971A59F),
                             border: Border.all(
-                              color: Color(0xD971A59F),
+                              color: const Color(0xD971A59F),
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
                           ),
                           height: 200,
                         ),
@@ -106,19 +121,19 @@ class MainScreen extends StatelessWidget {
                           children: [
                             Container(
                               alignment: Alignment.center,
-                              child: Text(
+                              child: const Text(
                                 "Тут",
                                 style: TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                               decoration: BoxDecoration(
-                                color: Color(0xD9F1B488),
+                                color: const Color(0xD9F1B488),
                                 border: Border.all(
-                                  color: Color(0xD9F1B488),
+                                  color: const Color(0xD9F1B488),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                    const BorderRadius.all(Radius.circular(20)),
                               ),
                               height: 94,
                             ),
@@ -127,19 +142,19 @@ class MainScreen extends StatelessWidget {
                             ),
                             Container(
                               alignment: Alignment.center,
-                              child: Text(
+                              child: const Text(
                                 "И тут",
                                 style: TextStyle(
                                     fontSize: 24, color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                               decoration: BoxDecoration(
-                                color: Color(0xD9678BD2),
+                                color: const Color(0xD9678BD2),
                                 border: Border.all(
-                                  color: Color(0xD9678BD2),
+                                  color: const Color(0xD9678BD2),
                                 ),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                    const BorderRadius.all(Radius.circular(20)),
                               ),
                               height: 94,
                             ),
@@ -150,29 +165,37 @@ class MainScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
                         Row(
-                          children: [
-                            Text("Аудиозаписи",style: TextStyle(fontSize: 24)),
+                          children: const [
+                            Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
                             Spacer(),
-                            Text("Открыть все",style: TextStyle(fontSize: 16)),
+                            Text("Открыть все", style: TextStyle(fontSize: 16)),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 60,horizontal: 30),
-                          child: Text("Как только ты запишешь аудио, она появится здесь.",style: TextStyle(fontSize: 20,color: Color(0x993A3A55)),textAlign: TextAlign.center,),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 60, horizontal: 30),
+                          child: Text(
+                            "Как только ты запишешь аудио, она появится здесь.",
+                            style: TextStyle(
+                                fontSize: 20, color: Color(0x993A3A55)),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        Icon(Icons.arrow_downward,size: 64,color: Color(0x993A3A55)),
+                        const Image(
+                          image: AssetImage('assets/Arrow - Down.png'),
+                        ),
                       ],
                     ),
                   ),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF6F6F6),
+                    color: const Color(0xFFF6F6F6),
                     border: Border.all(
                       color: Colors.grey,
                     ),
