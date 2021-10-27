@@ -1,6 +1,10 @@
+
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'side_menu.dart';
+import 'bottomnavbar.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -8,53 +12,12 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: const Image(
-                    image: AssetImage('assets/Home.png'),
-                  ),
-                  label: "Главная"),
-              BottomNavigationBarItem(
-                  icon: const Image(
-                    image: AssetImage('assets/Category.png'),
-                  ),
-                  label: 'Подборки'),
-              BottomNavigationBarItem(
-                  icon: const Image(
-                    color: Colors.black,
-                    image: AssetImage('assets/Voice.png'),
-                  ),
-                  label: 'Запись'),
-              BottomNavigationBarItem(
-                  icon: const Image(
-                    image: AssetImage('assets/Paper.png'),
-                  ),
-                  label: 'Аудиозаписи'),
-              BottomNavigationBarItem(
-                  icon: const Image(
-                    image: AssetImage('assets/Profile.png'),
-                  ),
-                  label: 'Профиль'),
-            ],
-          ),
-        ),
+      bottomNavigationBar: const CustomNavigation(),
+      drawer: ClipRRect(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
+        child: SideMenu(),
       ),
-      drawer: const Drawer(),
       body: Stack(
         children: [
           const MyCustomPaint(),
@@ -69,7 +32,10 @@ class MainScreen extends StatelessWidget {
                         Icons.menu,
                         color: Colors.black,
                       ),
-                      onPressed: () => null,
+                      onPressed: () {
+                        //Scaffold.of(context).openDrawer();
+                        //TODO: "Fix";
+                      },
                     ),
                   ],
                 ),
@@ -211,3 +177,4 @@ class MainScreen extends StatelessWidget {
     );
   }
 }
+
