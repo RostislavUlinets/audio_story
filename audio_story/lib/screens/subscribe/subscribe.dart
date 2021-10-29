@@ -1,5 +1,7 @@
-import 'package:audio_story/screens/main_screen/bottomnavbar.dart';
+import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:audio_story/widgets/side_menu.dart';
+
 import 'package:flutter/material.dart';
 
 class Subscribe extends StatelessWidget {
@@ -8,6 +10,7 @@ class Subscribe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const SideMenu(),
       bottomNavigationBar: const CustomNavigation(),
       body: Stack(
         children: [
@@ -77,6 +80,7 @@ class Subscribe extends StatelessWidget {
                                       "в месяц",
                                       style: TextStyle(fontSize: 16),
                                     ),
+                                    OutButton(),
                                   ],
                                 ),
                                 decoration: BoxDecoration(
@@ -189,7 +193,9 @@ class Subscribe extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20,),
+                              SizedBox(
+                                height: 20,
+                              ),
                               ElevatedButton(
                                 child: const Text("Подписаться на месяц"),
                                 onPressed: () {},
@@ -241,18 +247,25 @@ class _OutButtonState extends State<OutButton> {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       onPressed: () {
         setState(() {
-          _localWidget = Image(image: AssetImage("assets/TickSquare.png"));
+          _localWidget = Image(
+            image: AssetImage("assets/TickSquare.png"),
+          );
         });
       },
-      style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(360.0),
-        ),
-      ),
       child: _localWidget,
+      style: ElevatedButton.styleFrom(
+        shape: CircleBorder(
+            side: BorderSide(
+          width: 2,
+          color: Colors.black54,
+        )),
+        padding: EdgeInsets.all(6),
+        primary: Colors.white,
+        onPrimary: Colors.black, // <-- Splash color
+      ),
     );
   }
 }

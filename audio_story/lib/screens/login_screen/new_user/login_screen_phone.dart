@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/main.dart';
 import 'package:audio_story/models/auth.dart';
 import 'package:audio_story/screens/login_screen/new_user/final_screen.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -114,7 +115,7 @@ class _AnonimState extends State<Anonim> {
         if (res != null) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
+            MaterialPageRoute(builder: (context) => MainPage()),
           );
         } else {
           log("Error with anonim auth");

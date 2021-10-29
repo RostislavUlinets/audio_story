@@ -1,6 +1,24 @@
+import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
-class CustomNavigation extends StatelessWidget {
+class CustomNavigation extends StatefulWidget {
   const CustomNavigation({Key? key}) : super(key: key);
+
+  @override
+  State<CustomNavigation> createState() => _CustomNavigationState();
+}
+
+class _CustomNavigationState extends State<CustomNavigation> {
+
+  int _pageIndex = 0;
+
+  List<Widget>pageList =  [
+    MainScreen(),
+    MainScreen(),
+    MainScreen(),
+    MainScreen(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +36,18 @@ class CustomNavigation extends StatelessWidget {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
+            currentIndex: _pageIndex,
+            onTap: (value){
+              setState(() {
+                _pageIndex = value;
+              });             
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => pageList[_pageIndex],
+                ),
+              );
+            },
             type: BottomNavigationBarType.fixed,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
