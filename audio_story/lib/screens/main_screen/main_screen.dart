@@ -3,8 +3,8 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'side_menu.dart';
-import 'bottomnavbar.dart';
+import '../../widgets/side_menu.dart';
+import '../../widgets/bottomnavbar.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
