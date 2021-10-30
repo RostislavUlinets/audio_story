@@ -12,7 +12,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigation(),
+      bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
           MyCustomPaint(),

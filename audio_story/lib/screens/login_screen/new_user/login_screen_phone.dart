@@ -115,7 +115,7 @@ class _AnonimState extends State<Anonim> {
         if (res != null) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MainPage()),
+            MaterialPageRoute(builder: (context) => MainScreen()),
           );
         } else {
           log("Error with anonim auth");

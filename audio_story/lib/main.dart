@@ -16,9 +16,18 @@ import 'screens/main_screen/main_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ListenableProvider<NavigationController>(
+          create: (_) => NavigationController(),
+        ),
+      ],
+      child: const NavApp(),
+    ),
+  );
 }
-
+/*
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -41,7 +50,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
@@ -53,7 +61,7 @@ class _MainPageState extends State<MainPage> {
   Widget buildPages() {
     final provider = Provider.of<NavigationProvider>(context);
     final navigationItem = provider.navigationIteam;
-  
+
     switch (navigationItem) {
       case NavigationItem.home:
         return MainScreen();
@@ -64,5 +72,29 @@ class _MainPageState extends State<MainPage> {
       default:
         return WelcomeScreen();
     }
+  }
+}*/
+
+class NavApp extends StatelessWidget {
+  const NavApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    NavigationController navigation = Provider.of<NavigationController>(context);
+
+    return MaterialApp(
+      home: Navigator(
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) return false;
+          return true;
+        },
+        pages: [
+          const MaterialPage(child: MainScreen()),
+          if(navigation.screenName == '/profile')
+            const MaterialPage(child: Profile()),
+        ],
+      ),
+    );
   }
 }

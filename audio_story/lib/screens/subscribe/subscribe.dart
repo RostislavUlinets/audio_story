@@ -11,7 +11,8 @@ class Subscribe extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigation(),
+      //TODO: FIX;
+      bottomNavigationBar: const CustomNavigationBar(0),
       body: Stack(
         children: [
           const MyCustomPaint(),

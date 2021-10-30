@@ -175,8 +175,8 @@ class SideMenu extends StatelessWidget {
     required AssetImage image,
   }) {
 
-    final provider = Provider.of<NavigationProvider>(context);
-    final currentIteam = provider.navigationIteam;
+    final provider = Provider.of<NavigationController>(context);
+    final currentIteam = provider.screenName;
     final isSelected = item == currentIteam;
 
     final color = isSelected ? Colors.red :Color(0xFF3A3A55);
@@ -192,13 +192,13 @@ class SideMenu extends StatelessWidget {
           color: color,
         ),
         title: Text(text, style: TextStyle(color: color)),
-        onTap: () => selectItem(context, item),
+        onTap: () {},
       ),
     );
   }
-  void selectItem(BuildContext context, NavigationItem item) {
-  final provider = Provider.of<NavigationProvider>(context,listen: false);
-  provider.setNavigationIteam(item);
+  void selectItem(BuildContext context, String item) {
+  final provider = Provider.of<NavigationController>(context,listen: false);
+  provider.changeScreen(item);
 }
 }
 
