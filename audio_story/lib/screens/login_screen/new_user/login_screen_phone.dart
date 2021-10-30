@@ -2,14 +2,19 @@ import 'dart:developer';
 
 import 'package:audio_story/main.dart';
 import 'package:audio_story/models/auth.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/new_user/final_screen.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  final _phoneController = TextEditingController();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +60,7 @@ class LoginScreen extends StatelessWidget {
                         child: Tooltip(
                           message: "SOMETHING",
                           child: TextField(
+                            controller: _phoneController,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: "+38 (0)",
@@ -69,11 +75,9 @@ class LoginScreen extends StatelessWidget {
                     ElevatedButton(
                       child: const Text("Продолжить"),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FinalScreen()),
-                        );
+                        final phone = _phoneController.text.trim();
+
+                        _auth.loginUser(phone,context);
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
@@ -109,14 +113,13 @@ class _AnonimState extends State<Anonim> {
 
   @override
   Widget build(BuildContext context) {
+      NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
     return GestureDetector(
       onTap: () async {
         User? res = await _auth.signInAnon();
         if (res != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainScreen()),
-          );
+          navigation.changeScreen('/');
         } else {
           log("Error with anonim auth");
         }

@@ -14,7 +14,7 @@ class NavigationProvider extends ChangeNotifier{
 }
 
 class NavigationController extends ChangeNotifier{
-  String screenName = '/';
+  String screenName = '';
 
   void changeScreen(String newScreenName) {
     screenName = newScreenName;

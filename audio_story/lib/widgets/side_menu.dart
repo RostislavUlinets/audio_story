@@ -72,14 +72,18 @@ class SideMenu extends StatelessWidget {
                   text: 'Недавно удаленные',
                   image: AssetImage('assets/Delete.png'),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.subscribe,
                   text: 'Подписка',
                   image: AssetImage('assets/Wallet.png'),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
@@ -174,12 +178,13 @@ class SideMenu extends StatelessWidget {
     required String text,
     required AssetImage image,
   }) {
-
+    NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
     final provider = Provider.of<NavigationController>(context);
-    final currentIteam = provider.screenName;
-    final isSelected = item == currentIteam;
+    final currentIteam = navigation.screenName;
+    final isSelected = checker(item,navigation);
 
-    final color = isSelected ? Colors.red :Color(0xFF3A3A55);
+    final color = isSelected ? Colors.red : Color(0xFF3A3A55);
 
     return Material(
       color: Colors.transparent,
@@ -192,13 +197,40 @@ class SideMenu extends StatelessWidget {
           color: color,
         ),
         title: Text(text, style: TextStyle(color: color)),
-        onTap: () {},
+        onTap: () {
+          switch (item) {
+            case NavigationItem.home:
+              navigation.changeScreen('/');
+              break;
+            case NavigationItem.profile:
+              navigation.changeScreen('/profile');
+              break;
+            case NavigationItem.subscribe:
+              navigation.changeScreen('/subscribe');
+              break;
+          }
+        },
       ),
     );
   }
-  void selectItem(BuildContext context, String item) {
-  final provider = Provider.of<NavigationController>(context,listen: false);
-  provider.changeScreen(item);
-}
-}
 
+  bool checker(NavigationItem item,NavigationController navigation){
+    switch (item) {
+            case NavigationItem.home:
+              if(navigation.screenName == '/') return true;
+              break;
+            case NavigationItem.profile:
+              if(navigation.screenName == '/profile') return true;
+              break;
+            case NavigationItem.subscribe:
+              if(navigation.screenName == '/subscribe') return true;
+              break;
+          }
+    return false;
+  }
+
+  /*void selectItem(BuildContext context, String item) {
+    final provider = Provider.of<NavigationController>(context, listen: false);
+    provider.changeScreen(item);
+  }*/
+}

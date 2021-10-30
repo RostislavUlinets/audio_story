@@ -90,9 +90,13 @@ class NavApp extends StatelessWidget {
           return true;
         },
         pages: [
-          const MaterialPage(child: MainScreen()),
+          const MaterialPage(child: WelcomeScreen()),
+          if(navigation.screenName == '/')
+            const MaterialPage(child: MainScreen()),
           if(navigation.screenName == '/profile')
             const MaterialPage(child: Profile()),
+          if(navigation.screenName == '/subscribe')
+            const MaterialPage(child: Subscribe()),
         ],
       ),
     );
