@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:audio_story/main.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +23,7 @@ class AuthService {
 
     _auth.verifyPhoneNumber(
       phoneNumber: phone,
-      timeout: Duration(seconds: 60),
+      timeout: const Duration(seconds: 60),
       verificationCompleted: (AuthCredential credential) async {
         UserCredential res = await _auth.signInWithCredential(credential);
         User? user = res.user;
@@ -34,7 +32,7 @@ class AuthService {
               Provider.of<NavigationController>(context, listen: false);
           navigation.changeScreen('/');
         } else {
-          print("Error");
+          log("Error");
         }
       },
       verificationFailed: (FirebaseAuthException exception) {
@@ -46,7 +44,7 @@ class AuthService {
           barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
-              title: Text("Give the code?"),
+              title: const Text("Give the code?"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -57,7 +55,7 @@ class AuthService {
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text("Confirm"),
+                  child: const Text("Confirm"),
                   textColor: Colors.white,
                   color: Colors.blue,
                   onPressed: () async {
@@ -76,7 +74,7 @@ class AuthService {
                               listen: false);
                       navigation.changeScreen('/');
                     } else {
-                      print("Error");
+                      log("Error");
                     }
                   },
                 )

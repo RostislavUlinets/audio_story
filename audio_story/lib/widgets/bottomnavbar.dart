@@ -1,5 +1,4 @@
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/screens/profile/profile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
@@ -131,7 +130,7 @@ class CustomNavigationBar extends StatelessWidget {
                 navigation.changeScreen('/');
                 break;
               case 1:
-                navigation.changeScreen('/');
+                navigation.changeScreen('/category');
                 break;
               case 2:
                 navigation.changeScreen('/record');
@@ -146,24 +145,24 @@ class CustomNavigationBar extends StatelessWidget {
           },
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Home.png'),
                 ),
                 label: "Главная"),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Category.png'),
                 ),
                 label: 'Подборки'),
             BottomNavigationBarItem(
                 icon: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xBFF1B488),
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
                     child: Image(
                       color: Colors.white,
                       image: AssetImage('assets/Voice.png'),
@@ -171,12 +170,12 @@ class CustomNavigationBar extends StatelessWidget {
                   ),
                 ),
                 label: 'Запись'),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Paper.png'),
                 ),
                 label: 'Аудиозаписи'),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Profile.png'),
                 ),

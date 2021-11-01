@@ -35,10 +35,10 @@ class Subscribe extends StatelessWidget {
                           //TODO: "Fix";
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 55,
                       ),
-                      Text(
+                      const Text(
                         "Подписка",
                         style: TextStyle(
                             fontSize: 36,
@@ -48,7 +48,7 @@ class Subscribe extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text(
+                const Text(
                   "Расширь возможности",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
@@ -58,8 +58,8 @@ class Subscribe extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(30.0),
+                        const Padding(
+                          padding: EdgeInsets.all(30.0),
                           child: Text(
                             "Выбери подписку",
                             style: TextStyle(fontSize: 24),
@@ -72,12 +72,12 @@ class Subscribe extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
+                                  children: const [
+                                     Text(
                                       "300p",
                                       style: TextStyle(fontSize: 26),
                                     ),
-                                    Text(
+                                     Text(
                                       "в месяц",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -94,7 +94,7 @@ class Subscribe extends StatelessWidget {
                                 height: 230,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Expanded(
@@ -102,12 +102,12 @@ class Subscribe extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
+                                  children:const [
+                                     Text(
                                       "1800р",
                                       style: TextStyle(fontSize: 26),
                                     ),
-                                    Text(
+                                     Text(
                                       "в год",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -127,7 +127,7 @@ class Subscribe extends StatelessWidget {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -135,7 +135,7 @@ class Subscribe extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 25.0),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     Text(
                                       "Что дает подписка:",
                                       style: TextStyle(
@@ -146,7 +146,7 @@ class Subscribe extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                children: [
+                                children: const [
                                   Image(
                                     image: AssetImage("assets/Infinity.png"),
                                   ),
@@ -159,11 +159,11 @@ class Subscribe extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                children: [
+                                children: const [
                                   Image(
                                     image: AssetImage("assets/CloudUpload.png"),
                                   ),
@@ -176,11 +176,11 @@ class Subscribe extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
-                                children: [
+                                children:const [
                                   Image(
                                     image:
                                         AssetImage("assets/PaperDownload.png"),
@@ -194,7 +194,7 @@ class Subscribe extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               ElevatedButton(
@@ -234,14 +234,14 @@ class Subscribe extends StatelessWidget {
 }
 
 class OutButton extends StatefulWidget {
-  OutButton({Key? key}) : super(key: key);
+  const OutButton({Key? key}) : super(key: key);
 
   @override
   _OutButtonState createState() => _OutButtonState();
 }
 
 class _OutButtonState extends State<OutButton> {
-  Widget _localWidget = SizedBox(
+  Widget _localWidget = const SizedBox(
     height: 10,
     width: 10,
   );
@@ -251,19 +251,19 @@ class _OutButtonState extends State<OutButton> {
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          _localWidget = Image(
+          _localWidget = const Image(
             image: AssetImage("assets/TickSquare.png"),
           );
         });
       },
       child: _localWidget,
       style: ElevatedButton.styleFrom(
-        shape: CircleBorder(
+        shape: const CircleBorder(
             side: BorderSide(
           width: 2,
           color: Colors.black54,
         )),
-        padding: EdgeInsets.all(6),
+        padding: const EdgeInsets.all(6),
         primary: Colors.white,
         onPrimary: Colors.black, // <-- Splash color
       ),

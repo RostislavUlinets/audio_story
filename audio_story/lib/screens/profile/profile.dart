@@ -3,8 +3,6 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -15,9 +13,9 @@ class Profile extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          MyCustomPaint(),
+          const MyCustomPaint(),
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 60,
               right: 10,
               left: 10,
@@ -37,10 +35,10 @@ class Profile extends StatelessWidget {
                         //TODO: "Fix";
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 55,
                     ),
-                    Text(
+                    const Text(
                       "Подписка",
                       style: TextStyle(
                           fontSize: 36,
@@ -49,16 +47,16 @@ class Profile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   "Твоя частичка",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Container(
+                  child: const SizedBox(
                     child: Image(
                       image: AssetImage(
                         "assets/selfi.jpg",
@@ -69,8 +67,8 @@ class Profile extends StatelessWidget {
                     width: 200,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: Text(
                     "Аня",
                     style: TextStyle(fontSize: 24),
@@ -94,15 +92,15 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: Text(
                     "Редактировать",
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
+                const Padding(
+                  padding: EdgeInsets.only(top: 50.0),
                   child: Text(
                     "Подписки",
                     style: TextStyle(fontSize: 14),
@@ -113,7 +111,7 @@ class Profile extends StatelessWidget {
                       top: 20.0, bottom: 10, right: 30, left: 30),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: LinearProgressIndicator(
+                    child: const LinearProgressIndicator(
                       color: Color(0xFFF1B488),
                       value: 20,
                       semanticsLabel: 'Linear progress indicator',
@@ -121,16 +119,16 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "150/500мб",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
-                    children: [
+                    children: const [
                       Text("Выйти из приложения"),
                       Spacer(),
                       Text(

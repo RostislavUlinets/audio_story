@@ -13,7 +13,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(0),
-      drawer: ClipRRect(
+      drawer: const ClipRRect(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
         child: SideMenu(),
@@ -80,7 +80,7 @@ class MainScreen extends StatelessWidget {
                                 spreadRadius: 10,
                                 blurRadius: 10,
                                 offset:
-                                    Offset(0, 3), // changes position of shadow
+                                    const Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -114,7 +114,7 @@ class MainScreen extends StatelessWidget {
                                     color: Colors.grey.withOpacity(0.2),
                                     spreadRadius: 10,
                                     blurRadius: 10,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
@@ -144,7 +144,7 @@ class MainScreen extends StatelessWidget {
                                     color: Colors.grey.withOpacity(0.2),
                                     spreadRadius: 10,
                                     blurRadius: 10,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
@@ -159,7 +159,7 @@ class MainScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                CustomList(),
+                const CustomList(),
                 /*Container(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -243,7 +243,7 @@ class CustomList extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 10,
               blurRadius: 10,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -260,7 +260,7 @@ ListView _buildListView() {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
-          child: ListTile(
+          child: const ListTile(
             title: Text(
               "Малышь Кокки 1",
               style: TextStyle(color: Color(0xFF3A3A55)),

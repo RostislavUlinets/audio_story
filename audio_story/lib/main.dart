@@ -1,8 +1,8 @@
-import 'package:audio_story/models/navigation_item.dart';
+
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/login_screen/new_user/welcome_screen.dart';
@@ -80,8 +80,11 @@ class NavApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    NavigationController navigation = Provider.of<NavigationController>(context);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, //top bar color
+    ));
+    NavigationController navigation =
+        Provider.of<NavigationController>(context);
 
     return MaterialApp(
       home: Navigator(
@@ -91,11 +94,13 @@ class NavApp extends StatelessWidget {
         },
         pages: [
           const MaterialPage(child: WelcomeScreen()),
-          if(navigation.screenName == '/')
+          if (navigation.screenName == '/')
             const MaterialPage(child: MainScreen()),
-          if(navigation.screenName == '/profile')
+          if (navigation.screenName == '/category')
+            const MaterialPage(child: Category()),
+          if (navigation.screenName == '/profile')
             const MaterialPage(child: Profile()),
-          if(navigation.screenName == '/subscribe')
+          if (navigation.screenName == '/subscribe')
             const MaterialPage(child: Subscribe()),
         ],
       ),

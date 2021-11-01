@@ -1,8 +1,5 @@
 import 'package:audio_story/models/navigation_item.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/screens/profile/profile.dart';
-import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,55 +37,55 @@ class SideMenu extends StatelessWidget {
                   context,
                   item: NavigationItem.home,
                   text: 'Главная',
-                  image: AssetImage('assets/Home.png'),
+                  image: const AssetImage('assets/Home.png'),
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Профиль',
-                  image: AssetImage('assets/Profile.png'),
+                  image: const AssetImage('assets/Profile.png'),
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Подборки',
-                  image: AssetImage('assets/Category.png'),
+                  image: const AssetImage('assets/Category.png'),
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Все аудиозаписи',
-                  image: AssetImage('assets/Paper.png'),
+                  image: const AssetImage('assets/Paper.png'),
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Поиск',
-                  image: AssetImage('assets/Search.png'),
+                  image: const AssetImage('assets/Search.png'),
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Недавно удаленные',
-                  image: AssetImage('assets/Delete.png'),
+                  image: const AssetImage('assets/Delete.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.subscribe,
                   text: 'Подписка',
-                  image: AssetImage('assets/Wallet.png'),
+                  image: const AssetImage('assets/Wallet.png'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Написать в\nподдержку',
-                  image: AssetImage('assets/Edit.png'),
+                  image: const AssetImage('assets/Edit.png'),
                 ),
               ],
             ),
@@ -180,16 +177,14 @@ class SideMenu extends StatelessWidget {
   }) {
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
-    final provider = Provider.of<NavigationController>(context);
-    final currentIteam = navigation.screenName;
     final isSelected = checker(item,navigation);
 
-    final color = isSelected ? Colors.red : Color(0xFF3A3A55);
+    final color = isSelected ? Colors.red : const Color(0xFF3A3A55);
 
     return Material(
       color: Colors.transparent,
       child: ListTile(
-        visualDensity: VisualDensity(horizontal: 0, vertical: -2),
+        visualDensity: const VisualDensity(horizontal: 0, vertical: -2),
         selected: isSelected,
         selectedTileColor: Colors.white24,
         leading: Image(
