@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/auth.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
@@ -8,16 +9,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
 final AuthService _auth = AuthService();
-
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final _phoneController = TextEditingController();
-
+  var maskFormatter = MaskTextInputFormatter(mask: '+## (###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,9 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.purpule,),
+          const MyCustomPaint(
+            color: CColors.purpule,
+          ),
           Column(
             children: [
               Padding(
@@ -63,8 +63,8 @@ class LoginScreen extends StatelessWidget {
                         child: Tooltip(
                           message: "SOMETHING",
                           child: TextField(
+                            inputFormatters: [maskFormatter],
                             controller: _phoneController,
-                            obscureText: true,
                             decoration: InputDecoration(
                               labelText: "+38 (0)",
                               border: OutlineInputBorder(
@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         final phone = _phoneController.text.trim();
 
-                        _auth.loginUser(phone,context);
+                        _auth.loginUser(phone, context);
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
@@ -92,6 +92,26 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const Anonim(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.4),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          "Регистрация привяжет твои сказки\nк облаку, после чего они всегда\nбудут с тобой",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: CColors.black),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -104,19 +124,16 @@ class LoginScreen extends StatelessWidget {
 }
 
 class Anonim extends StatefulWidget {
-
   const Anonim({Key? key}) : super(key: key);
 
   @override
   _AnonimState createState() => _AnonimState();
-
 }
 
 class _AnonimState extends State<Anonim> {
-
   @override
   Widget build(BuildContext context) {
-      NavigationController navigation =
+    NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return GestureDetector(
       onTap: () async {

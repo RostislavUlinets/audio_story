@@ -2,10 +2,39 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+
+  late String phone;
+  var maskFormatter = MaskTextInputFormatter(mask: '+## (###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
+
+  @override
+  void initState() {
+    super.initState();
+    getPhone();
+  }
+
+  getPhone() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    setState(() {
+      try{
+        phone = currentUser!.phoneNumber!;
+      }catch(e){
+        phone = "380xxxxxxxxx";
+      }
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +43,9 @@ class Profile extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.purpule,),
+          const MyCustomPaint(
+            color: CColors.purpule,
+          ),
           Padding(
             padding: const EdgeInsets.only(
               top: 60,
@@ -82,10 +113,10 @@ class Profile extends StatelessWidget {
                     elevation: 5,
                     shadowColor: Colors.grey,
                     child: TextField(
+                      inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
-                      obscureText: true,
+                      controller: TextEditingController(text: phone),
                       decoration: InputDecoration(
-                        labelText: "+38 (0)",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
                         ),

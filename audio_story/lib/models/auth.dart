@@ -79,7 +79,7 @@ class AuthService {
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);
-                      navigation.changeScreen('/');
+                      navigation.changeScreen('/splash');
                     } else {
                       log("Error");
                     }

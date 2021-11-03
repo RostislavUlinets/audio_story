@@ -1,6 +1,7 @@
 
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/category/category.dart';
+import 'package:audio_story/screens/login_screen/new_user/final_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,8 @@ class NavApp extends StatelessWidget {
         },
         pages: [
           const MaterialPage(child: WelcomeScreen()),
+          if (navigation.screenName == '/splash')
+             MaterialPage(child: FinalScreen(duration: 3)),
           if (navigation.screenName == '/')
             const MaterialPage(child: MainScreen()),
           if (navigation.screenName == '/category')
