@@ -1,3 +1,4 @@
+import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class FinalScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            const MyCustomPaint(),
+            const MyCustomPaint(color: CColors.purpule,),
             Column(
               children: [
                 Padding(

@@ -6,19 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthService {
+  
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User?> signInAnon() async {
+  // sign in anon
+  Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
       return user;
     } catch (e) {
       log(e.toString());
+      return null;
     }
+
   }
 
-  Future<bool?> loginUser(String phone, BuildContext context) async {
+  Future loginUser(String phone, BuildContext context) async {
+
     final _codeController = TextEditingController();
 
     _auth.verifyPhoneNumber(
@@ -27,6 +32,7 @@ class AuthService {
       verificationCompleted: (AuthCredential credential) async {
         UserCredential res = await _auth.signInWithCredential(credential);
         User? user = res.user;
+
         if (user != null) {
           NavigationController navigation =
               Provider.of<NavigationController>(context, listen: false);
@@ -38,7 +44,7 @@ class AuthService {
       verificationFailed: (FirebaseAuthException exception) {
         log(exception.toString());
       },
-      codeSent: (String verificationId, [int? forceResendingToken]) {
+      codeSent: (String verificationId, int? resendToken) {
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -69,6 +75,7 @@ class AuthService {
                     User? user = result.user;
 
                     if (user != null) {
+                      Navigator.pop(context, result);
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);

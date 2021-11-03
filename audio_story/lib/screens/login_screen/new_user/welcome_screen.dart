@@ -1,3 +1,4 @@
+import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/screens/login_screen/new_user/login_screen_phone.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const MyCustomPaint(),
+          const MyCustomPaint(color: CColors.purpule,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Padding(

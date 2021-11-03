@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/auth.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -7,11 +8,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+
+final AuthService _auth = AuthService();
+
+
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final _phoneController = TextEditingController();
-  final AuthService _auth = AuthService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          const MyCustomPaint(),
+          const MyCustomPaint(color: CColors.purpule,),
           Column(
             children: [
               Padding(
@@ -98,15 +104,15 @@ class LoginScreen extends StatelessWidget {
 }
 
 class Anonim extends StatefulWidget {
+
   const Anonim({Key? key}) : super(key: key);
 
   @override
   _AnonimState createState() => _AnonimState();
+
 }
 
 class _AnonimState extends State<Anonim> {
-
-  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {

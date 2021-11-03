@@ -1,3 +1,4 @@
+import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -13,7 +14,7 @@ class Profile extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          const MyCustomPaint(),
+          const MyCustomPaint(color: CColors.purpule,),
           Padding(
             padding: const EdgeInsets.only(
               top: 60,
@@ -31,7 +32,7 @@ class Profile extends StatelessWidget {
                         size: 36,
                       ),
                       onPressed: () {
-                        //Scaffold.of(context).openDrawer();
+                        Scaffold.of(context).openDrawer();
                         //TODO: "Fix";
                       },
                     ),
