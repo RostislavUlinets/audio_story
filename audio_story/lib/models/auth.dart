@@ -1,13 +1,17 @@
 import 'dart:developer';
 
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthService {
-  
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
 
   // sign in anon
   Future signInAnon() async {
@@ -19,11 +23,9 @@ class AuthService {
       log(e.toString());
       return null;
     }
-
   }
 
   Future loginUser(String phone, BuildContext context) async {
-
     final _codeController = TextEditingController();
 
     _auth.verifyPhoneNumber(
@@ -75,10 +77,12 @@ class AuthService {
                     User? user = result.user;
 
                     if (user != null) {
+                      //DatabaseService _dataBase = DatabaseService(user.uid);
                       Navigator.pop(context, result);
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);
+                      //_dataBase.updateUserData("Rostislav", user.phoneNumber);
                       navigation.changeScreen('/splash');
                     } else {
                       log("Error");

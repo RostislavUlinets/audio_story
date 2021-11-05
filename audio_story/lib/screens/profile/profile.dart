@@ -1,10 +1,13 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:audio_story/models/auth.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -14,9 +17,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final AuthService _auth = AuthService();
+  User? currentUser = FirebaseAuth.instance.currentUser;
 
   late String phone;
-  var maskFormatter = MaskTextInputFormatter(mask: '+## (###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
@@ -25,19 +31,20 @@ class _ProfileState extends State<Profile> {
   }
 
   getPhone() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
+    
     setState(() {
-      try{
+      try {
         phone = currentUser!.phoneNumber!;
-      }catch(e){
+      } catch (e) {
         phone = "380xxxxxxxxx";
       }
-      
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
       drawer: const SideMenu(),
       bottomNavigationBar: const CustomNavigationBar(4),
@@ -115,7 +122,7 @@ class _ProfileState extends State<Profile> {
                     child: TextField(
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
-                      controller: TextEditingController(text: phone),
+                      controller: TextEditingController(text: currentUser?.phoneNumber),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
@@ -155,17 +162,31 @@ class _ProfileState extends State<Profile> {
                   "150/500мб",
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
-                    children: const [
-                      Text("Выйти из приложения"),
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          _auth.signOut();
+                          navigation.changeScreen('');
+                        },
+                        child: Text("Выйти из приложения",
+                            style: TextStyle(
+                              color: CColors.black,
+                            )),
+                      ),
                       Spacer(),
-                      Text(
-                        "Удалить аккаунт",
-                        style: TextStyle(color: Color(0xFFE27777)),
+                      TextButton(
+                        onPressed: () {
+                          showAlertDialog(context);
+                        },
+                        child: Text(
+                          "Удалить аккаунт",
+                          style: TextStyle(color: Color(0xFFE27777)),
+                        ),
                       ),
                     ],
                   ),
@@ -177,4 +198,100 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text(
+      "Нет",
+      style: TextStyle(color: CColors.purpule),
+    ),
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+          side: BorderSide(color: CColors.purpule),
+        ),
+      ),
+    ),
+    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+  );
+  Widget continueButton = TextButton(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Text(
+        "Удалить",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+      ),
+      backgroundColor: MaterialStateProperty.all(CColors.red),
+    ),
+    onPressed: () {
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      currentUser?.delete();
+      Navigator.of(context, rootNavigator: true).pop();
+      navigation.changeScreen('');
+    },
+  );
+
+  // set up the AlertDialog
+  Widget alert = AlertDialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+    content: Container(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Text("Точно удалить аккаунт?",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: CColors.black)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
+                style: TextStyle(
+                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35.0),
+              child: Row(
+                children: [
+                  continueButton,
+                  Spacer(),
+                  cancelButton,
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      height: 180,
+      width: 300,
+    ),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
