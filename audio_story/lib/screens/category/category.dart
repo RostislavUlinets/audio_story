@@ -16,7 +16,7 @@ class Category extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.green),
+          const MyCustomPaint(color: CColors.green,),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Column(

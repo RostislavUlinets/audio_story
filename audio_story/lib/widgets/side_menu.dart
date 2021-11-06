@@ -47,25 +47,25 @@ class SideMenu extends StatelessWidget {
                 ),
                 buildMenuItem(
                   context,
-                  item: NavigationItem.profile,
+                  item: NavigationItem.category,
                   text: 'Подборки',
                   image: const AssetImage('assets/Category.png'),
                 ),
                 buildMenuItem(
                   context,
-                  item: NavigationItem.profile,
+                  item: NavigationItem.audio,
                   text: 'Все аудиозаписи',
                   image: const AssetImage('assets/Paper.png'),
                 ),
                 buildMenuItem(
                   context,
-                  item: NavigationItem.profile,
+                  item: NavigationItem.search,
                   text: 'Поиск',
                   image: const AssetImage('assets/Search.png'),
                 ),
                 buildMenuItem(
                   context,
-                  item: NavigationItem.profile,
+                  item: NavigationItem.delete,
                   text: 'Недавно удаленные',
                   image: const AssetImage('assets/Delete.png'),
                 ),
@@ -83,7 +83,7 @@ class SideMenu extends StatelessWidget {
                 ),
                 buildMenuItem(
                   context,
-                  item: NavigationItem.profile,
+                  item: NavigationItem.help,
                   text: 'Написать в\nподдержку',
                   image: const AssetImage('assets/Edit.png'),
                 ),
@@ -177,7 +177,7 @@ class SideMenu extends StatelessWidget {
   }) {
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
-    final isSelected = checker(item,navigation);
+    final isSelected = checker(item, navigation);
 
     final color = isSelected ? Colors.red : const Color(0xFF3A3A55);
 
@@ -203,24 +203,54 @@ class SideMenu extends StatelessWidget {
             case NavigationItem.subscribe:
               navigation.changeScreen('/subscribe');
               break;
+            case NavigationItem.category:
+              navigation.changeScreen('/category');
+              break;
+            case NavigationItem.audio:
+              navigation.changeScreen('/audio');
+              break;
+            case NavigationItem.search:
+              navigation.changeScreen('/subscribe');
+              break;
+            case NavigationItem.delete:
+              navigation.changeScreen('/subscribe');
+              break;
+            case NavigationItem.help:
+              navigation.changeScreen('/subscribe');
+              break;
           }
         },
       ),
     );
   }
 
-  bool checker(NavigationItem item,NavigationController navigation){
+  bool checker(NavigationItem item, NavigationController navigation) {
     switch (item) {
-            case NavigationItem.home:
-              if(navigation.screenName == '/') return true;
-              break;
-            case NavigationItem.profile:
-              if(navigation.screenName == '/profile') return true;
-              break;
-            case NavigationItem.subscribe:
-              if(navigation.screenName == '/subscribe') return true;
-              break;
-          }
+      case NavigationItem.home:
+        if (navigation.screenName == '/') return true;
+        break;
+      case NavigationItem.profile:
+        if (navigation.screenName == '/profile') return true;
+        break;
+      case NavigationItem.subscribe:
+        if (navigation.screenName == '/subscribe') return true;
+        break;
+      case NavigationItem.category:
+        if (navigation.screenName == '/category') return true;
+        break;
+      case NavigationItem.audio:
+        if (navigation.screenName == '/audio') return true;
+        break;
+      case NavigationItem.search:
+        if (navigation.screenName == '/profile') return true;
+        break;
+      case NavigationItem.help:
+        if (navigation.screenName == '/profile') return true;
+        break;
+      case NavigationItem.delete:
+        if (navigation.screenName == '/audio') return true;
+        break;
+    }
     return false;
   }
 

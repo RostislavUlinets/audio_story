@@ -25,6 +25,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           const MyCustomPaint(
             color: CColors.purpule,
+            
           ),
           Column(
             children: [

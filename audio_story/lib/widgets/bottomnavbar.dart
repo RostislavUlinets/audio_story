@@ -136,7 +136,7 @@ class CustomNavigationBar extends StatelessWidget {
                 navigation.changeScreen('/record');
                 break;
               case 3:
-                navigation.changeScreen('/list');
+                navigation.changeScreen('/audio');
                 break;
               case 4:
                 navigation.changeScreen('/profile');
