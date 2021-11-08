@@ -1,6 +1,7 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class Records extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      drawer: const SideMenu(),
       bottomNavigationBar: CustomNavigationBar(2),
       body: Stack(
         children: [
@@ -19,14 +21,22 @@ class Records extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 60, horizontal: 10),
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                      size: 36,
+                     Builder(
+                      builder: (ctx) => IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 36,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(ctx).openDrawer();
+                          //TODO: "Fix";
+                        },
+                      ),
                     ),
                   ],
                 ),

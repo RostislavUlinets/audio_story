@@ -1,4 +1,5 @@
 
+import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
@@ -150,11 +151,21 @@ class CustomNavigationBar extends StatelessWidget {
             const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Home.png'),
+                  color: Colors.black,
+                ),
+                activeIcon: Image(
+                  image: AssetImage('assets/Home.png'),
+                  color: CColors.purpule,
                 ),
                 label: "Главная"),
             const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Category.png'),
+                  color: Colors.black,
+                ),
+                activeIcon: Image(
+                  image: AssetImage('assets/Category.png'),
+                  color: CColors.purpule,
                 ),
                 label: 'Подборки'),
             BottomNavigationBarItem(
@@ -175,11 +186,21 @@ class CustomNavigationBar extends StatelessWidget {
             const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Paper.png'),
+                  color: Colors.black,
+                ),
+                activeIcon: Image(
+                  image: AssetImage('assets/Paper.png'),
+                  color: CColors.purpule,
                 ),
                 label: 'Аудиозаписи'),
             const BottomNavigationBarItem(
                 icon: Image(
                   image: AssetImage('assets/Profile.png'),
+                  color: Colors.black,
+                ),
+                activeIcon: Image(
+                  image: AssetImage('assets/Profile.png'),
+                  color: CColors.purpule,
                 ),
                 label: 'Профиль'),
           ],

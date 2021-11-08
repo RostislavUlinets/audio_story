@@ -1,5 +1,5 @@
-import 'dart:js';
 
+import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,8 +18,19 @@ class DatabaseService{
     });
   }
 
-  Stream<QuerySnapshot> get users {
-    return userCollection.snapshots();
+  List<CustomUser> _userListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.docs.map((doc){
+      return CustomUser(
+        name: doc.get('Name') ?? '',
+        phone: doc.get('Phone number') ?? 0
+      );
+    }).toList();
+  }
+  
+
+  Stream<List<CustomUser>> get users {
+    return userCollection.snapshots()
+      .map(_userListFromSnapshot);
   }
 
   /*Future getUserName(String uid) async {

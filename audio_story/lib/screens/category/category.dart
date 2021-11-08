@@ -25,10 +25,11 @@ class Category extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      icon: const Icon(
-                        Icons.exposure_plus_1,
+                      icon: const Image(
+                        image: AssetImage('assets/PlusIcon.png'),
                         color: Colors.white,
-                        size: 36,
+                        width: 36,
+                        height: 36,
                       ),
                       onPressed: () {
                         //Scaffold.of(context).openDrawer();

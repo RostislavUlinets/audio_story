@@ -26,17 +26,19 @@ class Subscribe extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
-                      IconButton(
+                       Builder(
+                      builder: (ctx) => IconButton(
                         icon: const Icon(
                           Icons.menu,
                           color: Colors.white,
                           size: 36,
                         ),
                         onPressed: () {
-                          Scaffold.of(context).openDrawer();
+                          Scaffold.of(ctx).openDrawer();
                           //TODO: "Fix";
                         },
                       ),
+                    ),
                       const SizedBox(
                         width: 55,
                       ),

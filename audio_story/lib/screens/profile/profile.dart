@@ -1,4 +1,5 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -19,6 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final AuthService _auth = AuthService();
   User? currentUser = FirebaseAuth.instance.currentUser;
+  CustomUser user = CustomUser();
 
   late String phone;
   var maskFormatter = MaskTextInputFormatter(
@@ -31,7 +33,6 @@ class _ProfileState extends State<Profile> {
   }
 
   getPhone() async {
-    
     setState(() {
       try {
         phone = currentUser!.phoneNumber!;
@@ -64,16 +65,18 @@ class _ProfileState extends State<Profile> {
               children: [
                 Row(
                   children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 36,
+                    Builder(
+                      builder: (ctx) => IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 36,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(ctx).openDrawer();
+                          //TODO: "Fix";
+                        },
                       ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                        //TODO: "Fix";
-                      },
                     ),
                     const SizedBox(
                       width: 55,
@@ -123,7 +126,8 @@ class _ProfileState extends State<Profile> {
                     child: TextField(
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
-                      controller: TextEditingController(text: currentUser?.phoneNumber),
+                      controller:
+                          TextEditingController(text: currentUser?.phoneNumber),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
@@ -203,7 +207,7 @@ class _ProfileState extends State<Profile> {
 
 showAlertDialog(BuildContext context) {
   NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
+      Provider.of<NavigationController>(context, listen: false);
   // set up the buttons
   Widget cancelButton = TextButton(
     child: Text(
