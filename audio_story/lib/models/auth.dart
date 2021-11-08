@@ -77,12 +77,12 @@ class AuthService {
                     User? user = result.user;
 
                     if (user != null) {
-                      //DatabaseService _dataBase = DatabaseService(user.uid);
+                    DatabaseService _dataBase = DatabaseService(user.uid);
                       Navigator.pop(context, result);
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);
-                      //_dataBase.updateUserData("Rostislav", user.phoneNumber);
+                      _dataBase.updateUserData("User", user.phoneNumber);
                       navigation.changeScreen('/splash');
                     } else {
                       log("Error");

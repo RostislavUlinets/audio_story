@@ -46,6 +46,7 @@ class _ProfileState extends State<Profile> {
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
+      extendBody: true,
       drawer: const SideMenu(),
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
@@ -55,7 +56,7 @@ class _ProfileState extends State<Profile> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 60,
+              top: 40,
               right: 10,
               left: 10,
             ),
@@ -139,7 +140,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 50.0),
+                  padding: EdgeInsets.only(top: 40.0),
                   child: Text(
                     "Подписки",
                     style: TextStyle(fontSize: 14),

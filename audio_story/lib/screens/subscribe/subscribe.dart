@@ -11,6 +11,7 @@ class Subscribe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       drawer: const SideMenu(),
       //TODO: FIX;
       bottomNavigationBar: const CustomNavigationBar(0),
@@ -60,7 +61,7 @@ class Subscribe extends StatelessWidget {
                     child: Column(
                       children: [
                         const Padding(
-                          padding: EdgeInsets.all(30.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Text(
                             "Выбери подписку",
                             style: TextStyle(fontSize: 24),
@@ -92,7 +93,7 @@ class Subscribe extends StatelessWidget {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(20)),
                                 ),
-                                height: 230,
+                                height: 215,
                               ),
                             ),
                             const SizedBox(
@@ -122,7 +123,7 @@ class Subscribe extends StatelessWidget {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(20)),
                                 ),
-                                height: 230,
+                                height: 215,
                               ),
                             ),
                           ],
@@ -223,7 +224,7 @@ class Subscribe extends StatelessWidget {
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
-                  height: 560,
+                  height: 520,
                 ),
               ],
             ),

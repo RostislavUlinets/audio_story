@@ -64,7 +64,7 @@ class Audio extends StatelessWidget {
                 ),
                 Container(
                   width: 350,
-                  height: 480,
+                  height: 420,
                   child: _buildListView(),
                 )
                 

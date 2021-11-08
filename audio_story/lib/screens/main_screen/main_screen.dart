@@ -252,7 +252,7 @@ class CustomList extends StatelessWidget {
             ),
           ],
         ),
-        height: 400,
+        height: 370,
       ),
     );
   }

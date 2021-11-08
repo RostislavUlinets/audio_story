@@ -123,6 +123,8 @@ class CustomNavigationBar extends StatelessWidget {
           topRight: Radius.circular(30.0),
         ),
         child: BottomNavigationBar(
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.black,
           currentIndex: activeButtonIndex,
           onTap: (buttonIndex) {
             switch (buttonIndex) {
