@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class DatabaseService{
 
@@ -14,5 +17,14 @@ class DatabaseService{
       'Phone number': phonenumber,
     });
   }
+
+  Stream<QuerySnapshot> get users {
+    return userCollection.snapshots();
+  }
+
+  /*Future getUserName(String uid) async {
+    return await userCollection.doc(uid).get();
+  }*/
+
 
 }
