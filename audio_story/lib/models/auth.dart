@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static FirebaseAuth _auth = FirebaseAuth.instance;
+
+  const AuthService._();
+
+  static const AuthService instance = AuthService._();
 
   Future<void> signOut() async {
     await _auth.signOut();
@@ -82,7 +87,9 @@ class AuthService {
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);
-                      _dataBase.updateUserData("User", user.phoneNumber);
+                      if(_dataBase.getCurrentUserData().toString() == "DEFAULT") {
+                        _dataBase.updateUserData("User", user.phoneNumber);
+                      }
                       navigation.changeScreen('/splash');
                     } else {
                       log("Error");

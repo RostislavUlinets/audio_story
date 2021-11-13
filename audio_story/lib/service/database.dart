@@ -1,14 +1,16 @@
 
+import 'dart:developer';
+
 import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DatabaseService{
 
-  final String uid;
+  String uid;
 
   DatabaseService(this.uid);
-
+  
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
   Future updateUserData(String name,String? phonenumber) async {
@@ -17,25 +19,33 @@ class DatabaseService{
       'Phone number': phonenumber,
     });
   }
+/*
+  Future<void> getUsersCollectionFromFirebase() async {
 
-  List<CustomUser> _userListFromSnapshot(QuerySnapshot snapshot){
-    return snapshot.docs.map((doc){
-      return CustomUser(
-        name: doc.get('Name') ?? '',
-        phone: doc.get('Phone number') ?? 0
-      );
-    }).toList();
-  }
-  
+    DocumentSnapshot snapshot = await userCollection.doc(uid).get();
+    Map data = snapshot.data() as Map;
+    var userData = data as List;
 
-  Stream<List<CustomUser>> get users {
-    return userCollection.snapshots()
-      .map(_userListFromSnapshot);
+    userData.forEach((users) {
+      CustomUser user = CustomUser.fromJson(users);
+      _users.add(users);
+      print(_users);
+     });
+  }*/
+
+   Future<String> getCurrentUserData() async{
+    try {
+      DocumentSnapshot ds = await userCollection.doc(uid).get();
+      String  name = ds.get('Name');
+      return name;
+    }catch(e){
+      print(e.toString());
+      return "DEFAULT";
+    }
   }
+}
+
 
   /*Future getUserName(String uid) async {
     return await userCollection.doc(uid).get();
   }*/
-
-
-}

@@ -1,6 +1,9 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/profile/edit_profile.dart';
+import 'package:audio_story/screens/profile/widgets/dialog.dart';
+import 'package:audio_story/service/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -18,28 +21,26 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService.instance;
   User? currentUser = FirebaseAuth.instance.currentUser;
-  CustomUser user = CustomUser();
-
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   late String phone;
+  String _userName = "";
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
+    _GetUserName();
     super.initState();
-    getPhone();
   }
 
-  getPhone() async {
-    setState(() {
-      try {
-        phone = currentUser!.phoneNumber!;
-      } catch (e) {
-        phone = "380xxxxxxxxx";
-      }
-    });
+  void _GetUserName() {
+    dataBase.getCurrentUserData().then((val) => setState(() {
+          _userName = val;
+          print(val);
+        }));
   }
 
   @override
@@ -110,10 +111,10 @@ class _ProfileState extends State<Profile> {
                     width: 200,
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
-                    "Аня",
+                    _userName,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -136,12 +137,20 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    "Редактировать",
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  child: TextButton(
+                      child: Text(
+                        "Редактировать",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfile()),
+                        );
+                      }),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 40.0),
@@ -205,98 +214,11 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-showAlertDialog(BuildContext context) {
-  NavigationController navigation =
-      Provider.of<NavigationController>(context, listen: false);
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text(
-      "Нет",
-      style: TextStyle(color: CColors.purpule),
-    ),
-    style: ButtonStyle(
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          side: BorderSide(color: CColors.purpule),
-        ),
-      ),
-    ),
-    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-  );
-  Widget continueButton = TextButton(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Text(
-        "Удалить",
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
-    style: ButtonStyle(
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      ),
-      backgroundColor: MaterialStateProperty.all(CColors.red),
-    ),
-    onPressed: () {
-      User? currentUser = FirebaseAuth.instance.currentUser;
-      currentUser?.delete();
-      Navigator.of(context, rootNavigator: true).pop();
-      navigation.changeScreen('');
-    },
-  );
-
-  // set up the AlertDialog
-  Widget alert = AlertDialog(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-    content: Container(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text("Точно удалить аккаунт?",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: CColors.black)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
-                style: TextStyle(
-                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35.0),
-              child: Row(
-                children: [
-                  continueButton,
-                  Spacer(),
-                  cancelButton,
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      height: 180,
-      width: 300,
-    ),
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
+Future<Widget> userName() async {
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+  return Text(
+    await dataBase.getCurrentUserData(),
+    style: TextStyle(fontSize: 24),
   );
 }

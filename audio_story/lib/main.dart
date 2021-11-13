@@ -14,6 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/main_screen/main_screen.dart';
+import 'screens/profile/edit_profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

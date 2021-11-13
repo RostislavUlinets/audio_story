@@ -1,11 +1,17 @@
 class CustomUser {
-  final String? name;
-  final String? phone;
+  String name;
+  String phoneNumber;
 
-  String? get userName => name ?? "USER";
-  String? get getPhone => phone ?? '';
+  CustomUser({
+    required this.name, 
+    required this.phoneNumber
+    });
 
-  CustomUser({this.name,this.phone});
-
-
+  factory CustomUser.fromJson(Map<String, dynamic> json) {
+    return CustomUser
+    (
+      name: json['name'] as String,
+      phoneNumber: json['phoneNumber'] as String
+    );
+  }
 }

@@ -131,7 +131,7 @@ ListView _buildListView() {
                         image: AssetImage(
                           "assets/story.jpg",
                         ),
-                        colorFilter: new ColorFilter.mode(
+                        colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.8), BlendMode.dstATop),
                         fit: BoxFit.cover,
                       ),

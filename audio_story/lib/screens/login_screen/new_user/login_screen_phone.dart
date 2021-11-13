@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-final AuthService _auth = AuthService();
+final AuthService _auth = AuthService.instance;
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
