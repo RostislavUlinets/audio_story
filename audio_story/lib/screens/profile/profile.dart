@@ -8,11 +8,13 @@ import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:audio_story/models/auth.dart';
 import 'package:provider/provider.dart';
 
+  String downloadURL = 'https://picsum.photos/250?image=9';
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -26,13 +28,16 @@ class _ProfileState extends State<Profile> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   late String phone;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   String _userName = "";
+
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
     _GetUserName();
+    downloadURLExample();
     super.initState();
   }
 
@@ -42,6 +47,12 @@ class _ProfileState extends State<Profile> {
           print(val);
         }));
   }
+
+  Future<void> downloadURLExample() async {
+  downloadURL = await FirebaseStorage.instance
+      .ref('Avatars/$uid/avatar.jpg')
+      .getDownloadURL();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +111,9 @@ class _ProfileState extends State<Profile> {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: const SizedBox(
-                    child: Image(
-                      image: AssetImage(
-                        "assets/selfi.jpg",
-                      ),
+                  child: SizedBox(
+                    child: Image.network(
+                      downloadURL,
                       fit: BoxFit.cover,
                     ),
                     height: 200,
@@ -212,13 +221,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-}
-
-Future<Widget> userName() async {
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  return Text(
-    await dataBase.getCurrentUserData(),
-    style: TextStyle(fontSize: 24),
-  );
 }
