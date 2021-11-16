@@ -24,6 +24,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  
   final AuthService _auth = AuthService.instance;
   User? currentUser = FirebaseAuth.instance.currentUser;
   DatabaseService dataBase =
@@ -37,16 +38,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    _GetUserName();
     downloadURLExample();
     super.initState();
-  }
-
-  void _GetUserName() {
-    dataBase.getCurrentUserData().then((val) => setState(() {
-          _userName = val;
-          print(val);
-        }));
   }
 
   Future<void> downloadURLExample() async {
@@ -61,6 +54,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CustomUser?>(context);
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
@@ -128,7 +122,7 @@ class _ProfileState extends State<Profile> {
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
-                    _userName,
+                    provider!.name,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),

@@ -13,6 +13,20 @@ class DatabaseService{
   
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
+  Future<CustomUser?> initUserData() async {
+    CustomUser? user = CustomUser(uid: uid,name: "User",phoneNumber: "");
+    var document = userCollection.doc(uid);
+    document.get().then((doc) => {
+      if(doc.exists){
+        log("Document exist"),
+        user = CustomUser(uid: uid, name: doc.get('Name'), phoneNumber: doc.get('Phone number'))
+      }else{
+        log("Creating new document"),
+      }
+    });
+    return user;
+  }
+
   Future updateUserData(String name,String? phonenumber) async {
     return await userCollection.doc(uid).set({
       'Name': name,

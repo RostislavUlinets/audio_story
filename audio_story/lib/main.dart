@@ -1,13 +1,14 @@
+import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
-import 'package:audio_story/screens/login_screen/new_user/final_screen.dart';
+import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/record/record.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/login_screen/new_user/welcome_screen.dart';
+import 'screens/login_screen/welcome_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 
 import 'screens/main_screen/main_screen.dart';
 import 'screens/profile/edit_profile.dart';
+import 'service/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,53 +32,6 @@ void main() async {
     ),
   );
 }
-/*
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, //top bar color
-    ));
-
-    return ChangeNotifierProvider(
-      create: (context) => NavigationProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: MainPage(),
-      ),
-    );
-  }
-}
-
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) => buildPages();
-  Widget buildPages() {
-    final provider = Provider.of<NavigationProvider>(context);
-    final navigationItem = provider.navigationIteam;
-
-    switch (navigationItem) {
-      case NavigationItem.home:
-        return MainScreen();
-      case NavigationItem.profile:
-        return Profile();
-      case NavigationItem.subscribe:
-        return Subscribe();
-      default:
-        return WelcomeScreen();
-    }
-  }
-}*/
 
 class NavApp extends StatelessWidget {
   const NavApp({Key? key}) : super(key: key);
@@ -86,32 +41,37 @@ class NavApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, //top bar color
     ));
+
     NavigationController navigation =
         Provider.of<NavigationController>(context);
 
-    return MaterialApp(
-      home: Navigator(
-        onPopPage: (route, result) {
-          if (!route.didPop(result)) return false;
-          return true;
-        },
-        pages: [
-          const MaterialPage(child: WelcomeScreen()),
-          if (navigation.screenName == '/splash')
-            MaterialPage(child: FinalScreen(duration: 3)),
-          if (navigation.screenName == '/')
-            const MaterialPage(child: MainScreen()),
-          if (navigation.screenName == '/category')
-            const MaterialPage(child: Category()),
-          if (navigation.screenName == '/audio')
-            const MaterialPage(child: Audio()),
-          if (navigation.screenName == '/profile')
-            const MaterialPage(child: Profile()),
-          if (navigation.screenName == '/subscribe')
-            const MaterialPage(child: Subscribe()),
-          if (navigation.screenName == '/record')
-            const MaterialPage(child: Records()),
-        ],
+    return StreamProvider<CustomUser?>.value(
+      value: AuthService.instance.user,
+      initialData: null,
+      child: MaterialApp(
+        home: Navigator(
+          onPopPage: (route, result) {
+            if (!route.didPop(result)) return false;
+            return true;
+          },
+          pages: [
+            const MaterialPage(child: WelcomeScreen()),
+            if (navigation.screenName == '/splash')
+              MaterialPage(child: FinalScreen(duration: 3)),
+            if (navigation.screenName == '/')
+              const MaterialPage(child: MainScreen()),
+            if (navigation.screenName == '/category')
+              const MaterialPage(child: Category()),
+            if (navigation.screenName == '/audio')
+              const MaterialPage(child: Audio()),
+            if (navigation.screenName == '/profile')
+              const MaterialPage(child: Profile()),
+            if (navigation.screenName == '/subscribe')
+              const MaterialPage(child: Subscribe()),
+            if (navigation.screenName == '/record')
+              const MaterialPage(child: Records()),
+          ],
+        ),
       ),
     );
   }

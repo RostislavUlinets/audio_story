@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,11 +9,20 @@ import 'package:provider/provider.dart';
 
 class AuthService {
 
-  static FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   const AuthService._();
 
   static const AuthService instance = AuthService._();
+
+  CustomUser? _userFromFirebaseUser(User user) {
+    return user != null ? CustomUser(uid: user.uid,name: "User",phoneNumber: "") : null;
+  }
+
+  Stream<CustomUser?> get user {
+    return _auth.authStateChanges()
+      .map((User? user) => _userFromFirebaseUser(user!));  
+  }
 
   Future<void> signOut() async {
     await _auth.signOut();
@@ -23,7 +33,7 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
-      return user;
+      return _userFromFirebaseUser(user!);
     } catch (e) {
       log(e.toString());
       return null;

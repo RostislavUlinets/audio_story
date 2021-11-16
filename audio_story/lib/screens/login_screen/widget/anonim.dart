@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +24,7 @@ class _AnonimState extends State<Anonim> {
         Provider.of<NavigationController>(context, listen: false);
     return GestureDetector(
       onTap: () async {
-        User? res = await _auth.signInAnon();
+        CustomUser? res = await _auth.signInAnon();
         if (res != null) {
           navigation.changeScreen('/');
         } else {
