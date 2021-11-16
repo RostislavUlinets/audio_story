@@ -14,7 +14,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:audio_story/models/auth.dart';
+import 'package:audio_story/service/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart';
 

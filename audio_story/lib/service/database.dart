@@ -19,24 +19,12 @@ class DatabaseService{
       'Phone number': phonenumber,
     });
   }
-/*
-  Future<void> getUsersCollectionFromFirebase() async {
-
-    DocumentSnapshot snapshot = await userCollection.doc(uid).get();
-    Map data = snapshot.data() as Map;
-    var userData = data as List;
-
-    userData.forEach((users) {
-      CustomUser user = CustomUser.fromJson(users);
-      _users.add(users);
-      print(_users);
-     });
-  }*/
 
    Future<String> getCurrentUserData() async{
     try {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
       String  name = ds.get('Name');
+      //CustomUser.fromJson(ds.data());
       return name;
     }catch(e){
       print(e.toString());
@@ -44,8 +32,3 @@ class DatabaseService{
     }
   }
 }
-
-
-  /*Future getUserName(String uid) async {
-    return await userCollection.doc(uid).get();
-  }*/

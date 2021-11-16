@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/side_menu.dart';
 import '../../widgets/bottomnavbar.dart';
+import 'widget/custom_list.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -22,7 +23,9 @@ class MainScreen extends StatelessWidget {
       body: Builder(
         builder: (ctx) => Stack(
           children: [
-            const MyCustomPaint(color: CColors.purpule,),
+            const MyCustomPaint(
+              color: CColors.purpule,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 50.0),
               child: Column(
@@ -164,43 +167,6 @@ class MainScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const CustomList(),
-                  /*Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: const [
-                              Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
-                              Spacer(),
-                              Text("Открыть все", style: TextStyle(fontSize: 16)),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 60, horizontal: 30),
-                            child: Text(
-                              "Как только ты запишешь аудио, она появится здесь.",
-                              style: TextStyle(
-                                  fontSize: 20, color: Color(0x993A3A55)),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          const Image(
-                            image: AssetImage('assets/Arrow - Down.png'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF6F6F6),
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    height: 350,
-                  ),*/
                 ],
               ),
             )
@@ -209,84 +175,4 @@ class MainScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class CustomList extends StatelessWidget {
-  const CustomList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  children: const [
-                    Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
-                    Spacer(),
-                    Text("Открыть все", style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ),
-              Expanded(child: _buildListView()),
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF6F6F6),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 10,
-              blurRadius: 10,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        height: 370,
-      ),
-    );
-  }
-}
-
-ListView _buildListView() {
-  return ListView.builder(
-    itemCount: 10,
-    itemBuilder: (_, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Container(
-          child: const ListTile(
-            title: Text(
-              "Малышь Кокки 1",
-              style: TextStyle(color: Color(0xFF3A3A55)),
-            ),
-            subtitle: Text(
-              "30 минут",
-              style: TextStyle(color: Color(0x803A3A55)),
-            ),
-            leading: Image(
-              image: AssetImage("assets/Play.png"),
-            ),
-            trailing: Icon(Icons.more_horiz),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(75),
-            border: Border.all(
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }
