@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CColors{
+
+  CColors._();
+  
   static const Color green = const Color(0xFF71A59F);
   static const Color orange = const Color(0xFFF1B488);
   static const Color purpule = const Color(0xFF8C84E2);
