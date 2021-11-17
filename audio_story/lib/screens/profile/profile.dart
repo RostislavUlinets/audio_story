@@ -1,3 +1,4 @@
+
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
@@ -54,7 +55,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CustomUser?>(context);
+    final provider = Provider.of<CustomUser?>(context,listen: true);
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
@@ -121,9 +122,13 @@ class _ProfileState extends State<Profile> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    provider!.name,
-                    style: TextStyle(fontSize: 24),
+                  child: Builder(
+                    builder: (context) {
+                      return Text(
+                        Provider.of<CustomUser?>(context,listen: true)?.name ?? "",
+                        style: TextStyle(fontSize: 24),
+                      );
+                    }
                   ),
                 ),
                 Padding(
@@ -136,7 +141,7 @@ class _ProfileState extends State<Profile> {
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
                       controller:
-                          TextEditingController(text: currentUser?.phoneNumber),
+                          TextEditingController(text: Provider.of<CustomUser?>(context,listen: true)?.phoneNumber ?? "",),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
@@ -221,3 +226,5 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
+
+

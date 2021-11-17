@@ -92,14 +92,13 @@ class AuthService {
                     User? user = result.user;
 
                     if (user != null) {
+                    _userFromFirebaseUser(user);
                     DatabaseService _dataBase = DatabaseService(user.uid);
+                    _dataBase.initUserData();
                       Navigator.pop(context, result);
                       NavigationController navigation =
                           Provider.of<NavigationController>(context,
                               listen: false);
-                      if(_dataBase.getCurrentUserData().toString() == "DEFAULT") {
-                        _dataBase.updateUserData("User", user.phoneNumber);
-                      }
                       navigation.changeScreen('/splash');
                     } else {
                       log("Error");
