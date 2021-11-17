@@ -154,58 +154,6 @@ class _ProfileState extends State<EditProfile> {
                   ),
                   TextButton(
                     onPressed: () {
-                      /*final _codeController = TextEditingController();
-                      if (_phoneController.toString() != null) {
-                        FirebaseAuth.instance.verifyPhoneNumber(
-                            phoneNumber: _phoneController.toString(),
-                            timeout: const Duration(minutes: 2),
-                            verificationCompleted: (credential) async {
-                              await (await FirebaseAuth.instance.currentUser!)
-                                  .updatePhoneNumber(credential);
-                              // either this occurs or the user needs to manually enter the SMS code
-                            },
-                            verificationFailed:
-                                (FirebaseAuthException exception) {
-                              log(exception.toString());
-                            },
-                            codeSent:
-                                (String verificationId, int? resendToken) {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text("Give the code?"),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        TextField(
-                                          controller: _codeController,
-                                        ),
-                                      ],
-                                    ),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: const Text("Confirm"),
-                                        textColor: Colors.white,
-                                        color: Colors.blue,
-                                        onPressed: () async {
-                                          final code =
-                                              _codeController.text.trim();
-                                          AuthCredential credential =
-                                              PhoneAuthProvider.credential(
-                                                  verificationId:
-                                                      verificationId,
-                                                  smsCode: code);
-                                        },
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            codeAutoRetrievalTimeout: (String verificationId) {});
-                      }*/
                       //final phone = _phoneController.text.trim();
                       //dataBase.updateUserData(_userName.text, phone);
                       uploadFile();

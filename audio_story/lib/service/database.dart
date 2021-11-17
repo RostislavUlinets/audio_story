@@ -38,11 +38,21 @@ class DatabaseService{
     try {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
       String  name = ds.get('Name');
-      //CustomUser.fromJson(ds.data());
       return name;
     }catch(e){
       print(e.toString());
-      return "DEFAULT";
+      return "User";
+    }
+  }
+
+  Future<String> getCurrentUserPhoneNumber() async{
+    try {
+      DocumentSnapshot ds = await userCollection.doc(uid).get();
+      String  phoneNumber = ds.get('Phone number');
+      return phoneNumber;
+    }catch(e){
+      print(e.toString());
+      return "User";
     }
   }
 }

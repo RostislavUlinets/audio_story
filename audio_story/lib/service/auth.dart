@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/login_screen/code_sent.dart';
 import 'package:audio_story/service/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthService {
-
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
   const AuthService._();
@@ -16,12 +16,15 @@ class AuthService {
   static const AuthService instance = AuthService._();
 
   CustomUser? _userFromFirebaseUser(User user) {
-    return user != null ? CustomUser(uid: user.uid,name: "User",phoneNumber: "") : null;
+    return user != null
+        ? CustomUser(uid: user.uid, name: "User", phoneNumber: "")
+        : null;
   }
 
   Stream<CustomUser?> get user {
-    return _auth.authStateChanges()
-      .map((User? user) => _userFromFirebaseUser(user!));  
+    return _auth
+        .authStateChanges()
+        .map((User? user) => _userFromFirebaseUser(user!));
   }
 
   Future<void> signOut() async {
@@ -41,8 +44,6 @@ class AuthService {
   }
 
   Future loginUser(String phone, BuildContext context) async {
-    final _codeController = TextEditingController();
-
     _auth.verifyPhoneNumber(
       phoneNumber: phone,
       timeout: const Duration(seconds: 60),
@@ -61,8 +62,51 @@ class AuthService {
       verificationFailed: (FirebaseAuthException exception) {
         log(exception.toString());
       },
-      codeSent: (String verificationId, int? resendToken) {
-        showDialog(
+      codeSent: (String verificationId, int? resendToken)  async {
+        final code = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CodeSent(),
+            ));
+        AuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: code);
+
+        UserCredential result = await _auth.signInWithCredential(credential);
+
+        User? user = result.user;
+
+        if (user != null) {
+          _userFromFirebaseUser(user);
+          DatabaseService _dataBase = DatabaseService(user.uid);
+          _dataBase.initUserData();
+          Navigator.pop(context, result);
+          NavigationController navigation =
+              Provider.of<NavigationController>(context, listen: false);
+          navigation.changeScreen('/splash');
+        } else {
+          log("Error");
+        }
+ /*     
+        AuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: code);
+
+        UserCredential result = await _auth.signInWithCredential(credential);
+
+        User? user = result.user;
+
+        if (user != null) {
+          _userFromFirebaseUser(user);
+          DatabaseService _dataBase = DatabaseService(user.uid);
+          _dataBase.initUserData();
+          Navigator.pop(context, result);
+          NavigationController navigation =
+              Provider.of<NavigationController>(context, listen: false);
+          navigation.changeScreen('/splash');
+        } else {
+          log("Error");
+        }
+*/
+        /*showDialog(
           context: context,
           barrierDismissible: false,
           builder: (context) {
@@ -107,8 +151,10 @@ class AuthService {
                 )
               ],
             );
+            
           },
         );
+        */
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );

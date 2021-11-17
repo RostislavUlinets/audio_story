@@ -1,13 +1,19 @@
-/*
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CodeSent extends StatelessWidget {
+  
+
   CodeSent({Key? key}) : super(key: key);
 
   final _codeController = TextEditingController();
+
+  void _sendDataBack(BuildContext context) {
+    String textToSendBack = _codeController.text.trim();
+    Navigator.pop(context, textToSendBack);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class CodeSent extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: Text(
-                        "Введите номер телефона",
+                        "Введи код из смс, чтобы мы\nтебя запомнили",
                         style: TextStyle(fontSize: 16.0),
                       ),
                     ),
@@ -68,25 +74,7 @@ class CodeSent extends StatelessWidget {
                     ElevatedButton(
                       child: const Text("Продолжить"),
                       onPressed: () {
-                        final code = _codeController.text.trim();
-                    AuthCredential credential = PhoneAuthProvider.credential(
-                        verificationId: verificationId, smsCode: code);
-
-                    UserCredential result =
-                        await _auth.signInWithCredential(credential);
-
-                    User? user = result.user;
-
-                    if (user != null) {
-                    DatabaseService _dataBase = DatabaseService(user.uid);
-                      Navigator.pop(context, result);
-                      NavigationController navigation =
-                          Provider.of<NavigationController>(context,
-                              listen: false);
-                      if(_dataBase.getCurrentUserData().toString() == "DEFAULT") {
-                        _dataBase.updateUserData("User", user.phoneNumber);
-                      }
-                      navigation.changeScreen('/splash');
+                        _sendDataBack(context);
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
@@ -127,4 +115,3 @@ class CodeSent extends StatelessWidget {
     );
   }
 }
-*/

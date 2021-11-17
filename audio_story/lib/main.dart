@@ -46,6 +46,7 @@ class NavApp extends StatelessWidget {
         Provider.of<NavigationController>(context);
 
     return StreamProvider<CustomUser?>.value(
+      updateShouldNotify: (_, __) => true,
       value: AuthService.instance.user,
       initialData: null,
       child: MaterialApp(

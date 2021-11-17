@@ -27,27 +27,45 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   
   final AuthService _auth = AuthService.instance;
-  User? currentUser = FirebaseAuth.instance.currentUser;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  late String phone;
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  String _userName = "";
+
+  String phoneNumber = "",userName = "";
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
+    getUserName();
+    getUserPhoneNumber();
     downloadURLExample();
     super.initState();
   }
 
   Future<void> downloadURLExample() async {
     try {
-      downloadURL = await FirebaseStorage.instance
+      setState(() async {
+        downloadURL = await FirebaseStorage.instance
           .ref('Avatars/$uid/avatar.jpg')
           .getDownloadURL();
+      }); 
+    } catch (e) {
+      Exception e;
+    }
+  }
+
+  Future<void> getUserName() async {
+    try {
+      userName = await dataBase.getCurrentUserData();
+    } catch (e) {
+      Exception e;
+    }
+  }
+
+  Future<void> getUserPhoneNumber() async {
+    try {
+      phoneNumber = await dataBase.getCurrentUserPhoneNumber();
     } catch (e) {
       Exception e;
     }
@@ -125,7 +143,7 @@ class _ProfileState extends State<Profile> {
                   child: Builder(
                     builder: (context) {
                       return Text(
-                        Provider.of<CustomUser?>(context,listen: true)?.name ?? "",
+                        userName,
                         style: TextStyle(fontSize: 24),
                       );
                     }
@@ -141,7 +159,7 @@ class _ProfileState extends State<Profile> {
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
                       controller:
-                          TextEditingController(text: Provider.of<CustomUser?>(context,listen: true)?.phoneNumber ?? "",),
+                          TextEditingController(text: phoneNumber),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
@@ -166,7 +184,7 @@ class _ProfileState extends State<Profile> {
                       }),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 40.0),
+                  padding: EdgeInsets.only(top: 10.0),
                   child: Text(
                     "Подписки",
                     style: TextStyle(fontSize: 14),
