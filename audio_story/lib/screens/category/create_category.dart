@@ -10,7 +10,7 @@ class CreateCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     var _infoController = TextEditingController();
     return Scaffold(
-      bottomNavigationBar: CustomNavigationBar(1),
+      bottomNavigationBar: const CustomNavigationBar(1),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -54,9 +54,9 @@ class CreateCategory extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: const Text(
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    child: Text(
                       "Название",
                       style: TextStyle(
                           fontSize: 24,
@@ -69,7 +69,7 @@ class CreateCategory extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
@@ -79,8 +79,8 @@ class CreateCategory extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     child: Text("Введите описание..."),
                   ),
                   TextField(

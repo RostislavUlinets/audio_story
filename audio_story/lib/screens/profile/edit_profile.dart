@@ -7,7 +7,6 @@ import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -196,18 +195,8 @@ Future selectFile() async {
 }
 
 Future uploadFile() async {
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   final destination = 'Avatars/$uid/avatar.jpg';
-
-  FirebaseApi.uploadFile(destination, file!);
-}
-
-class FirebaseApi {
-  static UploadTask? uploadFile(String destination, File file) {
-    try {
-      final ref = FirebaseStorage.instance.ref(destination);
-      return ref.putFile(file);
-    } on FirebaseException {
-      return null;
-    }
-  }
+  dataBase.uploadFile(destination, file!);
 }
