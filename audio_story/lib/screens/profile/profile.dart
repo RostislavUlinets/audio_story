@@ -1,6 +1,7 @@
 
+import 'dart:developer';
+
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
@@ -50,30 +51,34 @@ class _ProfileState extends State<Profile> {
           .ref('Avatars/$uid/avatar.jpg')
           .getDownloadURL();
       }); 
-    } catch (e) {
-      Exception e;
-    }
+    } catch (e) { log("DownloadURL error");}
   }
 
   Future<void> getUserName() async {
     try {
-      userName = await dataBase.getCurrentUserData();
+      String temp = await dataBase.getCurrentUserData();
+      setState(() {
+        userName = temp;
+      });
     } catch (e) {
-      Exception e;
+      log("getUserName error");
     }
   }
 
   Future<void> getUserPhoneNumber() async {
     try {
-      phoneNumber = await dataBase.getCurrentUserPhoneNumber();
+      String temp = await dataBase.getCurrentUserPhoneNumber();
+      setState(() {
+        phoneNumber = temp;
+      });
+      
     } catch (e) {
-      Exception e;
+      log("getUserPhoneNumber error");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CustomUser?>(context,listen: true);
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
@@ -82,7 +87,7 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          const MyCustomPaint(
+          MyCustomPaint(
             color: CColors.purpule,
           ),
           Padding(
@@ -104,7 +109,6 @@ class _ProfileState extends State<Profile> {
                         ),
                         onPressed: () {
                           Scaffold.of(ctx).openDrawer();
-                          //TODO: "Fix";
                         },
                       ),
                     ),
@@ -139,12 +143,12 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Builder(
                     builder: (context) {
                       return Text(
                         userName,
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 24),
                       );
                     }
                   ),
@@ -169,9 +173,9 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: TextButton(
-                      child: Text(
+                      child: const Text(
                         "Редактировать",
                         style: TextStyle(fontSize: 14),
                       ),
@@ -179,7 +183,7 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditProfile()),
+                              builder: (context) => const EditProfile()),
                         );
                       }),
                 ),
@@ -223,12 +227,12 @@ class _ProfileState extends State<Profile> {
                               color: CColors.black,
                             )),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       TextButton(
                         onPressed: () {
                           showAlertDialog(context);
                         },
-                        child: Text(
+                        child: const Text(
                           "Удалить аккаунт",
                           style: TextStyle(color: Color(0xFFE27777)),
                         ),

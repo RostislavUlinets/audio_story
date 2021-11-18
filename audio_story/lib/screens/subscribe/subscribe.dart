@@ -15,11 +15,10 @@ class Subscribe extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),
-      //TODO: FIX;
       bottomNavigationBar: const CustomNavigationBar(0),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.purpule,),
+          MyCustomPaint(color: CColors.purpule,),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Column(
@@ -37,7 +36,6 @@ class Subscribe extends StatelessWidget {
                         ),
                         onPressed: () {
                           Scaffold.of(ctx).openDrawer();
-                          //TODO: "Fix";
                         },
                       ),
                     ),

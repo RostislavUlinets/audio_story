@@ -16,9 +16,7 @@ class AuthService {
   static const AuthService instance = AuthService._();
 
   CustomUser? _userFromFirebaseUser(User user) {
-    return user != null
-        ? CustomUser(uid: user.uid, name: "User", phoneNumber: "")
-        : null;
+    return CustomUser(uid: user.uid, name: "User", phoneNumber: "");
   }
 
   Stream<CustomUser?> get user {

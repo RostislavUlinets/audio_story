@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 
 class DatabaseService{
 
@@ -34,13 +33,25 @@ class DatabaseService{
     });
   }
 
+  Future updateUserName(String name)async {
+    return await userCollection.doc(uid).update({
+      'Name': name,
+    });
+  }
+
+  Future updateUserPhoneNumber(String phoneNumber)async {
+    return await userCollection.doc(uid).update({
+      'Phone number': phoneNumber,
+    });
+  }
+
    Future<String> getCurrentUserData() async{
     try {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
       String  name = ds.get('Name');
       return name;
     }catch(e){
-      print(e.toString());
+      log(e.toString());
       return "User";
     }
   }
@@ -51,7 +62,7 @@ class DatabaseService{
       String  phoneNumber = ds.get('Phone number');
       return phoneNumber;
     }catch(e){
-      print(e.toString());
+      log(e.toString());
       return "User";
     }
   }

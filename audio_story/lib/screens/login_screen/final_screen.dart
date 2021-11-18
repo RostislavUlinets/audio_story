@@ -9,7 +9,7 @@ class FinalScreen extends StatelessWidget {
 
   final int duration;
 
-  FinalScreen({required this.duration});
+  const FinalScreen({Key? key, required this.duration}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class FinalScreen extends StatelessWidget {
         Provider.of<NavigationController>(context, listen: false);
 
     Future.delayed(
-      Duration(seconds: this.duration),(){
+      Duration(seconds: duration),(){
         navigation.changeScreen('/');
       }
     );
@@ -36,7 +36,7 @@ class FinalScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            const MyCustomPaint(color: CColors.purpule,),
+            MyCustomPaint(color: CColors.purpule,),
             Column(
               children: [
                 Padding(

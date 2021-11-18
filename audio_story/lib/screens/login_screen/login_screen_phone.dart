@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 
 import 'widget/anonim.dart';
 
-final AuthService _auth = AuthService.instance;
+const AuthService _auth = AuthService.instance;
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
+
   LoginScreen({Key? key}) : super(key: key);
 
   final _phoneController = TextEditingController();
@@ -22,7 +24,7 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          const MyCustomPaint(
+          MyCustomPaint(
             color: CColors.purpule,
           ),
           Column(

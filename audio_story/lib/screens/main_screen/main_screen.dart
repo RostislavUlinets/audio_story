@@ -23,7 +23,7 @@ class MainScreen extends StatelessWidget {
       body: Builder(
         builder: (ctx) => Stack(
           children: [
-            const MyCustomPaint(
+            MyCustomPaint(
               color: CColors.purpule,
             ),
             Padding(
@@ -32,16 +32,17 @@ class MainScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 36,
+                      Builder(
+                        builder: (ctx) => IconButton(
+                          icon: const Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                            size: 36,
+                          ),
+                          onPressed: () {
+                            Scaffold.of(ctx).openDrawer();
+                          },
                         ),
-                        onPressed: () {
-                          Scaffold.of(ctx).openDrawer();
-                          //TODO: "Fix";
-                        },
                       ),
                     ],
                   ),

@@ -1,6 +1,5 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CodeSent extends StatelessWidget {
@@ -21,7 +20,7 @@ class CodeSent extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          const MyCustomPaint(
+          MyCustomPaint(
             color: CColors.purpule,
           ),
           Column(

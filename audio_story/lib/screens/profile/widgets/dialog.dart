@@ -26,8 +26,8 @@ void showAlertDialog(BuildContext context) {
     onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
   );
   Widget continueButton = TextButton(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+    child: const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: Text(
         "Удалить",
         style: TextStyle(color: Colors.white),
@@ -51,9 +51,9 @@ void showAlertDialog(BuildContext context) {
 
   // set up the AlertDialog
   Widget alert = AlertDialog(
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20.0))),
-    content: Container(
+    content: SizedBox(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -80,7 +80,7 @@ void showAlertDialog(BuildContext context) {
               child: Row(
                 children: [
                   continueButton,
-                  Spacer(),
+                  const Spacer(),
                   cancelButton,
                 ],
               ),

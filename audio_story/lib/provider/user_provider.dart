@@ -1,7 +1,4 @@
-import 'package:audio_story/models/user.dart';
-import 'package:audio_story/service/auth.dart';
-import 'package:audio_story/service/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 
 /*class UserProvider extends ChangeNotifier {

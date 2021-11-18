@@ -15,7 +15,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/main_screen/main_screen.dart';
-import 'screens/profile/edit_profile.dart';
 import 'service/auth.dart';
 
 void main() async {
@@ -58,7 +57,7 @@ class NavApp extends StatelessWidget {
           pages: [
             const MaterialPage(child: WelcomeScreen()),
             if (navigation.screenName == '/splash')
-              MaterialPage(child: FinalScreen(duration: 3)),
+              const MaterialPage(child: FinalScreen(duration: 3)),
             if (navigation.screenName == '/')
               const MaterialPage(child: MainScreen()),
             if (navigation.screenName == '/category')

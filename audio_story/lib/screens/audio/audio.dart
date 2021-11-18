@@ -1,6 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
-import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +12,7 @@ class Audio extends StatelessWidget {
     return Scaffold(
       drawer: const SideMenu(),
       extendBody: true,
-      bottomNavigationBar: CustomNavigationBar(3),
+      bottomNavigationBar: const CustomNavigationBar(3),
       body: Stack(
         children: [
           const CustomP(),
@@ -35,11 +33,10 @@ class Audio extends StatelessWidget {
                         ),
                         onPressed: () {
                           Scaffold.of(ctx).openDrawer();
-                          //TODO: "Fix";
                         },
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Аудиозаписи",
                       style: TextStyle(
                         fontSize: 36,
@@ -47,21 +44,21 @@ class Audio extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.more_horiz,
                       color: Colors.white,
                       size: 36,
                     ),
                   ],
                 ),
-                Text(
+                const Text(
                   "Все в одном месте",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 40),
                   child: Row(
-                    children: [
+                    children:const  [
                       Text(
                         "20 аудио\n10:30 часов",
                         style: TextStyle(fontSize: 16, color: Colors.white),
@@ -70,7 +67,7 @@ class Audio extends StatelessWidget {
                   ),
                   
                 ),
-                Container(
+                SizedBox(
                   width: 350,
                   height: 420,
                   child: _buildListView(),

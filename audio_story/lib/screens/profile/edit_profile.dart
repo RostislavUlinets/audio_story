@@ -1,24 +1,17 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/user.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
-import 'package:audio_story/screens/profile/widgets/dialog.dart';
+import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/service/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:audio_story/service/auth.dart';
-import 'package:provider/provider.dart';
-import 'package:path/path.dart';
 
-late File file;
+File? file;
 User? currentUser = FirebaseAuth.instance.currentUser;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -30,7 +23,6 @@ class EditProfile extends StatefulWidget {
 }
 
 class _ProfileState extends State<EditProfile> {
-  final AuthService _auth = AuthService.instance;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   final _userName = TextEditingController();
@@ -40,14 +32,12 @@ class _ProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          const MyCustomPaint(
+          MyCustomPaint(
             color: CColors.purpule,
           ),
           Padding(
@@ -108,7 +98,7 @@ class _ProfileState extends State<EditProfile> {
                       width: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
+                          image: const AssetImage(
                             "assets/selfi.jpg",
                           ),
                           colorFilter: ColorFilter.mode(
@@ -120,8 +110,8 @@ class _ProfileState extends State<EditProfile> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100.0, vertical: 30),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100.0, vertical: 30),
                     child: TextField(
                       readOnly: false,
                       textAlign: TextAlign.center,
@@ -154,13 +144,24 @@ class _ProfileState extends State<EditProfile> {
                   ),
                   TextButton(
                     onPressed: () {
+                      if(file != null){
+                        uploadFile();
+                      }                    
                       //final phone = _phoneController.text.trim();
                       //dataBase.updateUserData(_userName.text, phone);
-                      uploadFile();
+                      if (_userName.text.trim() != "") {
+                        dataBase.updateUserName(_userName.text.trim());
+                      }
                       //AuthService.instance.loginUser(phone, context);
                       //navigation.changeScreen('/profile');
+                      if (_phoneController.text.trim() != "") {
+                        const _auth = AuthService.instance;
+                        _auth.loginUser(_phoneController.text.trim(), context);
+                        dataBase.updateUserPhoneNumber(
+                            _phoneController.text.trim());
+                      }
                     },
-                    child: const Text(
+                    child: Text(
                       "Сохранить",
                       style: TextStyle(color: CColors.black),
                     ),
@@ -180,7 +181,7 @@ Future<Widget> userName() async {
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   return Text(
     await dataBase.getCurrentUserData(),
-    style: TextStyle(fontSize: 24),
+    style: const TextStyle(fontSize: 24),
   );
 }
 
@@ -195,13 +196,9 @@ Future selectFile() async {
 }
 
 Future uploadFile() async {
-  if (file == null) return;
-
-  final fileName = basename(file.path);
-
   final destination = 'Avatars/$uid/avatar.jpg';
 
-  FirebaseApi.uploadFile(destination, file);
+  FirebaseApi.uploadFile(destination, file!);
 }
 
 class FirebaseApi {
@@ -209,14 +206,8 @@ class FirebaseApi {
     try {
       final ref = FirebaseStorage.instance.ref(destination);
       return ref.putFile(file);
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       return null;
     }
   }
-}
-
-Future<void> downloadURLExample() async {
-  String downloadURL = await FirebaseStorage.instance
-      .ref('Avatars/$uid/avatar.jpg')
-      .getDownloadURL();
 }

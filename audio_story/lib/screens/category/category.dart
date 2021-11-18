@@ -1,3 +1,4 @@
+import 'package:audio_story/screens/category/create_category.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -14,11 +15,12 @@ class Category extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),
-      //TODO: FIX;
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.green,),
+          MyCustomPaint(
+            color: CColors.green,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Column(
@@ -34,8 +36,12 @@ class Category extends StatelessWidget {
                         height: 36,
                       ),
                       onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CreateCategory()),
+                        );
                         //Scaffold.of(context).openDrawer();
-                        //TODO: "Fix";
                       },
                     ),
                     const Text(
@@ -51,10 +57,7 @@ class Category extends StatelessWidget {
                         color: Colors.white,
                         size: 36,
                       ),
-                      onPressed: () {
-                        //Scaffold.of(context).openDrawer();
-                        //TODO: "Fix";
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -69,7 +72,7 @@ class Category extends StatelessWidget {
                     child: buildListView(),
                   ),
                   height: 580,
-                  color: Color(0x0071A59F),
+                  color: const Color(0x0071A59F),
                 ),
                 //_buildListView(),
               ],
@@ -80,4 +83,3 @@ class Category extends StatelessWidget {
     );
   }
 }
-

@@ -13,7 +13,7 @@ class Records extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),
-      bottomNavigationBar: CustomNavigationBar(2),
+      bottomNavigationBar: const CustomNavigationBar(2),
       body: Stack(
         children: [
           MyCustomPaint(color: CColors.purpule),
@@ -34,7 +34,6 @@ class Records extends StatelessWidget {
                         ),
                         onPressed: () {
                           Scaffold.of(ctx).openDrawer();
-                          //TODO: "Fix";
                         },
                       ),
                     ),
@@ -50,7 +49,7 @@ class Records extends StatelessWidget {
                       padding: const EdgeInsets.all(30.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: const [
                           Image(
                             image: AssetImage("assets/Upload.png"),
                           ),
@@ -67,20 +66,20 @@ class Records extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
-                    Text(
+                    const Text(
                       "Аудиозапись 1",
                       style: TextStyle(
                         fontSize: 24,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 100),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 100),
                       child: Text("---------------------------------------------------------------"),
                     ),
-                    IconButton(onPressed: (){}, icon: Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
+                    IconButton(onPressed: (){}, icon: const Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
                   ],
                 ),
                 

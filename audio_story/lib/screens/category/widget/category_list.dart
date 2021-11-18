@@ -19,8 +19,8 @@ ListView buildListView() {
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
+                        children: const [
+                          SizedBox(
                             child: Text(
                               "Сказка \nо малыше Кокки",
                               style: TextStyle(
@@ -33,7 +33,7 @@ ListView buildListView() {
                             width: 90,
                           ),
                           Spacer(),
-                          Container(
+                          SizedBox(
                             child: Text(
                               "n аудио\n1:30 часа",
                               style: TextStyle(
@@ -48,7 +48,7 @@ ListView buildListView() {
                     ),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(
+                        image: const AssetImage(
                           "assets/story.jpg",
                         ),
                         colorFilter: ColorFilter.mode(
@@ -69,8 +69,8 @@ ListView buildListView() {
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
+                        children: const [
+                          SizedBox(
                             child: Text(
                               "Сказка \nо малыше Кокки",
                               style: TextStyle(
@@ -83,7 +83,7 @@ ListView buildListView() {
                             width: 90,
                           ),
                           Spacer(),
-                          Container(
+                          SizedBox(
                             child: Text(
                               "n аудио\n1:30 часа",
                               style: TextStyle(
@@ -98,10 +98,10 @@ ListView buildListView() {
                     ),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(
+                        image: const AssetImage(
                           "assets/seconStory.jpg",
                         ),
-                        colorFilter: new ColorFilter.mode(
+                        colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.8), BlendMode.dstATop),
                         fit: BoxFit.cover,
                       ),

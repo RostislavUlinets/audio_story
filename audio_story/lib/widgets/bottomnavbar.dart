@@ -103,7 +103,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
 class CustomNavigationBar extends StatelessWidget {
   final int activeButtonIndex;
 
-  const CustomNavigationBar(this.activeButtonIndex);
+  const CustomNavigationBar(this.activeButtonIndex, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,23 +148,23 @@ class CustomNavigationBar extends StatelessWidget {
           },
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
-            const BottomNavigationBarItem(
-                icon: Image(
+            BottomNavigationBarItem(
+                icon: const Image(
                   image: AssetImage('assets/Home.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: AssetImage('assets/Home.png'),
+                  image: const AssetImage('assets/Home.png'),
                   color: CColors.purpule,
                 ),
                 label: "Главная"),
-            const BottomNavigationBarItem(
-                icon: Image(
+            BottomNavigationBarItem(
+                icon: const Image(
                   image: AssetImage('assets/Category.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: AssetImage('assets/Category.png'),
+                  image: const AssetImage('assets/Category.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Подборки'),
@@ -183,23 +183,23 @@ class CustomNavigationBar extends StatelessWidget {
                   ),
                 ),
                 label: 'Запись'),
-            const BottomNavigationBarItem(
-                icon: Image(
+             BottomNavigationBarItem(
+                icon: const Image(
                   image: AssetImage('assets/Paper.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: AssetImage('assets/Paper.png'),
+                  image: const AssetImage('assets/Paper.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Аудиозаписи'),
-            const BottomNavigationBarItem(
-                icon: Image(
+             BottomNavigationBarItem(
+                icon:const Image(
                   image: AssetImage('assets/Profile.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: AssetImage('assets/Profile.png'),
+                  image: const AssetImage('assets/Profile.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Профиль'),
