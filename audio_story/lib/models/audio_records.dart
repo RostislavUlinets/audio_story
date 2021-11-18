@@ -1,9 +1,12 @@
 
-/*
-final pathToSaveAudio = 'assets/';
+import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+const pathToSaveAudio = '/sdcard/Download/temp.aac';
 
 class AudioRecord {
-  //FlutterSoundRecorder? _audioRecorder;
+
+  FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialised = false;
 
   bool get isRecording => _audioRecorder!.isRecording;
@@ -11,10 +14,11 @@ class AudioRecord {
   Future init() async {
     _audioRecorder = FlutterSoundRecorder();
 
-    //final status = await Permission.microphone.request();
-    //if (status != PermissionStatus.granted) {
-    //  throw RecordingPermissionException('Microphone permission error');
-    //}
+    final status = await Permission.microphone.request();
+    final secondStatus = await Permission.storage.request();
+    if (status != PermissionStatus.granted && secondStatus != PermissionStatus.granted) {
+      throw RecordingPermissionException('Microphone permission error');
+    }
 
     await _audioRecorder!.openAudioSession();
     _isRecorderInitialised = true;
@@ -31,7 +35,7 @@ class AudioRecord {
   Future _record() async {
     if (!_isRecorderInitialised) return;
 
-    await _audioRecorder!.startRecorder(toFile: null);
+    await _audioRecorder!.startRecorder(toFile: pathToSaveAudio);
   }
 
   Future _stop() async {
@@ -48,4 +52,3 @@ class AudioRecord {
     }
   }
 }
-*/

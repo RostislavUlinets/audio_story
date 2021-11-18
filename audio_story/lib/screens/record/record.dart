@@ -1,12 +1,33 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio_records.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Records extends StatelessWidget {
+class Records extends StatefulWidget {
   const Records({Key? key}) : super(key: key);
+
+  @override
+  State<Records> createState() => _RecordsState();
+}
+
+class _RecordsState extends State<Records> {
+
+  final recorder = AudioRecord();
+
+  @override
+  void initState() {
+    super.initState();
+    recorder.init();
+  }
+
+  @override
+  void dispose() {
+    recorder.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +46,7 @@ class Records extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                     Builder(
+                    Builder(
                       builder: (ctx) => IconButton(
                         icon: const Icon(
                           Icons.menu,
@@ -77,12 +98,13 @@ class Records extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 100),
-                      child: Text("---------------------------------------------------------------"),
+                      child: Text(
+                          "---------------------------------------------------------------"),
                     ),
-                    IconButton(onPressed: (){}, icon: const Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
+                    buildStart(),
+                    //IconButton(onPressed: (){}, icon: const Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
                   ],
                 ),
-                
                 decoration: BoxDecoration(
                   color: const Color(0xFFF6F6F6),
                   border: Border.all(
@@ -94,6 +116,28 @@ class Records extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildStart() {
+    final isRecording = recorder.isRecording;
+
+    final icon = isRecording ? Icons.stop : Icons.mic;
+    final text = isRecording ? 'STOP' : 'START';
+    final primary = isRecording ? Colors.red : Colors.white;
+    final onPrimary = isRecording ? Colors.white : Colors.black;
+
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final isRecording = await recorder.toggleRecording();
+        setState(() {});
+      },
+      icon: Icon(icon),
+      label: Text(text),
+      style: ElevatedButton.styleFrom(
+        primary: primary,
+        onPrimary: onPrimary,
       ),
     );
   }

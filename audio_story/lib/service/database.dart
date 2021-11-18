@@ -1,8 +1,10 @@
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService{
 
@@ -64,6 +66,15 @@ class DatabaseService{
     }catch(e){
       log(e.toString());
       return "User";
+    }
+  }
+
+  UploadTask? uploadFile(String destination, File file) {
+    try {
+      final ref = FirebaseStorage.instance.ref(destination);
+      return ref.putFile(file);
+    } on FirebaseException {
+      return null;
     }
   }
 }
