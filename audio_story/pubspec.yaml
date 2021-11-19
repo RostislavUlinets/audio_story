@@ -49,10 +49,13 @@ dependencies:
   file_picker: ^4.2.2+1
 
   #Sound play/record
-  flutter_sound_lite: 8.1.9
+  flutter_sound_lite: ^8.1.9
 
   #Permission
-  permission_handler: 8.1.2
+  permission_handler: ^8.1.2
+
+  #SoundPlayer
+  #audioplayers: ^0.17.1
 
 dev_dependencies:
   flutter_test:

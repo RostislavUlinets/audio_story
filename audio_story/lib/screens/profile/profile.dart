@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:audio_story/Colors/colors.dart';
@@ -26,12 +25,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  
+  final user = FirebaseAuth.instance.currentUser;
   final AuthService _auth = AuthService.instance;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  String phoneNumber = "",userName = "";
+  String phoneNumber = "", userName = "USER";
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
@@ -45,40 +44,48 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> downloadURLExample() async {
-    try {
-      setState(() async {
+    if (user!.isAnonymous == false) {
+      try {
         downloadURL = await FirebaseStorage.instance
-          .ref('Avatars/$uid/avatar.jpg')
-          .getDownloadURL();
-      }); 
-    } catch (e) { log("DownloadURL error");}
+            .ref('Avatars/$uid/avatar.jpg')
+            .getDownloadURL();
+        setState(() {});
+      } catch (e) {
+        log("DownloadURL error");
+      }
+    }
   }
 
   Future<void> getUserName() async {
-    try {
-      String temp = await dataBase.getCurrentUserData();
-      setState(() {
-        userName = temp;
-      });
-    } catch (e) {
-      log("getUserName error");
+    if (user!.isAnonymous == false) {
+      try {
+        String? temp = await dataBase.getCurrentUserData();
+        setState(() {
+          userName = temp;
+        });
+      } catch (e) {
+        log("getUserName error");
+      }
     }
   }
 
   Future<void> getUserPhoneNumber() async {
-    try {
-      String temp = await dataBase.getCurrentUserPhoneNumber();
-      setState(() {
-        phoneNumber = temp;
-      });
-      
-    } catch (e) {
-      log("getUserPhoneNumber error");
+    if (user!.isAnonymous == false) {
+      try {
+        String? temp = await dataBase.getCurrentUserPhoneNumber();
+        setState(() {
+          phoneNumber = temp;
+        });
+      } catch (e) {
+        log("getUserPhoneNumber error");
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
+    bool flag = user!.isAnonymous;
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
@@ -134,24 +141,22 @@ class _ProfileState extends State<Profile> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
-                    child: Image.network(
+                    child: !flag ? Image.network(
                       downloadURL,
                       fit: BoxFit.cover,
-                    ),
+                    ) : Image.asset('assets/anon_ava.jpg'),
                     height: 200,
                     width: 200,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Builder(
-                    builder: (context) {
-                      return Text(
-                        userName,
-                        style: const TextStyle(fontSize: 24),
-                      );
-                    }
-                  ),
+                  child: Builder(builder: (context) {
+                    return Text(
+                      userName,
+                      style: const TextStyle(fontSize: 24),
+                    );
+                  }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -162,8 +167,7 @@ class _ProfileState extends State<Profile> {
                     child: TextField(
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
-                      controller:
-                          TextEditingController(text: phoneNumber),
+                      controller: TextEditingController(text: phoneNumber),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(60.0),
@@ -248,5 +252,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-
-

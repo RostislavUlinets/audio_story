@@ -6,6 +6,9 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'widget/player.dart';
+import 'widget/timer.dart';
+
 class Records extends StatefulWidget {
   const Records({Key? key}) : super(key: key);
 
@@ -14,7 +17,6 @@ class Records extends StatefulWidget {
 }
 
 class _RecordsState extends State<Records> {
-
   final recorder = AudioRecord();
 
   @override
@@ -101,7 +103,13 @@ class _RecordsState extends State<Records> {
                       child: Text(
                           "---------------------------------------------------------------"),
                     ),
+                    AudioTimer(),
                     buildStart(),
+                    IconButton(
+                      onPressed: () {
+                      },
+                      icon: Icon(Icons.arrow_drop_up),
+                    ),
                     //IconButton(onPressed: (){}, icon: const Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
                   ],
                 ),
