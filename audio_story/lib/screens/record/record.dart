@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/player.dart';
+import 'widget/test.dart';
 import 'widget/timer.dart';
 
 class Records extends StatefulWidget {
@@ -18,15 +19,18 @@ class Records extends StatefulWidget {
 
 class _RecordsState extends State<Records> {
   final recorder = AudioRecord();
+  final player = SoundPlayer();
 
   @override
   void initState() {
     super.initState();
     recorder.init();
+    player.init();
   }
 
   @override
   void dispose() {
+    player.dispose();
     recorder.dispose();
     super.dispose();
   }
@@ -92,6 +96,8 @@ class _RecordsState extends State<Records> {
                     const SizedBox(
                       height: 50,
                     ),
+                    PlayerOnProgress(),
+                    /*
                     const Text(
                       "Аудиозапись 1",
                       style: TextStyle(
@@ -106,10 +112,12 @@ class _RecordsState extends State<Records> {
                     AudioTimer(),
                     buildStart(),
                     IconButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await player.togglePlaying(whenFinished: () => setState(() {}));
+                        setState(() {});
                       },
-                      icon: Icon(Icons.arrow_drop_up),
-                    ),
+                      icon: Icon(Icons.arrow_drop_up,size: 64,),
+                    ),*/
                     //IconButton(onPressed: (){}, icon: const Image(image: AssetImage("assets/PlayRec.png"),),iconSize: 92,)
                   ],
                 ),

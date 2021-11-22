@@ -188,27 +188,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  flutter_sound:
+    dependency: "direct main"
+    description:
+      name: flutter_sound
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.3.9"
   flutter_sound_lite:
     dependency: "direct main"
     description:
       name: flutter_sound_lite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.9"
+    version: "8.3.9"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.9"
+    version: "8.3.9"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.9"
+    version: "8.3.9"
   flutter_spinkit:
     dependency: transitive
     description:

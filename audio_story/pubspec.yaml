@@ -50,6 +50,7 @@ dependencies:
 
   #Sound play/record
   flutter_sound_lite: ^8.1.9
+  flutter_sound: ^8.2.0
 
   #Permission
   permission_handler: ^8.1.2
