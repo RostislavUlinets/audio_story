@@ -1,5 +1,5 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/audio_records.dart';
+import 'package:audio_story/service/audio_records.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';

@@ -35,25 +35,25 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # Provider
-  provider: ^5.0.0
+  provider: ^6.0.1
 
   # Input text mask
   mask_text_input_formatter: ^2.0.0
 
   # Database
   firebase_auth: ^3.2.0
-  cloud_firestore: ^3.1.0
+  cloud_firestore: 3.0.0
   firebase_storage: ^10.1.0
 
   # Work with local file
   file_picker: ^4.2.2+1
 
   #Sound play/record
-  flutter_sound_lite: ^8.1.9
-  flutter_sound: ^8.2.0
+  flutter_sound_lite: ^8.4.2
+  flutter_sound: ^8.4.2
 
   #Permission
-  permission_handler: ^8.1.2
+  permission_handler: ^7.0.0
 
   #SoundPlayer
   #audioplayers: ^0.17.1

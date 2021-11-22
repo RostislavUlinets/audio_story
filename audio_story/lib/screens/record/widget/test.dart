@@ -20,6 +20,8 @@ typedef Fn = void Function();
 
 /// Example app.
 class PlayerOnProgress extends StatefulWidget {
+  const PlayerOnProgress({Key? key}) : super(key: key);
+
   @override
   _PlayerOnProgressState createState() => _PlayerOnProgressState();
 }
@@ -91,9 +93,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     await player.stopPlayer();
   }
 
-  Future<void> setSubscriptionDuration(
-      double d) async // v is between 0.0 and 2000 (milliseconds)
-  {
+  Future<void> setSubscriptionDuration(double d) async {
     _mSubscriptionDuration = d;
     setState(() {});
     await _mPlayer.setSubscriptionDuration(
@@ -119,47 +119,36 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.all(3),
-        padding: const EdgeInsets.all(3),
-        height: 140,
-        width: double.infinity,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Color(0xFFFAF0E6),
-          border: Border.all(
-            color: Colors.indigo,
-            width: 3,
-          ),
+      margin: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(3),
+      width: double.infinity,
+      alignment: Alignment.center,
+      child: Column(children: [
+        Text(
+          'Аудиозапись 1',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
         ),
-        child: Column(children: [
-          Row(children: [
-            ElevatedButton(
-              onPressed: getPlaybackFn(_mPlayer),
-              child: Text(_mPlayer.isPlaying ? 'Stop' : 'Play'),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Text(_mPlayer.isPlaying
-                ? 'Playback in progress'
-                : 'Player is stopped'),
-            SizedBox(
-              width: 20,
-            ),
-            Text('Pos: $pos'),
-          ]),
-          Text('Subscription Duration:'),
-          Slider(
+        SliderTheme(
+          data: SliderThemeData(
+            thumbColor: Colors.black,
+            inactiveTrackColor: Colors.black,
+            activeTrackColor: Colors.black,
+          ),
+          child: Slider(
             value: _mSubscriptionDuration,
             min: 0.0,
             max: 2000.0,
-            onChanged: setSubscriptionDuration,
+            onChanged: setSubscriptionDuration,    
             //divisions: 100
           ),
-        ]),
-        //),
-        //],
-      );
-    }
+        ),
+        ElevatedButton(
+          onPressed: getPlaybackFn(_mPlayer),
+          child: Text(_mPlayer.isPlaying ? 'Stop' : 'Play'),
+        ),
+      ]),
+      //),
+      //],
+    );
   }
-
+}

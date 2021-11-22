@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:audio_story/models/audio_records.dart';
+import 'package:audio_story/service/audio_records.dart';
 import 'package:flutter/material.dart';
 
 class AudioTimer extends StatefulWidget {
