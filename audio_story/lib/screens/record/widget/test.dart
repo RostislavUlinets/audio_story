@@ -123,32 +123,63 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       padding: const EdgeInsets.all(3),
       width: double.infinity,
       alignment: Alignment.center,
-      child: Column(children: [
-        Text(
-          'Аудиозапись 1',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-        ),
-        SliderTheme(
-          data: SliderThemeData(
-            thumbColor: Colors.black,
-            inactiveTrackColor: Colors.black,
-            activeTrackColor: Colors.black,
+      child: Column(
+        children: [
+          const Text(
+            'Аудиозапись 1',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.normal,
+            ),
           ),
-          child: Slider(
-            value: _mSubscriptionDuration,
-            min: 0.0,
-            max: 2000.0,
-            onChanged: setSubscriptionDuration,    
-            //divisions: 100
+          Padding(
+            padding: const EdgeInsets.only(top: 80.0),
+            child: SliderTheme(
+              data: const SliderThemeData(
+                thumbColor: Colors.black,
+                inactiveTrackColor: Colors.black,
+                activeTrackColor: Colors.black,
+              ),
+              child: Slider(
+                value: _mSubscriptionDuration,
+                min: 0.0,
+                max: 2000.0,
+                onChanged: setSubscriptionDuration,
+                //divisions: 100
+              ),
+            ),
           ),
-        ),
-        ElevatedButton(
-          onPressed: getPlaybackFn(_mPlayer),
-          child: Text(_mPlayer.isPlaying ? 'Stop' : 'Play'),
-        ),
-      ]),
-      //),
-      //],
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 60.0,
+              right: 40,
+              left: 40,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: null,
+                  icon: Image.asset('assets/PlayBack.png'),
+                  iconSize: 32,
+                ),
+                IconButton(
+                  onPressed: getPlaybackFn(_mPlayer),
+                  icon: _mPlayer.isPlaying
+                      ? Image.asset('assets/PlayRec.png')
+                      : Image.asset('assets/PlayRec.png'),
+                  iconSize: 124,
+                ),
+                IconButton(
+                  onPressed: null,
+                  icon: Image.asset('assets/PlayFront.png'),
+                  iconSize: 32,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

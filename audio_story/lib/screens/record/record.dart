@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/record/player.dart';
 import 'package:audio_story/service/audio_records.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/player.dart';
 import 'widget/test.dart';
@@ -24,7 +29,7 @@ class _RecordsState extends State<Records> {
   @override
   void initState() {
     super.initState();
-    recorder.init();
+    recorder.init().then((value) => recorder.record());
     player.init();
   }
 
@@ -75,28 +80,32 @@ class _RecordsState extends State<Records> {
                     Padding(
                       padding: const EdgeInsets.all(30.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: const [
-                          Image(
-                            image: AssetImage("assets/Upload.png"),
-                          ),
-                          Image(
-                            image: AssetImage("assets/PaperDownload1.png"),
-                          ),
-                          Image(
-                            image: AssetImage("assets/Delete.png"),
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text("Сохранить"),
+                          Text("Отменить"),
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
-                    PlayerOnProgress(),
+                    Text(
+                      'Запись',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 100.0),
+                      child: Text(
+                          '-------------------------------------------------------------------'),
+                    ),
+                    const AudioTimer(),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: buildStart(),
+                    ),
                     /*
                     const Text(
                       "Аудиозапись 1",
@@ -109,8 +118,7 @@ class _RecordsState extends State<Records> {
                       child: Text(
                           "---------------------------------------------------------------"),
                     ),
-                    AudioTimer(),
-                    buildStart(),
+                    
                     IconButton(
                       onPressed: () async {
                         await player.togglePlaying(whenFinished: () => setState(() {}));
@@ -139,15 +147,17 @@ class _RecordsState extends State<Records> {
   Widget buildStart() {
     final isRecording = recorder.isRecording;
 
-    final icon = isRecording ? Icons.stop : Icons.mic;
-    final text = isRecording ? 'STOP' : 'START';
-    final primary = isRecording ? Colors.red : Colors.white;
-    final onPrimary = isRecording ? Colors.white : Colors.black;
+    final icon = Icons.stop;
+    final text = 'STOP';
+    final primary = Colors.red;
+    final onPrimary = Colors.white;
 
     return ElevatedButton.icon(
       onPressed: () async {
-        final isRecording = await recorder.toggleRecording();
-        setState(() {});
+        recorder.toggleRecording();
+          NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
+        navigation.changeScreen('/player');
       },
       icon: Icon(icon),
       label: Text(text),

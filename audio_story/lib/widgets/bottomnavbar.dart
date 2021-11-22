@@ -1,4 +1,3 @@
-
 import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -103,7 +102,8 @@ class _CustomNavigationState extends State<CustomNavigation> {
 class CustomNavigationBar extends StatelessWidget {
   final int activeButtonIndex;
 
-  const CustomNavigationBar(this.activeButtonIndex, {Key? key}) : super(key: key);
+  const CustomNavigationBar(this.activeButtonIndex, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,8 +182,17 @@ class CustomNavigationBar extends StatelessWidget {
                     ),
                   ),
                 ),
+                activeIcon: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xBFF1B488),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(22.0),
+                  ),
+                ),
                 label: 'Запись'),
-             BottomNavigationBarItem(
+            BottomNavigationBarItem(
                 icon: const Image(
                   image: AssetImage('assets/Paper.png'),
                   color: Colors.black,
@@ -193,8 +202,8 @@ class CustomNavigationBar extends StatelessWidget {
                   color: CColors.purpule,
                 ),
                 label: 'Аудиозаписи'),
-             BottomNavigationBarItem(
-                icon:const Image(
+            BottomNavigationBarItem(
+                icon: const Image(
                   image: AssetImage('assets/Profile.png'),
                   color: Colors.black,
                 ),
