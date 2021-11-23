@@ -13,7 +13,6 @@ class AudioRecord {
 
   Future init() async {
     _audioRecorder = FlutterSoundRecorder();
-
     final status = await Permission.microphone.request();
     final secondStatus = await Permission.storage.request();
     if (status != PermissionStatus.granted && secondStatus != PermissionStatus.granted) {

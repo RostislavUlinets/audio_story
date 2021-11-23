@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FinalScreen extends StatelessWidget {
+  static const routeName = '/splash';
 
   final int duration;
 
@@ -13,15 +14,12 @@ class FinalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
 
-    Future.delayed(
-      Duration(seconds: duration),(){
-        navigation.changeScreen('/');
-      }
-    );
+    Future.delayed(Duration(seconds: duration), () {
+      navigation.changeScreen(MainScreen.routeName);
+    });
 
     return Scaffold(
       body: GestureDetector(
@@ -36,7 +34,9 @@ class FinalScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            MyCustomPaint(color: CColors.purpule,),
+            MyCustomPaint(
+              color: CColors.purpule,
+            ),
             Column(
               children: [
                 Padding(

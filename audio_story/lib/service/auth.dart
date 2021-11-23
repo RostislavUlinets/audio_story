@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/code_sent.dart';
-import 'package:audio_story/service/database.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'widget/select_button.dart';
 
 class Subscribe extends StatelessWidget {
+
+  static const routeName = '/subscribe';
+
   const Subscribe({Key? key}) : super(key: key);
 
   @override

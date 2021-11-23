@@ -8,6 +8,9 @@ import '../../widgets/bottomnavbar.dart';
 import 'widget/custom_list.dart';
 
 class MainScreen extends StatelessWidget {
+
+  static const routeName = '/';
+  
   const MainScreen({Key? key}) : super(key: key);
 
   @override

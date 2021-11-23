@@ -14,6 +14,7 @@ import 'package:flutter_sound/flutter_sound.dart';
  */
 
 const _boum = 'assets/sample2.aac';
+const int duration = 42673;
 
 ///
 typedef Fn = void Function();
@@ -29,7 +30,6 @@ class PlayerOnProgress extends StatefulWidget {
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
-  double _mSubscriptionDuration = 0;
   Uint8List? _boumData;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
@@ -64,11 +64,11 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   Future<void> init() async {
     await _mPlayer.openAudioSession();
+    await _mPlayer.setSubscriptionDuration(Duration(milliseconds: 50));
     _boumData = await getAssetData(_boum);
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
-      setState(() {
-        pos = e.position.inMilliseconds;
-      });
+      setPos(e.position.inMilliseconds);
+      setState(() {});
     });
   }
 
@@ -76,8 +76,6 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     var asset = await rootBundle.load(path);
     return asset.buffer.asUint8List();
   }
-
-  // -------  Here is the code to playback  -----------------------
 
   void play(FlutterSoundPlayer? player) async {
     await player!.startPlayer(
@@ -93,15 +91,29 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     await player.stopPlayer();
   }
 
-  Future<void> setSubscriptionDuration(double d) async {
-    _mSubscriptionDuration = d;
-    setState(() {});
-    await _mPlayer.setSubscriptionDuration(
-      Duration(milliseconds: d.floor()),
-    );
+  Future<void> setPos(int d) async {
+    if (d > duration) {
+      d = duration;
+    }
+    setState(() {
+      pos = d;
+    });
   }
 
-  // --------------------- UI -------------------
+  Future<void> seek(double d) async {
+    await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor()));
+    await setPos(d.floor());
+  }
+
+  Future<void> seekBack(double d) async {
+    await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor() - 600));
+    await setPos(d.floor() - 600);
+  }
+
+  Future<void> seekFoward(double d) async {
+    await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor() + 600));
+    await setPos(d.floor() + 600);
+  }
 
   Fn? getPlaybackFn(FlutterSoundPlayer? player) {
     if (!_mPlayerIsInited) {
@@ -141,10 +153,11 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                 activeTrackColor: Colors.black,
               ),
               child: Slider(
-                value: _mSubscriptionDuration,
+                value: pos + 0.0,
                 min: 0.0,
-                max: 2000.0,
-                onChanged: setSubscriptionDuration,
+                max: duration + 0.0,
+                onChanged: seek,
+                divisions: 100,
                 //divisions: 100
               ),
             ),
@@ -159,7 +172,9 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: null,
+                  onPressed: () {
+                    seekBack(pos + 0.0);
+                  },
                   icon: Image.asset('assets/PlayBack.png'),
                   iconSize: 32,
                 ),
@@ -171,7 +186,9 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                   iconSize: 124,
                 ),
                 IconButton(
-                  onPressed: null,
+                  onPressed: () {
+                    seekFoward(pos + 0.0);
+                  },
                   icon: Image.asset('assets/PlayFront.png'),
                   iconSize: 32,
                 ),

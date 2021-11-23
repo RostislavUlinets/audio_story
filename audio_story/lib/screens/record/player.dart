@@ -11,6 +11,9 @@ import 'widget/test.dart';
 import 'widget/timer.dart';
 
 class Player extends StatefulWidget {
+
+  static const routeName = '/player';
+
   const Player({Key? key}) : super(key: key);
 
   @override

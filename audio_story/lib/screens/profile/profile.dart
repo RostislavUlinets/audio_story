@@ -4,7 +4,7 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
-import 'package:audio_story/service/database.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -18,6 +18,9 @@ import 'package:provider/provider.dart';
 String downloadURL = 'https://picsum.photos/250?image=9';
 
 class Profile extends StatefulWidget {
+
+  static const routeName = '/profile';
+
   const Profile({Key? key}) : super(key: key);
 
   @override

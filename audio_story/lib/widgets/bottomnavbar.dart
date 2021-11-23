@@ -1,4 +1,9 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/screens/audio/audio.dart';
+import 'package:audio_story/screens/category/category.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/profile/profile.dart';
+import 'package:audio_story/screens/record/record.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
@@ -130,19 +135,19 @@ class CustomNavigationBar extends StatelessWidget {
           onTap: (buttonIndex) {
             switch (buttonIndex) {
               case 0:
-                navigation.changeScreen('/');
+                navigation.changeScreen(MainScreen.routeName);
                 break;
               case 1:
-                navigation.changeScreen('/category');
+                navigation.changeScreen(Category.routeName);
                 break;
               case 2:
-                navigation.changeScreen('/record');
+                navigation.changeScreen(Records.routeName);
                 break;
               case 3:
-                navigation.changeScreen('/audio');
+                navigation.changeScreen(Audio.routeName);
                 break;
               case 4:
-                navigation.changeScreen('/profile');
+                navigation.changeScreen(Profile.routeName);
                 break;
             }
           },

@@ -57,21 +57,21 @@ class NavApp extends StatelessWidget {
           },
           pages: [
             const MaterialPage(child: WelcomeScreen()),
-            if (navigation.screenName == '/splash')
+            if (navigation.screenName == FinalScreen.routeName)
               const MaterialPage(child: FinalScreen(duration: 3)),
-            if (navigation.screenName == '/')
+            if (navigation.screenName == MainScreen.routeName)
               const MaterialPage(child: MainScreen()),
-            if (navigation.screenName == '/category')
+            if (navigation.screenName == Category.routeName)
               const MaterialPage(child: Category()),
-            if (navigation.screenName == '/audio')
+            if (navigation.screenName == Audio.routeName)
               const MaterialPage(child: Audio()),
-            if (navigation.screenName == '/profile')
+            if (navigation.screenName == Profile.routeName)
               const MaterialPage(child: Profile()),
-            if (navigation.screenName == '/subscribe')
+            if (navigation.screenName == Subscribe.routeName)
               const MaterialPage(child: Subscribe()),
-            if (navigation.screenName == '/record')
-              const MaterialPage(child: Records()),
-            if (navigation.screenName == '/player')
+            if (navigation.screenName == Records.routeName)
+              const MaterialPage(child: Player()),//records
+            if (navigation.screenName == Player.routeName)
               const MaterialPage(child: Player()),
           ],
         ),

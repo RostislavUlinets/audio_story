@@ -52,7 +52,7 @@ class CodeSent extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 80),
+                      padding: const EdgeInsets.only(bottom: 60),
                       child: Material(
                         borderRadius: BorderRadius.circular(60.0),
                         elevation: 5,
@@ -70,17 +70,20 @@ class CodeSent extends StatelessWidget {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      child: const Text("Продолжить"),
-                      onPressed: () {
-                        _sendDataBack(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                        primary: Colors.deepOrange[200],
-                        onPrimary: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: ElevatedButton(
+                        child: const Text("Продолжить"),
+                        onPressed: () {
+                          _sendDataBack(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          primary: Colors.deepOrange[200],
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.0),
+                          ),
                         ),
                       ),
                     ),

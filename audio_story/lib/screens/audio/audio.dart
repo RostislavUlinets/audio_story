@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'custompaint.dart';
 
 class Audio extends StatelessWidget {
+
+  static const routeName = '/audio';
+
   const Audio({Key? key}) : super(key: key);
 
   @override

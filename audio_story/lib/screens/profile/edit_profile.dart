@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/service/auth.dart';
-import 'package:audio_story/service/database.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:file_picker/file_picker.dart';
@@ -148,12 +148,12 @@ class _ProfileState extends State<EditProfile> {
                       }                    
                       //final phone = _phoneController.text.trim();
                       //dataBase.updateUserData(_userName.text, phone);
-                      if (_userName.text.trim() != "") {
+                      if (_userName.text.trim().isNotEmpty) {
                         dataBase.updateUserName(_userName.text.trim());
                       }
                       //AuthService.instance.loginUser(phone, context);
                       //navigation.changeScreen('/profile');
-                      if (_phoneController.text.trim() != "") {
+                      if (_phoneController.text.trim().isNotEmpty) {
                         const _auth = AuthService.instance;
                         _auth.loginUser(_phoneController.text.trim(), context);
                         dataBase.updateUserPhoneNumber(

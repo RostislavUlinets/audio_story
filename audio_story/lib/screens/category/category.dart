@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'widget/category_list.dart';
 
 class Category extends StatelessWidget {
+
+  static const routeName = '/category';
+
   const Category({Key? key}) : super(key: key);
 
   @override
