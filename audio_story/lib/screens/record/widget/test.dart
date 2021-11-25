@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 
 /*
  *
@@ -13,9 +14,8 @@ import 'package:flutter_sound/flutter_sound.dart';
  *
  */
 
-const _boum = 'assets/sample2.aac';
-const int duration = 42673;
-
+const int duration = 5000;
+const int tSampleRate = 44000;
 ///
 typedef Fn = void Function();
 
@@ -28,9 +28,9 @@ class PlayerOnProgress extends StatefulWidget {
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
+  final pathToSaveAudio = '/sdcard/Download/temp.aac';
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
-  Uint8List? _boumData;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
 
@@ -64,8 +64,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   Future<void> init() async {
     await _mPlayer.openAudioSession();
-    await _mPlayer.setSubscriptionDuration(Duration(milliseconds: 50));
-    _boumData = await getAssetData(_boum);
+    await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
       setPos(e.position.inMilliseconds);
       setState(() {});
@@ -78,12 +77,20 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   }
 
   void play(FlutterSoundPlayer? player) async {
+    /*
+    var tempDir = await getTemporaryDirectory();
     await player!.startPlayer(
-        fromDataBuffer: _boumData,
-        codec: Codec.aacADTS,
+        fromURI: '${tempDir.path}/flutter_sound_example.pcm',
+        sampleRate: tSampleRate,
+        codec: Codec.pcm16,
+        numChannels: 1,
         whenFinished: () {
           setState(() {});
         });
+        */
+        await player!.startPlayer(
+          fromURI: pathToSaveAudio,
+        );
     setState(() {});
   }
 

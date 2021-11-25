@@ -1,17 +1,13 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/service/audio_records.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'widget/player.dart';
 import 'widget/test.dart';
-import 'widget/timer.dart';
 
 class Player extends StatefulWidget {
-
   static const routeName = '/player';
 
   const Player({Key? key}) : super(key: key);

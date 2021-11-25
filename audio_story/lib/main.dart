@@ -70,7 +70,7 @@ class NavApp extends StatelessWidget {
             if (navigation.screenName == Subscribe.routeName)
               const MaterialPage(child: Subscribe()),
             if (navigation.screenName == Records.routeName)
-              const MaterialPage(child: Player()),//records
+              const MaterialPage(child: Records()),//records
             if (navigation.screenName == Player.routeName)
               const MaterialPage(child: Player()),
           ],
