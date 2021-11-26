@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 
 const int duration = 5000;
 const int tSampleRate = 44000;
+
 ///
 typedef Fn = void Function();
 
@@ -28,7 +29,7 @@ class PlayerOnProgress extends StatefulWidget {
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
-  final pathToSaveAudio = '/sdcard/Download/temp.aac';
+  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
@@ -62,6 +63,12 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     }
   }
 
+  Future<String> _getTempPath(String path) async {
+    var tempDir = await getTemporaryDirectory();
+    var tempPath = tempDir.path;
+    return tempPath + '/' + path;
+  }
+
   Future<void> init() async {
     await _mPlayer.openAudioSession();
     await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
@@ -77,20 +84,12 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   }
 
   void play(FlutterSoundPlayer? player) async {
-    /*
-    var tempDir = await getTemporaryDirectory();
     await player!.startPlayer(
-        fromURI: '${tempDir.path}/flutter_sound_example.pcm',
-        sampleRate: tSampleRate,
-        codec: Codec.pcm16,
-        numChannels: 1,
+        codec: Codec.mp3,
+        fromURI: pathToSaveAudio,
         whenFinished: () {
           setState(() {});
         });
-        */
-        await player!.startPlayer(
-          fromURI: pathToSaveAudio,
-        );
     setState(() {});
   }
 

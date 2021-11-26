@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/test.dart';
 
@@ -28,12 +31,14 @@ class Records extends StatefulWidget {
 }
 
 class _RecordsState extends State<Records> {
-  final pathToSaveAudio = '/sdcard/Download/temp.aac';
+  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
+  final pathToSaveTemp = '/sdcard/Download/temp.aac';
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
-  StreamSubscription? _mRecordingDataSubscription;
+  //StreamSubscription? _mRecordingDataSubscription;
   static String? _mPath;
+  late var tempDir;
 
   Future<void> _openRecorder() async {
     final status = await Permission.microphone.request();
@@ -62,42 +67,25 @@ class _RecordsState extends State<Records> {
     super.dispose();
   }
 
-  Future<IOSink> createFile() async {
-    var tempDir = await getTemporaryDirectory();
-    _mPath = '${tempDir.path}/flutter_sound_example.pcm';
-    var outputFile = File(_mPath!);
-    if (outputFile.existsSync()) {
-      await outputFile.delete();
-    }
-    return outputFile.openWrite();
-  }
-
-  Future<void> record() async {
-    if (!_mRecorderIsInited) return;
-    var sink = await createFile();
-    var recordingDataController = StreamController<Food>();
-    _mRecordingDataSubscription =
-        recordingDataController.stream.listen((buffer) {
-      if (buffer is FoodData) {
-        sink.add(buffer.data!);
-      }
+  void record() {
+    _mRecorder!
+        .startRecorder(
+      toFile: pathToSaveTemp,
+    )
+        .then((value) {
+      setState(() {});
     });
-    await _mRecorder!.startRecorder(
-      toStream: recordingDataController.sink,
-      codec: Codec.pcm16,
-      numChannels: 1,
-      sampleRate: tSampleRate,
-    );
-    setState(() {});
   }
 
   Future<void> stopRecorder() async {
     await _mRecorder!.stopRecorder();
-    if (_mRecordingDataSubscription != null) {
-      await _mRecordingDataSubscription!.cancel();
-      _mRecordingDataSubscription = null;
-    }
+    // if (_mRecordingDataSubscription != null) {
+    //   await _mRecordingDataSubscription!.cancel();
+    //   _mRecordingDataSubscription = null;
+    // }
     _mplaybackReady = true;
+    await FlutterSoundHelper()
+        .convertFile(pathToSaveTemp, Codec.aacADTS, pathToSaveAudio, Codec.mp3);
   }
 
   _Fn? getRecorderFn() {
@@ -113,6 +101,9 @@ class _RecordsState extends State<Records> {
 
   @override
   Widget build(BuildContext context) {
+    NavigationController navigation =
+        Provider.of<NavigationController>(context);
+
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),
@@ -159,13 +150,12 @@ class _RecordsState extends State<Records> {
                                     image: AssetImage("assets/Upload.png"),
                                   ),
                                   onPressed: () {
-                                    File file = File(_mPath!);
+                                    File file = File(pathToSaveAudio);
                                     String uid =
                                         FirebaseAuth.instance.currentUser!.uid;
                                     DatabaseService dataBase =
                                         DatabaseService(uid);
-                                    final destination =
-                                        'Sounds/$uid/audio.pcm';
+                                    final destination = 'Sounds/$uid/audio.mp3';
                                     dataBase.uploadFile(destination, file);
                                   },
                                 ),
@@ -173,8 +163,14 @@ class _RecordsState extends State<Records> {
                                   image:
                                       AssetImage("assets/PaperDownload1.png"),
                                 ),
-                                Image(
-                                  image: AssetImage("assets/Delete.png"),
+                                IconButton(
+                                  icon: Image(
+                                    image: AssetImage("assets/Delete.png"),
+                                  ),
+                                  onPressed: () {
+                                    navigation
+                                        .changeScreen(MainScreen.routeName);
+                                  },
                                 ),
                                 SizedBox(
                                   width: 4,
@@ -237,8 +233,14 @@ class _RecordsState extends State<Records> {
                             padding: const EdgeInsets.all(30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Text("Отменить"),
+                              children: [
+                                TextButton(
+                                  child: Text("Отменить"),
+                                  onPressed: () {
+                                    navigation
+                                        .changeScreen(MainScreen.routeName);
+                                  },
+                                ),
                               ],
                             ),
                           ),
