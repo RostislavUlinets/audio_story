@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -38,6 +39,7 @@ class _RecordsState extends State<Records> {
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
+  String audioName = 'Аудиозапись 1';
   //StreamSubscription? _mRecordingDataSubscription;
 
   Future<void> _openRecorder() async {
@@ -151,19 +153,15 @@ class _RecordsState extends State<Records> {
                                   ),
                                   onPressed: () {
                                     Share.shareFiles([pathToSaveAudio]);
-                                    // File file = File(pathToSaveAudio);
-                                    // String uid =
-                                    //     FirebaseAuth.instance.currentUser!.uid;
-                                    // DatabaseService dataBase =
-                                    //     DatabaseService(uid);
-                                    // final destination = 'Sounds/$uid/audio.mp3';
-                                    // dataBase.uploadFile(destination, file);
                                   },
                                 ),
                                 IconButton(
-                                  onPressed: () async {  
-                                    await FlutterSoundHelper()
-        .convertFile(pathToSaveTemp, Codec.aacADTS, '/sdcard/Music/audio.mp3', Codec.mp3);
+                                  onPressed: () async {
+                                    await FlutterSoundHelper().convertFile(
+                                        pathToSaveTemp,
+                                        Codec.aacADTS,
+                                        '/sdcard/Music/audio.mp3',
+                                        Codec.mp3);
                                   },
                                   icon: Image(
                                     image:
@@ -182,16 +180,40 @@ class _RecordsState extends State<Records> {
                                   width: 4,
                                 ),
                                 TextButton(
-                                  onPressed: () {
-
-                                  },
-                                  child: Text("Сохранить"),
+                                  onPressed: () {},
+                                  child: TextButton(
+                                    onPressed: () {
+                                      File file = File(pathToSaveAudio);
+                                      String uid = FirebaseAuth
+                                          .instance.currentUser!.uid;
+                                      DatabaseService dataBase =
+                                          DatabaseService(uid);
+                                      final destination =
+                                          'Sounds/$uid/$audioName.mp3';
+                                      dataBase.uploadFile(destination, file);
+                                      navigation.changeScreen(Audio.routeName);
+                                    },
+                                    child: Text("Сохранить"),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                           const SizedBox(
                             height: 50,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 40.0),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              controller:
+                                  TextEditingController(text: audioName),
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
                           ),
                           const PlayerOnProgress(),
                         ],

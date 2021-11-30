@@ -35,7 +35,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
   int duration = 0;
-
+  
   @override
   void initState() {
     super.initState();
@@ -147,15 +147,8 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       alignment: Alignment.center,
       child: Column(
         children: [
-          const Text(
-            'Аудиозапись 1',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 80.0,bottom: 10),
+            padding: const EdgeInsets.only(top: 60.0,bottom: 10),
             child: SliderTheme(
               data: const SliderThemeData(
                 thumbColor: Colors.black,
@@ -182,7 +175,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-              top: 60.0,
+              top: 40.0,
               right: 40,
               left: 40,
             ),
