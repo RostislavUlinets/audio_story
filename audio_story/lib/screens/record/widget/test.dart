@@ -14,7 +14,7 @@ import 'package:path_provider/path_provider.dart';
  *
  */
 
-const int duration = 5000;
+
 const int tSampleRate = 44000;
 
 ///
@@ -34,6 +34,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
+  int duration = 0;
 
   @override
   void initState() {
@@ -71,6 +72,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   Future<void> init() async {
     await _mPlayer.openAudioSession();
+    duration = (await flutterSoundHelper.duration('/sdcard/Download/audio.mp3'))!.inMilliseconds;
     await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
       setPos(e.position.inMilliseconds);
@@ -134,6 +136,8 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           };
   }
 
+  format(Duration d) => d.toString().split('.').first.padLeft(8, "0"); 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -151,7 +155,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 80.0),
+            padding: const EdgeInsets.only(top: 80.0,bottom: 10),
             child: SliderTheme(
               data: const SliderThemeData(
                 thumbColor: Colors.black,
@@ -167,6 +171,14 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                 //divisions: 100
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [        
+              Text("${format(Duration(milliseconds: pos))}"),
+              Text("${format(Duration(milliseconds: duration))}"),
+            ],
+            
           ),
           Padding(
             padding: const EdgeInsets.only(

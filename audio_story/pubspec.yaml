@@ -55,6 +55,9 @@ dependencies:
   #Permission
   permission_handler: ^7.0.0
 
+  #Social share
+  share: ^2.0.4
+
   #SoundPlayer
   #audioplayers: ^0.17.1
 

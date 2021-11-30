@@ -9,13 +9,15 @@ import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
+import 'widget/dialog.dart';
 import 'widget/test.dart';
 
 const int tSampleRate = 44000;
@@ -37,8 +39,6 @@ class _RecordsState extends State<Records> {
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
   //StreamSubscription? _mRecordingDataSubscription;
-  static String? _mPath;
-  late var tempDir;
 
   Future<void> _openRecorder() async {
     final status = await Permission.microphone.request();
@@ -150,32 +150,43 @@ class _RecordsState extends State<Records> {
                                     image: AssetImage("assets/Upload.png"),
                                   ),
                                   onPressed: () {
-                                    File file = File(pathToSaveAudio);
-                                    String uid =
-                                        FirebaseAuth.instance.currentUser!.uid;
-                                    DatabaseService dataBase =
-                                        DatabaseService(uid);
-                                    final destination = 'Sounds/$uid/audio.mp3';
-                                    dataBase.uploadFile(destination, file);
+                                    Share.shareFiles([pathToSaveAudio]);
+                                    // File file = File(pathToSaveAudio);
+                                    // String uid =
+                                    //     FirebaseAuth.instance.currentUser!.uid;
+                                    // DatabaseService dataBase =
+                                    //     DatabaseService(uid);
+                                    // final destination = 'Sounds/$uid/audio.mp3';
+                                    // dataBase.uploadFile(destination, file);
                                   },
                                 ),
-                                Image(
-                                  image:
-                                      AssetImage("assets/PaperDownload1.png"),
+                                IconButton(
+                                  onPressed: () async {  
+                                    await FlutterSoundHelper()
+        .convertFile(pathToSaveTemp, Codec.aacADTS, '/sdcard/Music/audio.mp3', Codec.mp3);
+                                  },
+                                  icon: Image(
+                                    image:
+                                        AssetImage("assets/PaperDownload1.png"),
+                                  ),
                                 ),
                                 IconButton(
                                   icon: Image(
                                     image: AssetImage("assets/Delete.png"),
                                   ),
                                   onPressed: () {
-                                    navigation
-                                        .changeScreen(MainScreen.routeName);
+                                    showAlertDialog(context);
                                   },
                                 ),
                                 SizedBox(
                                   width: 4,
                                 ),
-                                Text("Сохранить"),
+                                TextButton(
+                                  onPressed: () {
+
+                                  },
+                                  child: Text("Сохранить"),
+                                ),
                               ],
                             ),
                           ),
