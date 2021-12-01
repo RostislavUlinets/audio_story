@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService{
@@ -14,18 +15,15 @@ class DatabaseService{
   
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-  Future<CustomUser?> initUserData() async {
-    CustomUser? user = CustomUser(uid: uid,name: "User",phoneNumber: "");
+  Future<void> initUserData() async {
     var document = userCollection.doc(uid);
     document.get().then((doc) => {
       if(doc.exists){
         log("Document exist"),
-        user = CustomUser(uid: uid, name: doc.get('Name'), phoneNumber: doc.get('Phone number'))
       }else{
-        log("Creating new document"),
+        updateUserData('User',FirebaseAuth.instance.currentUser!.phoneNumber)
       }
     });
-    return user;
   }
 
   Future updateUserData(String name,String? phonenumber) async {

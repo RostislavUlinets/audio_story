@@ -159,6 +159,7 @@ class _ProfileState extends State<EditProfile> {
                         dataBase.updateUserPhoneNumber(
                             _phoneController.text.trim());
                       }
+                      Navigator.pop(context);
                     },
                     child: Text(
                       "Сохранить",

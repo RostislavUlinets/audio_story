@@ -1,14 +1,31 @@
+import 'dart:developer';
+
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/side_menu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'custompaint.dart';
 
 class Audio extends StatelessWidget {
-
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
+
+  Future<void> AudioListDB() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    ListResult result =
+        await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
+    List<String> url = [];
+    for (var i = 0; i < result.items.length; i++) {
+      url.add(await result.items[i].getDownloadURL());
+    }
+    log(result.items[0].name);
+    url.forEach((element) {
+      log('Found file $element');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +44,7 @@ class Audio extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     Builder(
+                    Builder(
                       builder: (ctx) => IconButton(
                         icon: const Icon(
                           Icons.menu,
@@ -47,10 +64,15 @@ class Audio extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
-                    const Icon(
-                      Icons.more_horiz,
-                      color: Colors.white,
-                      size: 36,
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_horiz,
+                        color: Colors.white,
+                        size: 36,
+                      ),
+                      onPressed: () {
+                        AudioListDB();
+                      },
                     ),
                   ],
                 ),
@@ -59,23 +81,22 @@ class Audio extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: Row(
-                    children:const  [
+                    children: const [
                       Text(
                         "20 аудио\n10:30 часов",
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ],
                   ),
-                  
                 ),
                 SizedBox(
                   width: 350,
                   height: 420,
-                  child: _buildListView(),
+                  child: ListWidget(),
                 )
-                
               ],
             ),
           ),
@@ -107,7 +128,7 @@ class CustomList extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(child: _buildListView()),
+              Expanded(child: ListWidget()),
             ],
           ),
         ),
@@ -163,4 +184,58 @@ ListView _buildListView() {
       );
     },
   );
+}
+
+class ListWidget extends StatefulWidget {
+  ListWidget({Key? key}) : super(key: key);
+
+  @override
+  _ListWidgetState createState() => _ListWidgetState();
+}
+
+class _ListWidgetState extends State<ListWidget> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  late final ListResult result;
+  late final int count;
+
+  @override
+  Future<void> initState() async {
+    super.initState();
+    result = await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: result.items.length,
+      itemBuilder: (_, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          child: Container(
+            child: const ListTile(
+              title: Text(
+                "Малышь Кокки 1",
+                style: TextStyle(color: Color(0xFF3A3A55)),
+              ),
+              subtitle: Text(
+                "30 минут",
+                style: TextStyle(color: Color(0x803A3A55)),
+              ),
+              leading: Image(
+                image: AssetImage("assets/Play.png"),
+              ),
+              trailing: Icon(Icons.more_horiz),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(75),
+              border: Border.all(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }

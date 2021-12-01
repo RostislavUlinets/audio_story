@@ -39,7 +39,7 @@ class _RecordsState extends State<Records> {
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
-  String audioName = 'Аудиозапись 1';
+  final audioName = TextEditingController(text: 'Аудиозапись 1');
   //StreamSubscription? _mRecordingDataSubscription;
 
   Future<void> _openRecorder() async {
@@ -99,6 +99,14 @@ class _RecordsState extends State<Records> {
         : () {
             stopRecorder().then((value) => setState(() {}));
           };
+  }
+
+  Future<void> saveAudio() async {
+    File file = File(pathToSaveAudio);
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DatabaseService dataBase = DatabaseService(uid);
+    final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
+    dataBase.uploadFile(destination, file);
   }
 
   @override
@@ -180,19 +188,12 @@ class _RecordsState extends State<Records> {
                                   width: 4,
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    saveAudio();
+                                    navigation.changeScreen(Audio.routeName);
+                                  },
                                   child: TextButton(
-                                    onPressed: () {
-                                      File file = File(pathToSaveAudio);
-                                      String uid = FirebaseAuth
-                                          .instance.currentUser!.uid;
-                                      DatabaseService dataBase =
-                                          DatabaseService(uid);
-                                      final destination =
-                                          'Sounds/$uid/$audioName.mp3';
-                                      dataBase.uploadFile(destination, file);
-                                      navigation.changeScreen(Audio.routeName);
-                                    },
+                                    onPressed: () {},
                                     child: Text("Сохранить"),
                                   ),
                                 ),
@@ -207,8 +208,7 @@ class _RecordsState extends State<Records> {
                                 const EdgeInsets.symmetric(horizontal: 40.0),
                             child: TextField(
                               textAlign: TextAlign.center,
-                              controller:
-                                  TextEditingController(text: audioName),
+                              controller: audioName,
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.normal,
