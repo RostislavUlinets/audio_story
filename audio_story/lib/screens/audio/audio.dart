@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,12 +8,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'custompaint.dart';
+import 'widget/player.dart';
 
 class Audio extends StatelessWidget {
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
-
   Future<void> AudioListDB() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     ListResult result =
@@ -194,36 +195,59 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  late final ListResult result;
-  late final int count;
+
+  List<String> url = [];
+  List<String> audioName = [];
+
+  Future<void> audioListDB() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    ListResult result =
+        await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
+
+    for (var i = 0; i < result.items.length; i++) {
+      url.add(await result.items[i].getDownloadURL());
+      List<String> temp =  result.items[i].name.split('_');
+      temp.removeLast();
+      audioName.add(temp.join('_'));
+    }
+    log(result.items[0].name);
+    url.forEach((element) {
+      log('Found file $element');
+    });
+    setState(() {});
+  }
 
   @override
-  Future<void> initState() async {
+  initState() {
     super.initState();
-    result = await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
-    setState(() {});
+    audioListDB();
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: result.items.length,
+      itemCount: audioName.length,
       itemBuilder: (_, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
-            child: const ListTile(
+            child: ListTile(
               title: Text(
-                "Малышь Кокки 1",
+                audioName[index],
                 style: TextStyle(color: Color(0xFF3A3A55)),
               ),
               subtitle: Text(
                 "30 минут",
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
-              leading: Image(
-                image: AssetImage("assets/Play.png"),
+              leading: IconButton(
+                icon: Image(
+                  image: AssetImage("assets/Play.png"),
+                ), onPressed: () {  
+                  const PlayerOnProgress();
+                },
+                
               ),
               trailing: Icon(Icons.more_horiz),
             ),
