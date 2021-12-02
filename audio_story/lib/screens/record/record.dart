@@ -192,10 +192,7 @@ class _RecordsState extends State<Records> {
                                     saveAudio();
                                     navigation.changeScreen(Audio.routeName);
                                   },
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text("Сохранить"),
-                                  ),
+                                  child: Text("Сохранить"),
                                 ),
                               ],
                             ),

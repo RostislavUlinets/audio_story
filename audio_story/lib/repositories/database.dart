@@ -14,12 +14,14 @@ class DatabaseService{
   DatabaseService(this.uid);
   
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+  static ListResult? audioList;
 
   Future<void> initUserData() async {
     var document = userCollection.doc(uid);
-    document.get().then((doc) => {
+    document.get().then((doc) async => {
       if(doc.exists){
         log("Document exist"),
+        audioList = await FirebaseStorage.instance.ref('Sounds/$uid/').listAll()
       }else{
         updateUserData('User',FirebaseAuth.instance.currentUser!.phoneNumber)
       }
@@ -74,5 +76,9 @@ class DatabaseService{
     } on FirebaseException {
       return null;
     }
+  }
+
+  ListResult? getAudioList(){
+    return audioList;
   }
 }
