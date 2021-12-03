@@ -14,6 +14,7 @@ class Audio extends StatelessWidget {
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
+  
   Future<void> AudioListDB() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     ListResult result =
@@ -195,7 +196,6 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
-
   List<String> url = [];
   List<String> audioName = [];
 
@@ -206,7 +206,7 @@ class _ListWidgetState extends State<ListWidget> {
 
     for (var i = 0; i < result.items.length; i++) {
       url.add(await result.items[i].getDownloadURL());
-      List<String> temp =  result.items[i].name.split('_');
+      List<String> temp = result.items[i].name.split('_');
       temp.removeLast();
       audioName.add(temp.join('_'));
     }
@@ -221,7 +221,6 @@ class _ListWidgetState extends State<ListWidget> {
   initState() {
     super.initState();
     audioListDB();
-    
   }
 
   @override
@@ -243,11 +242,12 @@ class _ListWidgetState extends State<ListWidget> {
               ),
               leading: IconButton(
                 icon: Image(
-                  image: AssetImage("assets/Play.png"),
-                ), onPressed: () {  
-                  const PlayerOnProgress();
-                },
-                
+                  image: AssetImage("assets/Play.png"),               
+                ), onPressed: () {
+                Scaffold
+                    .of(context)
+                    .showBottomSheet((context) => PlayerOnProgress(url: url[index],name: audioName[index],));
+              },
               ),
               trailing: Icon(Icons.more_horiz),
             ),

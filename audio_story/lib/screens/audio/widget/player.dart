@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -9,20 +10,25 @@ const int tSampleRate = 44000;
 typedef Fn = void Function();
 
 class PlayerOnProgress extends StatefulWidget {
-  const PlayerOnProgress({Key? key}) : super(key: key);
+  final String url, name;
+
+  const PlayerOnProgress({Key? key, required this.url, required this.name})
+      : super(key: key);
 
   @override
-  _PlayerOnProgressState createState() => _PlayerOnProgressState();
+  _PlayerOnProgressState createState() => _PlayerOnProgressState(url, name);
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
+  _PlayerOnProgressState(this.url, this.name);
+
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
   int duration = 0;
-  String url = "https://firebasestorage.googleapis.com/v0/b/audiostorysl.appspot.com/o/Sounds%2FvlzG8jhQYWVx7dVkeiMdLrzbYpp1%2FMyAudio_2021-12-01%2011%3A58%3A19.078318.mp3?alt=media&token=12721916-3e8b-488c-b3b5-b29a2d339122";
-  
+  final String url, name;
+
   @override
   void initState() {
     super.initState();
@@ -47,13 +53,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       _mPlayerSubscription = null;
     }
   }
-
-  Future<String> _getTempPath(String path) async {
-    var tempDir = await getTemporaryDirectory();
-    var tempPath = tempDir.path;
-    return tempPath + '/' + path;
-  }
-
+  
   Future<void> init() async {
     await _mPlayer.openAudioSession();
     duration = (await flutterSoundHelper.duration(url))!.inMilliseconds;
@@ -105,60 +105,89 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           };
   }
 
-  format(Duration d) => d.toString().split('.').first.padLeft(8, "0"); 
+  format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(3),
-      padding: const EdgeInsets.all(3),
-      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color(0xFF6C689F),
+            Color(0xFF8C84E2),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(90),
+      ),
+      height: 75,
       alignment: Alignment.center,
-      child: Column(
+      child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 60.0,bottom: 10),
-            child: SliderTheme(
-              data: const SliderThemeData(
-                thumbColor: Colors.black,
-                inactiveTrackColor: Colors.black,
-                activeTrackColor: Colors.black,
-              ),
-              child: Slider(
-                value: pos + 0.0,
-                min: 0.0,
-                max: duration + 0.0,
-                onChanged: seek,
-                divisions: 100,
-                //divisions: 100
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [        
-              Text("${format(Duration(milliseconds: pos))}"),
-              Text("${format(Duration(milliseconds: duration))}"),
-            ],
-            
+          IconButton(
+            onPressed: getPlaybackFn(_mPlayer),
+            icon: _mPlayer.isPlaying
+                ? Image.asset(
+                    'assets/Pause.png',
+                    color: Colors.white,
+                  )
+                : Image.asset(
+                    'assets/PlayRec.png',
+                    color: Colors.white,
+                  ),
+            iconSize: 64,
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 40.0,
-              right: 40,
-              left: 40,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: getPlaybackFn(_mPlayer),
-                  icon: _mPlayer.isPlaying
-                      ? Image.asset('assets/PlayRec.png')
-                      : Image.asset('assets/PlayRec.png'),
-                  iconSize: 124,
-                ),
-              ],
+            padding: const EdgeInsets.all(5.0),
+            child: SizedBox(
+              width: 250,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    child: SliderTheme(
+                      data: const SliderThemeData(
+                        thumbColor: Colors.white,
+                        inactiveTrackColor: Colors.white,
+                        activeTrackColor: Colors.white,
+                      ),
+                      child: Slider(
+                        value: pos + 0.0,
+                        min: 0.0,
+                        max: duration + 0.0,
+                        onChanged: seek,
+                        divisions: 100,
+                        //divisions: 100
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${format(Duration(milliseconds: pos))}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        "${format(Duration(milliseconds: duration))}",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
