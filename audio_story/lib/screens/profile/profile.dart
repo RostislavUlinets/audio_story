@@ -32,6 +32,7 @@ class _ProfileState extends State<Profile> {
   final AuthService _auth = AuthService.instance;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+  
 
   String phoneNumber = "", userName = "USER";
 

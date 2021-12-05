@@ -13,6 +13,8 @@ class Category extends StatelessWidget {
 
   const Category({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +74,7 @@ class Category extends StatelessWidget {
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: buildListView(),
+                    child: PlayList(),
                   ),
                   height: 580,
                   color: const Color(0x0071A59F),

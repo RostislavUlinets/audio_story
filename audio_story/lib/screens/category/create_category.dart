@@ -1,10 +1,40 @@
+import 'dart:developer';
+import 'dart:io';
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class CreateCategory extends StatelessWidget {
+File? file, image = null;
+
+class CreateCategory extends StatefulWidget {
   const CreateCategory({Key? key}) : super(key: key);
+
+  @override
+  State<CreateCategory> createState() => _CreateCategoryState();
+}
+
+class _CreateCategoryState extends State<CreateCategory> {
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+
+    final path = result.files.single.path;
+
+    file = File(path!);
+
+    final bytes = await File(path).readAsBytes();
+    final db =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+    db.setBase64(bytes.toString());
+    file!.writeAsBytesSync(bytes);
+    image = file;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,19 +94,34 @@ class CreateCategory extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: const BorderRadius.all(Radius.circular(30)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                        ),
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      selectFile();
+                    },
+                    child: Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        image: image != null
+                            ? DecorationImage(
+                                image: FileImage(image!),
+                                fit: BoxFit.cover,
+                              )
+                            : DecorationImage(
+                                image: AssetImage('assets/story.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const Padding(

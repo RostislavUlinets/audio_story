@@ -60,14 +60,14 @@ class AuthService {
       verificationFailed: (FirebaseAuthException exception) {
         log(exception.toString());
       },
-      codeSent: (String verificationId, int? resendToken)  async {
+      codeSent: (String verificationId, int? resendToken) async {
         final code = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => CodeSent(),
             ));
         AuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: code);
+            verificationId: verificationId, smsCode: code);
 
         UserCredential result = await _auth.signInWithCredential(credential);
 
@@ -84,7 +84,7 @@ class AuthService {
         } else {
           log("Error");
         }
- /*     
+        /*     
         AuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: code);
 
