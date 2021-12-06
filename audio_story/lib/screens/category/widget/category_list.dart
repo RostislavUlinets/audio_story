@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:ffi';
+import 'dart:io';
 
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/card_info.dart';
@@ -23,13 +25,20 @@ class _PlayListState extends State<PlayList> {
 
   var sounds = [];
   String name = '';
+  Image? image = null;
 
   Future<void> getSaveList() async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
     sounds = ds.get('SaveList');
     name = sounds[0]['Name'];
+    String bytes = sounds[0]['Image'];
+  image = imageFromBase64String(bytes);
     setState(() {});
+  }
+
+  Image imageFromBase64String(String base64String) {
+    return Image.memory(base64Decode(base64String));
   }
 
   @override
@@ -93,15 +102,21 @@ class _PlayListState extends State<PlayList> {
                           ),
                         ),
                         decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: const AssetImage(
-                              "assets/story.jpg",
-                            ),
-                            colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.8),
-                                BlendMode.dstATop),
-                            fit: BoxFit.cover,
-                          ),
+                          image: image != null
+                              ? DecorationImage(
+                                  image: image!.image,
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black.withOpacity(0.8),
+                                      BlendMode.dstATop),
+                                )
+                              : DecorationImage(
+                                  image: AssetImage('assets/story.jpg'),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                      Colors.black.withOpacity(0.8),
+                                      BlendMode.dstATop),
+                                ),
                           color: Colors.black,
                         ),
                         height: 210,

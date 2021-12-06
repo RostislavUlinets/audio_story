@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:audio_story/models/user.dart';
@@ -92,7 +93,19 @@ class DatabaseService {
     temp = temp[0];
     temp.update('Image', (dynamic val) => val = image);
     log(temp.toString());
-    return await userCollection.doc(uid).set({
+    return await userCollection.doc(uid).update({
+      'SaveList': [temp],
+    });
+  }
+
+  Future uploadPlayList(String image,String name,String info) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    var temp = ds.get('SaveList');
+    temp = temp[0];
+    temp.update('Image', (dynamic val) => val = image);
+    temp.update('Name', (dynamic val) => val = name);
+    temp.update('Info', (dynamic val) => val = info);
+    return await userCollection.doc(uid).update({
       'SaveList': [temp],
     });
   }

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -18,23 +20,26 @@ class CreateCategory extends StatefulWidget {
 }
 
 class _CreateCategoryState extends State<CreateCategory> {
+  late final bytes;
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-
     if (result == null) return;
-
     final path = result.files.single.path;
-
     file = File(path!);
 
-    final bytes = await File(path).readAsBytes();
-    final db =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-    db.setBase64(bytes.toString());
-    file!.writeAsBytesSync(bytes);
+    final bytes = File(path).readAsBytesSync();
+
+    String img64 = base64Encode(bytes);
+
+    final db = DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+    db.setBase64(img64);
+    
     image = file;
     setState(() {});
   }
+
+  final _Name = TextEditingController(text: "Название");
+  final _Info = TextEditingController(text: "Описание");
 
   @override
   Widget build(BuildContext context) {
@@ -75,23 +80,29 @@ class _CreateCategoryState extends State<CreateCategory> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                      const Text(
-                        "Готово",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal),
+                       TextButton(
+                        onPressed: () {
+                          final db = DatabaseService(
+                              FirebaseAuth.instance.currentUser!.uid);
+                              db.uploadPlayList(bytes.toString(), _Name.text, _Info.text);
+                        },
+                        child: const Text(
+                          "Готово",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text(
-                      "Название",
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: TextField(
+                      readOnly: false,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 24),
+                      controller: _Name,
                     ),
                   ),
                   GestureDetector(
@@ -129,7 +140,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                     child: Text("Введите описание..."),
                   ),
                   TextField(
-                    controller: _infoController,
+                    controller: _Info,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: InputDecoration(
