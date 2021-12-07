@@ -66,7 +66,7 @@ class _PlayListState extends State<PlayList> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CardInfo()),
+                        MaterialPageRoute(builder: (context) => CardInfo(index: index,)),
                       );
                     },
                     child: ClipRRect(

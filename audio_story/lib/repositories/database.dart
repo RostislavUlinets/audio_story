@@ -127,7 +127,7 @@ class DatabaseService {
     var temp = ds.get('SaveList');
     temp.add(playLit);
     log(temp.toString());
-    await userCollection.doc(uid).set({
+    await userCollection.doc(uid).update({
       'SaveList': temp,
     });
   }

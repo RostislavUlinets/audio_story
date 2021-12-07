@@ -25,15 +25,15 @@ String audioName = '';
 String info = '';
 Image? image;
 
-Future<void> getSaveList() async {
+Future<void> getSaveList(int index) async {
   DocumentSnapshot ds =
       await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
   sounds = ds.get('SaveList');
-  name = sounds[0]['Name'];
-  info = sounds[0]['Info'];
-  url = sounds[0]['Sounds'][0]['URL'];
-  audioName = sounds[0]['Sounds'][0]['Name'];
-  String bytes = sounds[0]['Image'];
+  name = sounds[index]['Name'];
+  info = sounds[index]['Info'];
+  url = sounds[index]['Sounds'][0]['URL'];
+  audioName = sounds[index]['Sounds'][0]['Name'];
+  String bytes = sounds[index]['Image'];
   image = imageFromBase64String(bytes);
 }
 
@@ -43,17 +43,23 @@ Image imageFromBase64String(String base64String) {
 
 class CardInfo extends StatefulWidget {
   static const routeName = '/audio';
+  final int index;
 
-  const CardInfo({Key? key}) : super(key: key);
+  const CardInfo({Key? key,required this.index}) : super(key: key);
 
   @override
-  State<CardInfo> createState() => _CardInfoState();
+  State<CardInfo> createState() => _CardInfoState(index);
 }
 
 class _CardInfoState extends State<CardInfo> {
+  final int index;
+
+  _CardInfoState(this.index);
+
+
   @override
   void initState() {
-    getSaveList().then((value) => setState(() {}));
+    getSaveList(index).then((value) => setState(() {}));
     super.initState();
   }
 
@@ -101,10 +107,10 @@ class _CardInfoState extends State<CardInfo> {
                       ),
                     ],
                   ),
-                  const Padding(
+                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      "Сказка о малыше Кокки",
+                      name,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -168,89 +174,6 @@ class _CardInfoState extends State<CardInfo> {
   }
 }
 
-class CustomList extends StatelessWidget {
-  const CustomList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  children: const [
-                    Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
-                    Spacer(),
-                    Text("Открыть все", style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ),
-              Expanded(child: ListWidget()),
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF6F6F6),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 10,
-              blurRadius: 10,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        height: 400,
-      ),
-    );
-  }
-}
-
-ListView _buildListView() {
-  return ListView.builder(
-    itemCount: 10,
-    itemBuilder: (_, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Container(
-          child: ListTile(
-            title: Text(
-              "Малышь Кокки 1",
-              style: TextStyle(color: Color(0xFF3A3A55)),
-            ),
-            subtitle: Text(
-              "30 минут",
-              style: TextStyle(color: Color(0x803A3A55)),
-            ),
-            leading: Image(
-              image: AssetImage(
-                "assets/Play.png",
-              ),
-              color: CColors.green,
-            ),
-            trailing: Icon(Icons.more_horiz),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(75),
-            border: Border.all(
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
 class ListWidget extends StatefulWidget {
   ListWidget({Key? key}) : super(key: key);
 
@@ -261,7 +184,6 @@ class ListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ListWidget> {
   @override
   void initState() {
-    getSaveList();
     super.initState();
   }
 
