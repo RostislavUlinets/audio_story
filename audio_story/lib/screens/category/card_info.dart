@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:audio_story/Colors/colors.dart';
@@ -22,6 +23,7 @@ String name = '';
 String url = '';
 String audioName = '';
 String info = '';
+Image? image;
 
 Future<void> getSaveList() async {
   DocumentSnapshot ds =
@@ -31,6 +33,12 @@ Future<void> getSaveList() async {
   info = sounds[0]['Info'];
   url = sounds[0]['Sounds'][0]['URL'];
   audioName = sounds[0]['Sounds'][0]['Name'];
+  String bytes = sounds[0]['Image'];
+  image = imageFromBase64String(bytes);
+}
+
+Image imageFromBase64String(String base64String) {
+  return Image.memory(base64Decode(base64String));
 }
 
 class CardInfo extends StatefulWidget {
@@ -89,8 +97,7 @@ class _CardInfoState extends State<CardInfo> {
                           color: Colors.white,
                           size: 36,
                         ),
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                       ),
                     ],
                   ),
@@ -127,14 +134,15 @@ class _CardInfoState extends State<CardInfo> {
                         ),
                       ),
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            "assets/story.jpg",
-                          ),
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.7), BlendMode.dstATop),
-                          fit: BoxFit.cover,
-                        ),
+                        image: image != null
+                            ? DecorationImage(
+                                image: image!.image,
+                                fit: BoxFit.cover,
+                              )
+                            : DecorationImage(
+                                image: AssetImage('assets/story.jpg'),
+                                fit: BoxFit.cover,
+                              ),
                         color: Colors.black,
                       ),
                       height: 210,
@@ -214,7 +222,7 @@ ListView _buildListView() {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
-          child:  ListTile(
+          child: ListTile(
             title: Text(
               "Малышь Кокки 1",
               style: TextStyle(color: Color(0xFF3A3A55)),
@@ -224,7 +232,9 @@ ListView _buildListView() {
               style: TextStyle(color: Color(0x803A3A55)),
             ),
             leading: Image(
-              image: AssetImage("assets/Play.png",),
+              image: AssetImage(
+                "assets/Play.png",
+              ),
               color: CColors.green,
             ),
             trailing: Icon(Icons.more_horiz),
@@ -277,7 +287,6 @@ class _ListWidgetState extends State<ListWidget> {
                 icon: Image(
                   image: AssetImage("assets/Play.png"),
                   color: CColors.green,
-                  
                 ),
                 onPressed: () {
                   Scaffold.of(context)

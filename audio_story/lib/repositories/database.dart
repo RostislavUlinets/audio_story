@@ -87,26 +87,48 @@ class DatabaseService {
     return audioList;
   }
 
-  Future setBase64(String image) async {
-    DocumentSnapshot ds = await userCollection.doc(uid).get();
-    var temp = ds.get('SaveList');
-    temp = temp[0];
-    temp.update('Image', (dynamic val) => val = image);
-    log(temp.toString());
-    return await userCollection.doc(uid).update({
-      'SaveList': [temp],
-    });
-  }
+  // Future<void> setBase64(String image) async {
+  //   DocumentSnapshot ds = await userCollection.doc(uid).get();
+  //   var temp = ds.get('SaveList');
+  //   temp = temp[0];
+  //   temp.update('Image', (dynamic val) => val = image);
+  //   log(temp.toString());
+  //   //TODO: deleted return
+  //   await userCollection.doc(uid).update({
+  //     'SaveList': [temp],
+  //   });
+  // }
 
-  Future uploadPlayList(String image,String name,String info) async {
+  Future<void> updatePlayList(String image,String name,String info) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     var temp = ds.get('SaveList');
     temp = temp[0];
     temp.update('Image', (dynamic val) => val = image);
     temp.update('Name', (dynamic val) => val = name);
     temp.update('Info', (dynamic val) => val = info);
-    return await userCollection.doc(uid).update({
+    await userCollection.doc(uid).update({
       'SaveList': [temp],
+    });
+  }
+
+  Future<void> createPlayList(String image,String name,String info) async {
+    var playLit = {
+      'Image' : image,
+      'Name' : name,
+      'Info' : info,
+      'Sounds' : [
+        {
+          'Name' : "AudioName",
+          'URL' : "https://firebasestorage.googleapis.com/v0/b/audiostorysl.appspot.com/o/Sounds%2FvlzG8jhQYWVx7dVkeiMdLrzbYpp1%2FSecond_Test_On_Split_2021-12-02%2020%3A39%3A51.904729.mp3?alt=media&token=bfc3e4e6-d206-4b2c-97c9-404129a037f2"
+        }
+      ]
+    };
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    var temp = ds.get('SaveList');
+    temp.add(playLit);
+    log(temp.toString());
+    await userCollection.doc(uid).set({
+      'SaveList': temp,
     });
   }
 }

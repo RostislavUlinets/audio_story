@@ -10,7 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-File? file, image = null;
+
 
 class CreateCategory extends StatefulWidget {
   const CreateCategory({Key? key}) : super(key: key);
@@ -20,30 +20,13 @@ class CreateCategory extends StatefulWidget {
 }
 
 class _CreateCategoryState extends State<CreateCategory> {
-  late final bytes;
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if (result == null) return;
-    final path = result.files.single.path;
-    file = File(path!);
-
-    final bytes = File(path).readAsBytesSync();
-
-    String img64 = base64Encode(bytes);
-
-    final db = DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-    db.setBase64(img64);
-    
-    image = file;
-    setState(() {});
-  }
-
+  File? image = null;
+  late final String img64;
   final _Name = TextEditingController(text: "Название");
   final _Info = TextEditingController(text: "Описание");
 
   @override
   Widget build(BuildContext context) {
-    var _infoController = TextEditingController();
     return Scaffold(
       bottomNavigationBar: const CustomNavigationBar(1),
       body: SingleChildScrollView(
@@ -80,11 +63,13 @@ class _CreateCategoryState extends State<CreateCategory> {
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
-                       TextButton(
+                      TextButton(
                         onPressed: () {
                           final db = DatabaseService(
                               FirebaseAuth.instance.currentUser!.uid);
-                              db.uploadPlayList(bytes.toString(), _Name.text, _Info.text);
+                          db.updatePlayList(img64, _Name.text, _Info.text);
+                          db.createPlayList(img64, _Name.text, _Info.text);
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           "Готово",
@@ -173,5 +158,19 @@ class _CreateCategoryState extends State<CreateCategory> {
         ),
       ),
     );
+  }
+
+  //FilePicker + base64 Convertor
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    final path = result.files.single.path;
+    final bytes = File(path!).readAsBytesSync();
+    img64 = base64Encode(bytes);
+
+    setState(() {
+      image = File(path);
+    });
   }
 }

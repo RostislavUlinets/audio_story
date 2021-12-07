@@ -27,14 +27,10 @@ class _PlayListState extends State<PlayList> {
   String name = '';
   Image? image = null;
 
-  Future<void> getSaveList() async {
+  Future getSaveList() async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-    sounds = ds.get('SaveList');
-    name = sounds[0]['Name'];
-    String bytes = sounds[0]['Image'];
-  image = imageFromBase64String(bytes);
-    setState(() {});
+    return ds.get('SaveList');
   }
 
   Image imageFromBase64String(String base64String) {
@@ -43,15 +39,22 @@ class _PlayListState extends State<PlayList> {
 
   @override
   void initState() {
-    getSaveList();
+    getSaveList().then((value) => setState(() {
+          sounds = value;
+        }));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 2,
+      itemCount: sounds.isNotEmpty ? sounds.length : 0,
       itemBuilder: (_, index) {
+        if (sounds.isNotEmpty) {
+          name = sounds[index]['Name'];
+          String bytes = sounds[index]['Image'];
+          image = imageFromBase64String(bytes);
+        }
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Column(
@@ -184,122 +187,122 @@ class _PlayListState extends State<PlayList> {
   }
 }
 
-ListView buildListView() {
-  return ListView.builder(
-    itemCount: 10,
-    itemBuilder: (_, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          SizedBox(
-                            child: Text(
-                              "Сказка \nо малыше Кокки",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                height: 1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            width: 90,
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            child: Text(
-                              "n аудио\n1:30 часа",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                            width: 70,
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage(
-                          "assets/story.jpg",
-                        ),
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                        fit: BoxFit.cover,
-                      ),
-                      color: Colors.black,
-                    ),
-                    height: 210,
-                    width: 180,
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          SizedBox(
-                            child: Text(
-                              "Сказка \nо малыше Кокки",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                height: 1,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            width: 90,
-                          ),
-                          Spacer(),
-                          SizedBox(
-                            child: Text(
-                              "n аудио\n1:30 часа",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                            width: 70,
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage(
-                          "assets/seconStory.jpg",
-                        ),
-                        colorFilter: ColorFilter.mode(
-                            Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                        fit: BoxFit.cover,
-                      ),
-                      color: Colors.black,
-                    ),
-                    height: 210,
-                    width: 180,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+// ListView buildListView() {
+//   return ListView.builder(
+//     itemCount: 10,
+//     itemBuilder: (_, index) {
+//       return Padding(
+//         padding: const EdgeInsets.symmetric(vertical: 5.0),
+//         child: Column(
+//           children: [
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 ClipRRect(
+//                   borderRadius: BorderRadius.circular(20),
+//                   child: Container(
+//                     alignment: Alignment.bottomRight,
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(10.0),
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: const [
+//                           SizedBox(
+//                             child: Text(
+//                               "Сказка \nо малыше Кокки",
+//                               style: TextStyle(
+//                                 fontSize: 14,
+//                                 color: Colors.white,
+//                                 height: 1,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                             width: 90,
+//                           ),
+//                           Spacer(),
+//                           SizedBox(
+//                             child: Text(
+//                               "n аудио\n1:30 часа",
+//                               style: TextStyle(
+//                                 fontSize: 13,
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                             width: 70,
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     decoration: BoxDecoration(
+//                       image: DecorationImage(
+//                         image: const AssetImage(
+//                           "assets/story.jpg",
+//                         ),
+//                         colorFilter: ColorFilter.mode(
+//                             Colors.black.withOpacity(0.8), BlendMode.dstATop),
+//                         fit: BoxFit.cover,
+//                       ),
+//                       color: Colors.black,
+//                     ),
+//                     height: 210,
+//                     width: 180,
+//                   ),
+//                 ),
+//                 ClipRRect(
+//                   borderRadius: BorderRadius.circular(20),
+//                   child: Container(
+//                     alignment: Alignment.bottomRight,
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(10.0),
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.end,
+//                         children: const [
+//                           SizedBox(
+//                             child: Text(
+//                               "Сказка \nо малыше Кокки",
+//                               style: TextStyle(
+//                                 fontSize: 14,
+//                                 color: Colors.white,
+//                                 height: 1,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                             width: 90,
+//                           ),
+//                           Spacer(),
+//                           SizedBox(
+//                             child: Text(
+//                               "n аудио\n1:30 часа",
+//                               style: TextStyle(
+//                                 fontSize: 13,
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                             width: 70,
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                     decoration: BoxDecoration(
+//                       image: DecorationImage(
+//                         image: const AssetImage(
+//                           "assets/seconStory.jpg",
+//                         ),
+//                         colorFilter: ColorFilter.mode(
+//                             Colors.black.withOpacity(0.8), BlendMode.dstATop),
+//                         fit: BoxFit.cover,
+//                       ),
+//                       color: Colors.black,
+//                     ),
+//                     height: 210,
+//                     width: 180,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       );
+//     },
+//   );
+// }
