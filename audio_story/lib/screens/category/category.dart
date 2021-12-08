@@ -1,19 +1,18 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/category/create_category.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'widget/category_list.dart';
 
 class Category extends StatelessWidget {
-
   static const routeName = '/category';
 
   const Category({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +40,11 @@ class Category extends StatelessWidget {
                         height: 36,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CreateCategory()),
-                        );
-                        //Scaffold.of(context).openDrawer();
+                        NavigationController navigation =
+                            Provider.of<NavigationController>(context,
+                                listen: false);
+                        navigation.changeScreen(CreateCategory.routeName);
+                      //Scaffold.of(context).openDrawer();
                       },
                     ),
                     const Text(

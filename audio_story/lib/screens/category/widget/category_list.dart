@@ -127,56 +127,6 @@ class _PlayListState extends State<PlayList> {
                       ),
                     ),
                   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            SizedBox(
-                              child: Text(
-                                "Сказка \nо малыше Кокки",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  height: 1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              width: 90,
-                            ),
-                            Spacer(),
-                            SizedBox(
-                              child: Text(
-                                "n аудио\n1:30 часа",
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              width: 70,
-                            ),
-                          ],
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            "assets/seconStory.jpg",
-                          ),
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.black,
-                      ),
-                      height: 210,
-                      width: 180,
-                    ),
-                  ),
                 ],
               ),
             ],
