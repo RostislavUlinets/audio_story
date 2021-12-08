@@ -4,15 +4,16 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/category/add_audio.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CreateCategory extends StatefulWidget {
+  static const routeName = '/createCategory';
+
   const CreateCategory({Key? key}) : super(key: key);
 
   @override
@@ -136,9 +137,16 @@ class _CreateCategoryState extends State<CreateCategory> {
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 70.0),
+                      padding: EdgeInsets.only(top: 70.0),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final SoundList = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddAudio(),
+                              ));
+                          getSoundsList(SoundList);
+                        },
                         child: Text(
                           "Добавить аудиофайл",
                           style: TextStyle(
@@ -161,6 +169,9 @@ class _CreateCategoryState extends State<CreateCategory> {
   }
 
   //FilePicker + base64 Convertor
+  Future getSoundsList(var SoundList) async {
+    log(SoundList);
+  }
 
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
