@@ -144,8 +144,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const AddAudio(),
-                              ));
-                          getSoundsList(SoundList);
+                              )).then((value) => getSoundsList(value));                    
                         },
                         child: Text(
                           "Добавить аудиофайл",
