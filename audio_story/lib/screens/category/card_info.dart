@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/widget/player.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -9,8 +9,8 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -47,7 +47,7 @@ class CardInfo extends StatefulWidget {
   static const routeName = '/audio';
   final int index;
 
-  const CardInfo({Key? key,required this.index}) : super(key: key);
+  const CardInfo({Key? key, required this.index}) : super(key: key);
 
   @override
   State<CardInfo> createState() => _CardInfoState(index);
@@ -58,7 +58,6 @@ class _CardInfoState extends State<CardInfo> {
 
   _CardInfoState(this.index);
 
-
   @override
   void initState() {
     getSaveList(index).then((value) => setState(() {}));
@@ -68,11 +67,12 @@ class _CardInfoState extends State<CardInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideMenu(),
       extendBody: true,
+      drawer: const SideMenu(),
+      bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          MyCustomPaint(color: CColors.green),
+          const MyCustomPaint(color: CColors.green),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
@@ -99,21 +99,44 @@ class _CardInfoState extends State<CardInfo> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.more_horiz,
-                          color: Colors.white,
-                          size: 36,
+                      PopupMenuButton(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
                         ),
-                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.more_horiz,
+                          size: 32,
+                          color: Colors.white,
+                        ),
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            child: Text("Редактировать"),
+                            value: 1,
+                          ),
+                          const PopupMenuItem(
+                            child: Text("Выбрать несколько"),
+                            value: 2,
+                          ),
+                          PopupMenuItem(
+                            child: const Text("Удалить подборку"),
+                            onTap: () => _deletePlayList(context, index),
+                            value: 3,
+                          ),
+                          const PopupMenuItem(
+                            child: Text("Поделиться"),
+                            value: 4,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
                       name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
                       ),
@@ -127,7 +150,7 @@ class _CardInfoState extends State<CardInfo> {
                         padding: const EdgeInsets.all(15.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                          children: const [
                             SizedBox(
                               child: Text(
                                 "n аудио\n1:30 часа",
@@ -147,7 +170,7 @@ class _CardInfoState extends State<CardInfo> {
                                 image: image!.image,
                                 fit: BoxFit.cover,
                               )
-                            : DecorationImage(
+                            : const DecorationImage(
                                 image: AssetImage('assets/story.jpg'),
                                 fit: BoxFit.cover,
                               ),
@@ -161,9 +184,9 @@ class _CardInfoState extends State<CardInfo> {
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Text(info),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 350,
-                    height: 250,
+                    height: 230,
                     child: ListWidget(),
                   )
                 ],
@@ -177,7 +200,7 @@ class _CardInfoState extends State<CardInfo> {
 }
 
 class ListWidget extends StatefulWidget {
-  ListWidget({Key? key}) : super(key: key);
+  const ListWidget({Key? key}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
@@ -189,26 +212,27 @@ class _ListWidgetState extends State<ListWidget> {
     super.initState();
   }
 
+//TODO: FIX NAVIGATION.POP
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: audioList.isNotEmpty ? audioList.length : 0,
       itemBuilder: (_, index) {
-        return Padding(        
+        return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
             child: ListTile(
               title: Text(
                 audioList[index]['Name'],
-                style: TextStyle(color: Color(0xFF3A3A55)),
+                style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 "30 минут",
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
               leading: IconButton(
                 iconSize: 32,
-                icon: Image(
+                icon: const Image(
                   image: AssetImage("assets/Play.png"),
                   color: CColors.green,
                 ),
@@ -220,7 +244,7 @@ class _ListWidgetState extends State<ListWidget> {
                           ));
                 },
               ),
-              trailing: Icon(Icons.more_horiz),
+              trailing: const Icon(Icons.more_horiz),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),
@@ -233,4 +257,96 @@ class _ListWidgetState extends State<ListWidget> {
       },
     );
   }
+}
+
+void _deletePlayList(BuildContext context, int index) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: const Text(
+      "Нет",
+      style: TextStyle(color: CColors.purpule),
+    ),
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+          side: const BorderSide(color: CColors.purpule),
+        ),
+      ),
+    ),
+    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+  );
+
+  Widget continueButton = TextButton(
+    child: const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      child: Text(
+        "Удалить",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+    style: ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+      ),
+      backgroundColor: MaterialStateProperty.all(CColors.purpule),
+    ),
+    onPressed: () {
+      dataBase.deletePlayList(index);
+    },
+  );
+
+  // set up the AlertDialog
+  Widget alert = AlertDialog(
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+    content: SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text("Подтверждаете удаление?",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CColors.red)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Ваш файл перенесется в папку “Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
+                style: TextStyle(
+                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35.0),
+              child: Row(
+                children: [
+                  continueButton,
+                  const Spacer(),
+                  cancelButton,
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      height: 180,
+      width: 350,
+    ),
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
