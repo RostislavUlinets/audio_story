@@ -19,6 +19,7 @@ final CollectionReference userCollection =
     FirebaseFirestore.instance.collection('users');
 
 var sounds = [];
+var audioList = [];
 String name = '';
 String url = '';
 String audioName = '';
@@ -33,6 +34,7 @@ Future<void> getSaveList(int index) async {
   info = sounds[index]['Info'];
   url = sounds[index]['Sounds'][0]['URL'];
   audioName = sounds[index]['Sounds'][0]['Name'];
+  audioList = sounds[index]['Sounds'];
   String bytes = sounds[index]['Image'];
   image = imageFromBase64String(bytes);
 }
@@ -161,7 +163,7 @@ class _CardInfoState extends State<CardInfo> {
                   ),
                   SizedBox(
                     width: 350,
-                    height: 200,
+                    height: 250,
                     child: ListWidget(),
                   )
                 ],
@@ -190,14 +192,14 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 1,
+      itemCount: audioList.isNotEmpty ? audioList.length : 0,
       itemBuilder: (_, index) {
-        return Padding(
+        return Padding(        
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
             child: ListTile(
               title: Text(
-                name,
+                audioList[index]['Name'],
                 style: TextStyle(color: Color(0xFF3A3A55)),
               ),
               subtitle: Text(
@@ -213,8 +215,8 @@ class _ListWidgetState extends State<ListWidget> {
                 onPressed: () {
                   Scaffold.of(context)
                       .showBottomSheet((context) => PlayerOnProgress(
-                            url: url.toString(),
-                            name: audioName.toString(),
+                            url: audioList[index]['URL'],
+                            name: audioList[index]['Name'],
                           ));
                 },
               ),

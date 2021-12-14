@@ -44,7 +44,7 @@ class Category extends StatelessWidget {
                             Provider.of<NavigationController>(context,
                                 listen: false);
                         navigation.changeScreen(CreateCategory.routeName);
-                      //Scaffold.of(context).openDrawer();
+                        //Scaffold.of(context).openDrawer();
                       },
                     ),
                     const Text(

@@ -46,95 +46,184 @@ class _PlayListState extends State<PlayList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: sounds.isNotEmpty ? sounds.length : 0,
-      itemBuilder: (_, index) {
-        if (sounds.isNotEmpty) {
-          name = sounds[index]['Name'];
-          String bytes = sounds[index]['Image'];
-          image = imageFromBase64String(bytes);
-        }
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CardInfo(index: index,)),
-                      );
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                child: Text(
-                                  name,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    height: 1,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                width: 90,
+    return GridView.count(
+      crossAxisCount: 2,
+      children: List.generate(
+        sounds.isNotEmpty ? sounds.length : 0,
+        (index) {
+          if (sounds.isNotEmpty) {
+            name = sounds[index]['Name'];
+            String bytes = sounds[index]['Image'];
+            image = imageFromBase64String(bytes);
+          }
+          return SizedBox(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CardInfo(
+                              index: index,
+                            )),
+                  );
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:5.0,vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            child: Text(
+                              name,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                height: 1,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Spacer(),
-                              SizedBox(
-                                child: Text(
-                                  "n аудио\n1:30 часа",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                width: 70,
-                              ),
-                            ],
+                            ),
+                            width: 90,
                           ),
-                        ),
-                        decoration: BoxDecoration(
-                          image: image != null
-                              ? DecorationImage(
-                                  image: image!.image,
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black.withOpacity(0.8),
-                                      BlendMode.dstATop),
-                                )
-                              : DecorationImage(
-                                  image: AssetImage('assets/story.jpg'),
-                                  fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black.withOpacity(0.8),
-                                      BlendMode.dstATop),
-                                ),
-                          color: Colors.black,
-                        ),
-                        height: 210,
-                        width: 180,
+                          Spacer(),
+                          const SizedBox(
+                            child: Text(
+                              "n аудио\n1:30 часа",
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.white,
+                              ),
+                            ),
+                            width: 70,
+                          ),
+                        ],
                       ),
                     ),
+                    decoration: BoxDecoration(
+                      image: image != null
+                          ? DecorationImage(
+                              image: image!.image,
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.8),
+                                  BlendMode.dstATop),
+                            )
+                          : DecorationImage(
+                              image: AssetImage('assets/story.jpg'),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.8),
+                                  BlendMode.dstATop),
+                            ),
+                      color: Colors.black,
+                    ),
                   ),
-                ],
+                ),
               ),
-            ],
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }
+
+  // _listGenerator() {
+  //   return List.generate(
+  //     sounds.isNotEmpty ? sounds.length : 0,
+  //     (index) {
+  //       if (sounds.isNotEmpty) {
+  //         name = sounds[index]['Name'];
+  //         String bytes = sounds[index]['Image'];
+  //         image = imageFromBase64String(bytes);
+  //       }
+  //       return Padding(
+  //         padding: const EdgeInsets.symmetric(vertical: 5.0),
+  //         child: Column(
+  //           children: [
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 GestureDetector(
+  //                   onTap: () {
+  //                     Navigator.push(
+  //                       context,
+  //                       MaterialPageRoute(
+  //                           builder: (context) => CardInfo(
+  //                                 index: index,
+  //                               )),
+  //                     );
+  //                   },
+  //                   child: ClipRRect(
+  //                     borderRadius: BorderRadius.circular(20),
+  //                     child: Container(
+  //                       alignment: Alignment.bottomRight,
+  //                       child: Padding(
+  //                         padding: const EdgeInsets.all(10.0),
+  //                         child: Row(
+  //                           mainAxisAlignment: MainAxisAlignment.end,
+  //                           children: [
+  //                             SizedBox(
+  //                               child: Text(
+  //                                 name,
+  //                                 style: TextStyle(
+  //                                   fontSize: 14,
+  //                                   color: Colors.white,
+  //                                   height: 1,
+  //                                   fontWeight: FontWeight.bold,
+  //                                 ),
+  //                               ),
+  //                               width: 90,
+  //                             ),
+  //                             Spacer(),
+  //                             SizedBox(
+  //                               child: Text(
+  //                                 "n аудио\n1:30 часа",
+  //                                 style: TextStyle(
+  //                                   fontSize: 13,
+  //                                   color: Colors.white,
+  //                                 ),
+  //                               ),
+  //                               width: 70,
+  //                             ),
+  //                           ],
+  //                         ),
+  //                       ),
+  //                       decoration: BoxDecoration(
+  //                         image: image != null
+  //                             ? DecorationImage(
+  //                                 image: image!.image,
+  //                                 fit: BoxFit.cover,
+  //                                 colorFilter: ColorFilter.mode(
+  //                                     Colors.black.withOpacity(0.8),
+  //                                     BlendMode.dstATop),
+  //                               )
+  //                             : DecorationImage(
+  //                                 image: AssetImage('assets/story.jpg'),
+  //                                 fit: BoxFit.cover,
+  //                                 colorFilter: ColorFilter.mode(
+  //                                     Colors.black.withOpacity(0.8),
+  //                                     BlendMode.dstATop),
+  //                               ),
+  //                         color: Colors.black,
+  //                       ),
+  //                       height: 210,
+  //                       width: 180,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
 
 // ListView buildListView() {
 //   return ListView.builder(
@@ -254,4 +343,3 @@ class _PlayListState extends State<PlayList> {
 //       );
 //     },
 //   );
-// }

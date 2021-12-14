@@ -110,22 +110,17 @@ class DatabaseService {
     });
   }
 
-  Future<void> createPlayList(String image,String name,String info) async {
-    var playLit = {
+  Future<void> createPlayList(String image,String name,String info,var soundList) async {
+    var playList = {
       'Image' : image,
       'Name' : name,
       'Info' : info,
-      'Sounds' : [
-        {
-          'Name' : "AudioName",
-          'URL' : "https://firebasestorage.googleapis.com/v0/b/audiostorysl.appspot.com/o/Sounds%2FvlzG8jhQYWVx7dVkeiMdLrzbYpp1%2FSecond_Test_On_Split_2021-12-02%2020%3A39%3A51.904729.mp3?alt=media&token=bfc3e4e6-d206-4b2c-97c9-404129a037f2"
-        }
-      ]
+      'Sounds' : soundList,
     };
+    log(soundList.toString());
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     var temp = ds.get('SaveList');
-    temp.add(playLit);
-    log(temp.toString());
+    temp.add(playList);
     await userCollection.doc(uid).update({
       'SaveList': temp,
     });

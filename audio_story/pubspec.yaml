@@ -47,6 +47,7 @@ dependencies:
 
   # Work with local file
   file_picker: ^4.2.2+1
+  image_picker: ^0.8.4+4
 
   #Sound play/record
   flutter_sound_lite: ^8.4.2
@@ -57,6 +58,8 @@ dependencies:
 
   #Social share
   share: ^2.0.4
+
+
 
   #SoundPlayer
   #audioplayers: ^0.17.1
