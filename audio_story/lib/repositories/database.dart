@@ -135,4 +135,16 @@ class DatabaseService {
     });
     log("YEAH!");
   }
+
+  Future<void>deleteSounds(int index,List<int> soundsIndex) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    List<dynamic> soundsList = ds.get('SaveList');
+    var sounds = soundsList[index]['Sounds'];
+    soundsIndex.forEach((element) { sounds.removeAt(element);});
+    soundsList[index]['Sounds'] = sounds;
+    // await userCollection.doc(uid).update({
+    //   'SaveList': soundsList,
+    // });
+    log(sounds);
+  }
 }

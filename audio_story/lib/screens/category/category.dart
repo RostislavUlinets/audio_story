@@ -9,10 +9,21 @@ import 'package:provider/provider.dart';
 
 import 'widget/category_list.dart';
 
-class Category extends StatelessWidget {
+class Category extends StatefulWidget {
   static const routeName = '/category';
 
   const Category({Key? key}) : super(key: key);
+
+  @override
+  State<Category> createState() => _CategoryState();
+}
+
+class _CategoryState extends State<Category> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {

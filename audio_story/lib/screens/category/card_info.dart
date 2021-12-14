@@ -18,6 +18,8 @@ DatabaseService dataBase =
 final CollectionReference userCollection =
     FirebaseFirestore.instance.collection('users');
 
+bool selectFlag = true;
+
 var sounds = [];
 var audioList = [];
 String name = '';
@@ -99,37 +101,83 @@ class _CardInfoState extends State<CardInfo> {
                           ),
                         ),
                       ),
-                      PopupMenuButton(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                        ),
-                        icon: const Icon(
-                          Icons.more_horiz,
-                          size: 32,
-                          color: Colors.white,
-                        ),
-                        itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            child: Text("Редактировать"),
-                            value: 1,
-                          ),
-                          const PopupMenuItem(
-                            child: Text("Выбрать несколько"),
-                            value: 2,
-                          ),
-                          PopupMenuItem(
-                            child: const Text("Удалить подборку"),
-                            onTap: () => _deletePlayList(context, index),
-                            value: 3,
-                          ),
-                          const PopupMenuItem(
-                            child: Text("Поделиться"),
-                            value: 4,
-                          ),
-                        ],
-                      ),
+                      selectFlag
+                          ? PopupMenuButton(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.more_horiz,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  child: const Text("Редактировать"),
+                                  onTap: () {
+                                    selectFlag = false;
+                                    setState(() {});
+                                  },
+                                  value: 1,
+                                ),
+                                const PopupMenuItem(
+                                  child: Text("Выбрать несколько"),
+                                  value: 2,
+                                ),
+                                PopupMenuItem(
+                                  child: const Text("Удалить подборку"),
+                                  onTap: () {
+                                    _deletePlayList(context, index);
+                                  },
+                                  value: 3,
+                                ),
+                                const PopupMenuItem(
+                                  child: Text("Поделиться"),
+                                  value: 4,
+                                ),
+                              ],
+                            )
+                          : PopupMenuButton(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.0),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.more_horiz,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  child: const Text("Отменить выбор"),
+                                  onTap: () {
+                                    selectFlag = true;
+                                    setState(() {});
+                                  },
+                                  value: 1,
+                                ),
+                                const PopupMenuItem(
+                                  child: Text("Добавить в подборку"),
+                                  value: 2,
+                                ),
+                                PopupMenuItem(
+                                  child: const Text("Поделиться"),
+                                  onTap: () {},
+                                  value: 3,
+                                ),
+                                const PopupMenuItem(
+                                  child: Text("Скачать все"),
+                                  value: 4,
+                                ),
+                                const PopupMenuItem(
+                                  child: Text("Удалить все"),
+                                  value: 4,
+                                ),
+                              ],
+                            ),
                     ],
                   ),
                   Padding(
@@ -184,9 +232,7 @@ class _CardInfoState extends State<CardInfo> {
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Text(info),
                   ),
-                  const SizedBox(
-                    width: 350,
-                    height: 230,
+                  Expanded(
                     child: ListWidget(),
                   )
                 ],
@@ -200,7 +246,7 @@ class _CardInfoState extends State<CardInfo> {
 }
 
 class ListWidget extends StatefulWidget {
-  const ListWidget({Key? key}) : super(key: key);
+  ListWidget({Key? key}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
@@ -210,6 +256,7 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
   }
 
 //TODO: FIX NAVIGATION.POP
@@ -244,7 +291,14 @@ class _ListWidgetState extends State<ListWidget> {
                           ));
                 },
               ),
-              trailing: const Icon(Icons.more_horiz),
+              trailing: selectFlag
+                  ? const Icon(Icons.more_horiz)
+                  : IconButton(
+                      icon: Icon(Icons.add), 
+                      onPressed: () { 
+                        dataBase.deleteSounds(index,[0,1,2]);
+                       },
+                    ),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),
@@ -294,7 +348,9 @@ void _deletePlayList(BuildContext context, int index) {
       backgroundColor: MaterialStateProperty.all(CColors.purpule),
     ),
     onPressed: () {
-      dataBase.deletePlayList(index);
+      dataBase.deletePlayList(index).then(
+            (value) => Navigator.pop(context),
+          );
     },
   );
 
