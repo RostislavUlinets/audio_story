@@ -125,4 +125,14 @@ class DatabaseService {
       'SaveList': temp,
     });
   }
+
+  Future<void>deletePlayList(int index) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    List<dynamic> saveList = ds.get('SaveList');
+    saveList.removeAt(index);
+    await userCollection.doc(uid).update({
+      'SaveList': saveList,
+    });
+    log("YEAH!");
+  }
 }
