@@ -13,10 +13,11 @@ import 'package:flutter/material.dart';
 import 'widget/player.dart';
 
 var playList = [];
+
 class AddAudio extends StatelessWidget {
   const AddAudio({Key? key}) : super(key: key);
 
-  void _sendDataBack(BuildContext context,var playList) {
+  void _sendDataBack(BuildContext context, var playList) {
     Navigator.pop(context, playList);
   }
 
@@ -44,7 +45,7 @@ class AddAudio extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: IconButton(
                           onPressed: () {
-                            _sendDataBack(context,playList);
+                            _sendDataBack(context, playList);
                           },
                           icon: Image.asset('assets/ArrowBack.png'),
                         ),
@@ -62,7 +63,7 @@ class AddAudio extends StatelessWidget {
                         final db = DatabaseService(
                             FirebaseAuth.instance.currentUser!.uid);
                         //Navigator.pop(context);
-                        _sendDataBack(context,playList);
+                        _sendDataBack(context, playList);
                       },
                       child: const Text(
                         "Добавить",
@@ -93,10 +94,10 @@ class AddAudio extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  child: Expanded(
-                    child: ListWidget(),
-                  ),
+                SizedBox(
+                  width: 350,
+                  height: 420,
+                  child: ListWidget(),
                 ),
               ],
             ),
@@ -134,8 +135,8 @@ class _ListWidgetState extends State<ListWidget> {
 
   void _saveAudio(int index) {
     playList.add({
-      'Name' : audioName[index].toString(),
-      'URL'  : url[index].toString(),
+      'Name': audioName[index].toString(),
+      'URL': url[index].toString(),
     });
     log(playList.toString());
   }

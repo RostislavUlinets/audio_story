@@ -7,6 +7,7 @@ import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/record/player.dart';
 import 'package:audio_story/screens/record/record.dart';
+import 'package:audio_story/screens/search/search.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -76,6 +77,8 @@ class NavApp extends StatelessWidget {
               const MaterialPage(child: Player()),
             if (navigation.screenName == CreateCategory.routeName)
               const MaterialPage(child: CreateCategory()),
+              if (navigation.screenName == SearchScreen.routeName)
+              const MaterialPage(child: SearchScreen()),
           ],
         ),
       ),

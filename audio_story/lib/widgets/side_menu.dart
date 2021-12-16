@@ -210,7 +210,7 @@ class SideMenu extends StatelessWidget {
               navigation.changeScreen('/audio');
               break;
             case NavigationItem.search:
-              navigation.changeScreen('/subscribe');
+              navigation.changeScreen('/search');
               break;
             case NavigationItem.delete:
               navigation.changeScreen('/subscribe');
@@ -242,7 +242,7 @@ class SideMenu extends StatelessWidget {
         if (navigation.screenName == '/audio') return true;
         break;
       case NavigationItem.search:
-        if (navigation.screenName == '/profile') return true;
+        if (navigation.screenName == '/search') return true;
         break;
       case NavigationItem.help:
         if (navigation.screenName == '/profile') return true;
