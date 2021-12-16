@@ -5,9 +5,9 @@ import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 File? file;
@@ -186,13 +186,11 @@ Future<Widget> userName() async {
 }
 
 Future selectFile() async {
-  final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+  final result = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 25,maxHeight: 300,maxWidth: 400);
 
   if (result == null) return;
 
-  final path = result.files.single.path;
-
-  file = File(path!);
+  file = File(result.path);
 }
 
 Future uploadFile() async {

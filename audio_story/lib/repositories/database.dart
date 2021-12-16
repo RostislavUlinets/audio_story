@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:audio_story/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -142,9 +141,9 @@ class DatabaseService {
     var sounds = soundsList[index]['Sounds'];
     soundsIndex.forEach((element) { sounds.removeAt(element);});
     soundsList[index]['Sounds'] = sounds;
-    // await userCollection.doc(uid).update({
-    //   'SaveList': soundsList,
-    // });
-    log(sounds);
+    await userCollection.doc(uid).update({
+      'SaveList': soundsList,
+    });
+    log(sounds.toString());
   }
 }

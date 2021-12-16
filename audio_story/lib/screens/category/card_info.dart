@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:developer';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
@@ -11,6 +11,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
+
+class AudioProperty {
+  final sounds;
+  final audioList;
+  final String name;
+  final String info;
+  final Image? image;
+
+  get getSounds => sounds;
+
+  AudioProperty({
+    required this.sounds,
+    required this.audioList,
+    required this.name,
+    required this.info,
+    required this.image,
+  });
+}
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -19,26 +38,31 @@ final CollectionReference userCollection =
     FirebaseFirestore.instance.collection('users');
 
 bool selectFlag = true;
+late List<int> eraseList;
 
-var sounds = [];
-var audioList = [];
-String name = '';
-String url = '';
-String audioName = '';
-String info = '';
-Image? image;
+late AudioProperty audioPropeperty;
 
-Future<void> getSaveList(int index) async {
+Future<AudioProperty> getSaveList(int index) async {
   DocumentSnapshot ds =
       await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-  sounds = ds.get('SaveList');
-  name = sounds[index]['Name'];
-  info = sounds[index]['Info'];
-  url = sounds[index]['Sounds'][0]['URL'];
-  audioName = sounds[index]['Sounds'][0]['Name'];
-  audioList = sounds[index]['Sounds'];
-  String bytes = sounds[index]['Image'];
-  image = imageFromBase64String(bytes);
+  var sounds = ds.get('SaveList');
+  sounds = sounds[index];
+  String bytes = sounds['Image'];
+  AudioProperty audioBase = AudioProperty(
+    sounds: ds.get('SaveList'),
+    audioList: sounds['Sounds'],
+    name: sounds['Name'],
+    info: sounds['Info'],
+    image: imageFromBase64String(bytes),
+  );
+  return audioBase;
+  // name = sounds[index]['Name'];
+  // info = sounds[index]['Info'];
+  // url = sounds[index]['Sounds'][0]['URL'];
+  // audioName = sounds[index]['Sounds'][0]['Name'];
+  // audioList = sounds[index]['Sounds'];
+
+  // image = imageFromBase64String(bytes);
 }
 
 Image imageFromBase64String(String base64String) {
@@ -62,7 +86,11 @@ class _CardInfoState extends State<CardInfo> {
 
   @override
   void initState() {
-    getSaveList(index).then((value) => setState(() {}));
+    getSaveList(index).then((value) => setState(() {
+          audioPropeperty = value;
+        }));
+    eraseList = [];
+    selectFlag = true;
     super.initState();
   }
 
@@ -116,14 +144,14 @@ class _CardInfoState extends State<CardInfo> {
                               itemBuilder: (context) => [
                                 PopupMenuItem(
                                   child: const Text("Редактировать"),
+                                  value: 1,
+                                ),
+                                 PopupMenuItem(
+                                  child: const Text("Выбрать несколько"),
                                   onTap: () {
                                     selectFlag = false;
                                     setState(() {});
                                   },
-                                  value: 1,
-                                ),
-                                const PopupMenuItem(
-                                  child: Text("Выбрать несколько"),
                                   value: 2,
                                 ),
                                 PopupMenuItem(
@@ -165,15 +193,29 @@ class _CardInfoState extends State<CardInfo> {
                                 ),
                                 PopupMenuItem(
                                   child: const Text("Поделиться"),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Share.shareFiles(
+                                        ['/sdcard/Download/audio.mp3']);
+                                  },
                                   value: 3,
                                 ),
                                 const PopupMenuItem(
                                   child: Text("Скачать все"),
                                   value: 4,
                                 ),
-                                const PopupMenuItem(
-                                  child: Text("Удалить все"),
+                                //TODO: CHECK SOLUTION
+                                PopupMenuItem(
+                                  child: const Text("Удалить все"),
+                                  onTap: () => dataBase
+                                      .deleteSounds(index, eraseList)
+                                      .then(
+                                        (value) => Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        super.widget)),
+                                      ),
                                   value: 4,
                                 ),
                               ],
@@ -183,7 +225,7 @@ class _CardInfoState extends State<CardInfo> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      name,
+                      audioPropeperty.name,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -213,9 +255,9 @@ class _CardInfoState extends State<CardInfo> {
                         ),
                       ),
                       decoration: BoxDecoration(
-                        image: image != null
+                        image: audioPropeperty.image != null
                             ? DecorationImage(
-                                image: image!.image,
+                                image: audioPropeperty.image!.image,
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
@@ -230,7 +272,7 @@ class _CardInfoState extends State<CardInfo> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Text(info),
+                    child: Text(audioPropeperty.info),
                   ),
                   Expanded(
                     child: ListWidget(),
@@ -263,14 +305,16 @@ class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: audioList.isNotEmpty ? audioList.length : 0,
+      itemCount: audioPropeperty.audioList.isNotEmpty
+          ? audioPropeperty.audioList.length
+          : 0,
       itemBuilder: (_, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
             child: ListTile(
               title: Text(
-                audioList[index]['Name'],
+                audioPropeperty.audioList[index]['Name'],
                 style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
               subtitle: const Text(
@@ -286,18 +330,16 @@ class _ListWidgetState extends State<ListWidget> {
                 onPressed: () {
                   Scaffold.of(context)
                       .showBottomSheet((context) => PlayerOnProgress(
-                            url: audioList[index]['URL'],
-                            name: audioList[index]['Name'],
+                            url: audioPropeperty.audioList[index]['URL'],
+                            name: audioPropeperty.audioList[index]['Name'],
                           ));
                 },
               ),
               trailing: selectFlag
                   ? const Icon(Icons.more_horiz)
                   : IconButton(
-                      icon: Icon(Icons.add), 
-                      onPressed: () { 
-                        dataBase.deleteSounds(index,[0,1,2]);
-                       },
+                      icon: const Icon(Icons.add),
+                      onPressed: () => eraseList.add(index),
                     ),
             ),
             decoration: BoxDecoration(

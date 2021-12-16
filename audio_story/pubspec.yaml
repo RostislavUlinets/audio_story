@@ -41,20 +41,23 @@ dependencies:
   mask_text_input_formatter: ^2.0.0
 
   # Database
-  firebase_auth: ^3.2.0
-  cloud_firestore: 3.0.0
-  firebase_storage: ^10.1.0
+  firebase_auth: ^3.3.3
+  cloud_firestore: ^3.1.4
+  firebase_storage: ^10.2.3
 
   # Work with local file
-  file_picker: ^4.2.2+1
+  # file_picker: 4.1.0
   image_picker: ^0.8.4+4
 
   #Sound play/record
-  flutter_sound_lite: ^8.4.2
   flutter_sound: ^8.4.2
 
   #Permission
-  permission_handler: ^7.0.0
+  path_provider: ^2.0.2
+  permission_handler: ^6.0.1
+  path: ^1.6.4
+  intl: ^0.17.0
+  just_audio: ^0.9.11
 
   #Social share
   share: ^2.0.4

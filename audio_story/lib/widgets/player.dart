@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'package:audio_story/Colors/colors.dart';
+
 import 'package:flutter/material.dart';
-import 'dart:typed_data';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
 
 const int tSampleRate = 44000;
 typedef Fn = void Function();
