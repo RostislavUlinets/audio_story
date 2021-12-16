@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -26,6 +27,26 @@ class _ListWidgetState extends State<ListWidget> {
       List<String> temp = result.items[i].name.split('_');
       temp.removeLast();
       audioName.add(temp.join('_'));
+    }
+
+    for (int i = 0; i < result.items.length; i++) {
+      List<String> temp = result.items[i].name.split('_');
+      temp.removeLast();
+      audioName.add(temp.join('_'));
+
+      List<Map<String, dynamic>> audio = [];
+      audio.add({
+        'name': temp.join('_'),
+        'url': await result.items[i].getDownloadURL(),
+      });
+
+      List<Audio> audioFromModel = [];
+      audioFromModel.add(
+        Audio(
+          name: temp.join('_'),
+          url: await result.items[i].getDownloadURL(),
+        ),
+      );
     }
     log(result.items[0].name);
     url.forEach((element) {
@@ -59,12 +80,15 @@ class _ListWidgetState extends State<ListWidget> {
               ),
               leading: IconButton(
                 icon: Image(
-                  image: AssetImage("assets/Play.png"),               
-                ), onPressed: () {
-                Scaffold
-                    .of(context)
-                    .showBottomSheet((context) => PlayerOnProgress(url: url[index],name: audioName[index],));
-              },
+                  image: AssetImage("assets/Play.png"),
+                ),
+                onPressed: () {
+                  Scaffold.of(context)
+                      .showBottomSheet((context) => PlayerOnProgress(
+                            url: url[index],
+                            name: audioName[index],
+                          ));
+                },
               ),
               trailing: Icon(Icons.more_horiz),
             ),
