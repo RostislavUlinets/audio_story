@@ -120,7 +120,7 @@ class _RecordsState extends State<Records> {
       body: _mplaybackReady
           ? Stack(
               children: [
-                MyCustomPaint(
+                const MyCustomPaint(
                   color: CColors.purpule,
                   size: 0.85,
                 ),
@@ -158,7 +158,7 @@ class _RecordsState extends State<Records> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                  icon: Image(
+                                  icon: const Image(
                                     image: AssetImage("assets/Upload.png"),
                                   ),
                                   onPressed: () {
@@ -173,20 +173,20 @@ class _RecordsState extends State<Records> {
                                         '/storage/sdcard0/Downloads/${audioName.text}',
                                         Codec.mp3);
                                   },
-                                  icon: Image(
+                                  icon: const Image(
                                     image:
                                         AssetImage("assets/PaperDownload1.png"),
                                   ),
                                 ),
                                 IconButton(
-                                  icon: Image(
+                                  icon: const Image(
                                     image: AssetImage("assets/Delete.png"),
                                   ),
                                   onPressed: () {
                                     showAlertDialog(context);
                                   },
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 TextButton(
@@ -194,7 +194,7 @@ class _RecordsState extends State<Records> {
                                     saveAudio();
                                     navigation.changeScreen(Audio.routeName);
                                   },
-                                  child: Text("Сохранить"),
+                                  child: const Text("Сохранить"),
                                 ),
                               ],
                             ),
@@ -208,7 +208,7 @@ class _RecordsState extends State<Records> {
                             child: TextField(
                               textAlign: TextAlign.center,
                               controller: audioName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -232,7 +232,7 @@ class _RecordsState extends State<Records> {
             )
           : Stack(
               children: [
-                MyCustomPaint(
+                const MyCustomPaint(
                   color: CColors.purpule,
                   size: 0.85,
                 ),
@@ -270,7 +270,7 @@ class _RecordsState extends State<Records> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                  child: Text("Отменить"),
+                                  child: const Text("Отменить"),
                                   onPressed: () {
                                     navigation
                                         .changeScreen(MainScreen.routeName);

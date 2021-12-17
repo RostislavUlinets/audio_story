@@ -1,9 +1,6 @@
-import 'dart:developer';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/widgets/player.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 
@@ -36,14 +33,14 @@ class _ListWidgetState extends State<ListWidget> {
             child: ListTile(
               title: Text(
                 audio[index].name,
-                style: TextStyle(color: Color(0xFF3A3A55)),
+                style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 "30 минут",
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
               leading: IconButton(
-                icon: Image(
+                icon: const Image(
                   image: AssetImage("assets/Play.png"),
                 ),
                 onPressed: () {
@@ -55,7 +52,7 @@ class _ListWidgetState extends State<ListWidget> {
                   );
                 },
               ),
-              trailing: Icon(Icons.more_horiz),
+              trailing: const Icon(Icons.more_horiz),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),

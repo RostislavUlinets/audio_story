@@ -11,7 +11,7 @@ void showAlertDialog(BuildContext context) {
       Provider.of<NavigationController>(context, listen: false);
   // set up the buttons
   Widget cancelButton = TextButton(
-    child: Text(
+    child: const Text(
       "Нет",
       style: TextStyle(color: CColors.purpule),
     ),
@@ -19,7 +19,7 @@ void showAlertDialog(BuildContext context) {
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
-          side: BorderSide(color: CColors.purpule),
+          side: const BorderSide(color: CColors.purpule),
         ),
       ),
     ),
@@ -56,8 +56,8 @@ void showAlertDialog(BuildContext context) {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text("Подтверждаете удаление?",
                   style: TextStyle(
                       fontSize: 16,

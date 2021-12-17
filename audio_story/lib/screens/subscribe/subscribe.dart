@@ -20,7 +20,7 @@ class Subscribe extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(0),
       body: Stack(
         children: [
-          MyCustomPaint(
+          const MyCustomPaint(
             color: CColors.purpule,
             size: 0.85,
           ),

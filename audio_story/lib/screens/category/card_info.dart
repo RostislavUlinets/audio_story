@@ -1,37 +1,18 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/category/widget/player.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 import 'widget/delete_audio.dart';
-
-class AudioProperty {
-  final sounds;
-  final audioList;
-  final String name;
-  final String info;
-  final Image? image;
-
-  get getSounds => sounds;
-
-  AudioProperty({
-    required this.sounds,
-    required this.audioList,
-    required this.name,
-    required this.info,
-    required this.image,
-  });
-}
+import 'widget/player.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -42,30 +23,7 @@ final CollectionReference userCollection =
 bool selectFlag = true;
 late List<int> eraseList;
 
-late AudioProperty audioPropeperty;
-
-Future<AudioProperty> getSaveList(int index) async {
-  DocumentSnapshot ds =
-      await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-  var sounds = ds.get('SaveList');
-  sounds = sounds[index];
-  String bytes = sounds['Image'];
-  AudioProperty audioBase = AudioProperty(
-    sounds: ds.get('SaveList'),
-    audioList: sounds['Sounds'],
-    name: sounds['Name'],
-    info: sounds['Info'],
-    image: imageFromBase64String(bytes),
-  );
-  return audioBase;
-  // name = sounds[index]['Name'];
-  // info = sounds[index]['Info'];
-  // url = sounds[index]['Sounds'][0]['URL'];
-  // audioName = sounds[index]['Sounds'][0]['Name'];
-  // audioList = sounds[index]['Sounds'];
-
-  // image = imageFromBase64String(bytes);
-}
+late SoundModel audioPropeperty;
 
 Image imageFromBase64String(String base64String) {
   return Image.memory(base64Decode(base64String));
@@ -88,7 +46,7 @@ class _CardInfoState extends State<CardInfo> {
 
   @override
   void initState() {
-    getSaveList(index).then((value) => setState(() {
+    dataBase.getSaveList(index).then((value) => setState(() {
           audioPropeperty = value;
         }));
     eraseList = [];
@@ -104,7 +62,10 @@ class _CardInfoState extends State<CardInfo> {
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.green,size: 0.85),
+          const MyCustomPaint(
+            color: CColors.green,
+            size: 0.85,
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
@@ -144,11 +105,11 @@ class _CardInfoState extends State<CardInfo> {
                                 color: Colors.white,
                               ),
                               itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: const Text("Редактировать"),
+                                const PopupMenuItem(
+                                  child: Text("Редактировать"),
                                   value: 1,
                                 ),
-                                 PopupMenuItem(
+                                PopupMenuItem(
                                   child: const Text("Выбрать несколько"),
                                   onTap: () {
                                     selectFlag = false;
@@ -259,7 +220,7 @@ class _CardInfoState extends State<CardInfo> {
                       decoration: BoxDecoration(
                         image: audioPropeperty.image != null
                             ? DecorationImage(
-                                image: audioPropeperty.image!.image,
+                                image: audioPropeperty.image.image,
                                 fit: BoxFit.cover,
                               )
                             : const DecorationImage(
@@ -276,7 +237,7 @@ class _CardInfoState extends State<CardInfo> {
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Text(audioPropeperty.info),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: ListWidget(),
                   )
                 ],
@@ -290,7 +251,7 @@ class _CardInfoState extends State<CardInfo> {
 }
 
 class ListWidget extends StatefulWidget {
-  ListWidget({Key? key}) : super(key: key);
+  const ListWidget({Key? key}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();

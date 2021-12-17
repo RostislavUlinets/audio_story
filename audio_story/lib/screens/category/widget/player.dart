@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
-import 'dart:typed_data';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
 
 const int tSampleRate = 44000;
 typedef Fn = void Function();
@@ -111,7 +107,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
@@ -147,7 +143,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -174,13 +170,13 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                     children: [
                       Text(
                         "${format(Duration(milliseconds: pos))}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
                       Text(
                         "${format(Duration(milliseconds: duration))}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),

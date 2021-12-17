@@ -8,7 +8,6 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class Audio extends StatefulWidget {
   static const routeName = '/audio';
 
@@ -19,7 +18,6 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-
   late List<AudioModel> audio;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -27,7 +25,14 @@ class _AudioState extends State<Audio> {
   @override
   void initState() {
     super.initState();
-    dataBase.audioListDB().then((value) => audio = value);
+
+    dataBase.audioListDB().then(
+          (value) => setState(
+            () {
+              audio = value;
+            },
+          ),
+        );
   }
 
   @override
@@ -43,8 +48,10 @@ class _AudioState extends State<Audio> {
             size: 0.7,
           ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10.0,
+              vertical: 60.0,
+            ),
             child: Column(
               children: [
                 Row(
@@ -71,7 +78,7 @@ class _AudioState extends State<Audio> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.more_horiz,
                         color: Colors.white,
                         size: 36,
@@ -82,16 +89,24 @@ class _AudioState extends State<Audio> {
                 ),
                 const Text(
                   "Все в одном месте",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 40,
+                  ),
                   child: Row(
                     children: const [
                       Text(
                         "20 аудио\n10:30 часов",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
@@ -102,7 +117,7 @@ class _AudioState extends State<Audio> {
                   child: ListWidget(
                     audio: audio,
                   ),
-                )
+                ),
               ],
             ),
           ),

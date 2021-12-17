@@ -153,23 +153,23 @@ class CustomNavigationBar extends StatelessWidget {
           },
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: const Image(
+            const BottomNavigationBarItem(
+                icon: Image(
                   image: AssetImage('assets/Home.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: const AssetImage('assets/Home.png'),
+                  image: AssetImage('assets/Home.png'),
                   color: CColors.purpule,
                 ),
                 label: "Главная"),
-            BottomNavigationBarItem(
-                icon: const Image(
+            const BottomNavigationBarItem(
+                icon: Image(
                   image: AssetImage('assets/Category.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: const AssetImage('assets/Category.png'),
+                  image: AssetImage('assets/Category.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Подборки'),
@@ -197,23 +197,23 @@ class CustomNavigationBar extends StatelessWidget {
                   ),
                 ),
                 label: 'Запись'),
-            BottomNavigationBarItem(
-                icon: const Image(
+            const BottomNavigationBarItem(
+                icon: Image(
                   image: AssetImage('assets/Paper.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: const AssetImage('assets/Paper.png'),
+                  image: AssetImage('assets/Paper.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Аудиозаписи'),
-            BottomNavigationBarItem(
-                icon: const Image(
+            const BottomNavigationBarItem(
+                icon: Image(
                   image: AssetImage('assets/Profile.png'),
                   color: Colors.black,
                 ),
                 activeIcon: Image(
-                  image: const AssetImage('assets/Profile.png'),
+                  image: AssetImage('assets/Profile.png'),
                   color: CColors.purpule,
                 ),
                 label: 'Профиль'),

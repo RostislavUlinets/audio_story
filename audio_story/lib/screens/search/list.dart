@@ -32,14 +32,14 @@ class _SearchCustomListState extends State<SearchCustomList> {
             child: ListTile(
               title: Text(
                 audio[index].name,
-                style: TextStyle(color: Color(0xFF3A3A55)),
+                style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
-              subtitle: Text(
+              subtitle: const Text(
                 "30 минут",
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
               leading: IconButton(
-                icon: Image(
+                icon: const Image(
                   image: AssetImage("assets/Play.png"),
                 ),
                 onPressed: () {
@@ -51,7 +51,7 @@ class _SearchCustomListState extends State<SearchCustomList> {
                   );
                 },
               ),
-              trailing: Icon(Icons.more_horiz),
+              trailing: const Icon(Icons.more_horiz),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),

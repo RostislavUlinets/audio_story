@@ -98,7 +98,7 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          MyCustomPaint(
+          const MyCustomPaint(
             color: CColors.purpule,
             size: 0.85,
           ),
@@ -231,7 +231,7 @@ class _ProfileState extends State<Profile> {
                           _auth.signOut();
                           navigation.changeScreen('');
                         },
-                        child: Text("Выйти из приложения",
+                        child: const Text("Выйти из приложения",
                             style: TextStyle(
                               color: CColors.black,
                             )),

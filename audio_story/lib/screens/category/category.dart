@@ -33,7 +33,7 @@ class _CategoryState extends State<Category> {
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          MyCustomPaint(
+          const MyCustomPaint(
             color: CColors.green,
             size: 0.85,
           ),
@@ -82,8 +82,8 @@ class _CategoryState extends State<Category> {
                 ),
                 const SizedBox(height: 30),
                 Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
                     child: PlayList(),
                   ),
                   height: 580,

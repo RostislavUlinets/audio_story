@@ -11,7 +11,10 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          MyCustomPaint(color: CColors.purpule,size: 0.85,),
+          const MyCustomPaint(
+            color: CColors.purpule,
+            size: 0.85,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Padding(

@@ -1,7 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/screens/search/search_field.dart';
-import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
@@ -10,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-import 'list.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = '/search';
@@ -102,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                     IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.more_horiz,
                         color: Colors.white,
                         size: 36,
@@ -125,17 +123,17 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: ListTile(
                             title: Text(
                               audio[index].name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Color(0xFF3A3A55),
                               ),
                             ),
-                            subtitle: Text(
+                            subtitle: const Text(
                               "30 минут",
                               style: TextStyle(color: Color(0x803A3A55)),
                             ),
                             leading: Builder(builder: (context) {
                               return IconButton(
-                                icon: Image(
+                                icon: const Image(
                                   image: AssetImage("assets/Play.png"),
                                 ),
                                 onPressed: () {
@@ -148,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 },
                               );
                             }),
-                            trailing: Icon(Icons.more_horiz),
+                            trailing: const Icon(Icons.more_horiz),
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(75),
@@ -178,7 +176,6 @@ class _SearchScreenState extends State<SearchScreen> {
   void searchBook(String query) {
     final audioList = allAudio.where((element) {
       final nameToLower = element.name.toLowerCase();
-      final url = element.url;
       final searchLower = query.toLowerCase();
 
       return nameToLower.contains(searchLower);
@@ -186,7 +183,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     setState(() {
       this.query = query;
-      this.audio = audioList;
+      audio = audioList;
     });
   }
 }

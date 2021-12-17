@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/models/sounds.dart';
+import 'package:audio_story/screens/category/card_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -86,19 +88,7 @@ class DatabaseService {
     return audioList;
   }
 
-  // Future<void> setBase64(String image) async {
-  //   DocumentSnapshot ds = await userCollection.doc(uid).get();
-  //   var temp = ds.get('SaveList');
-  //   temp = temp[0];
-  //   temp.update('Image', (dynamic val) => val = image);
-  //   log(temp.toString());
-  //   //TODO: deleted return
-  //   await userCollection.doc(uid).update({
-  //     'SaveList': [temp],
-  //   });
-  // }
-
-  Future<void> updatePlayList(String image,String name,String info) async {
+  Future<void> updatePlayList(String image, String name, String info) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     var temp = ds.get('SaveList');
     temp = temp[0];
@@ -110,12 +100,13 @@ class DatabaseService {
     });
   }
 
-  Future<void> createPlayList(String image,String name,String info,var soundList) async {
+  Future<void> createPlayList(
+      String image, String name, String info, var soundList) async {
     var playList = {
-      'Image' : image,
-      'Name' : name,
-      'Info' : info,
-      'Sounds' : soundList,
+      'Image': image,
+      'Name': name,
+      'Info': info,
+      'Sounds': soundList,
     };
     log(soundList.toString());
     DocumentSnapshot ds = await userCollection.doc(uid).get();
@@ -126,7 +117,7 @@ class DatabaseService {
     });
   }
 
-  Future<void>deletePlayList(int index) async {
+  Future<void> deletePlayList(int index) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> saveList = ds.get('SaveList');
     saveList.removeAt(index);
@@ -136,11 +127,13 @@ class DatabaseService {
     log("YEAH!");
   }
 
-  Future<void>deleteSounds(int index,List<int> soundsIndex) async {
+  Future<void> deleteSounds(int index, List<int> soundsIndex) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> soundsList = ds.get('SaveList');
     var sounds = soundsList[index]['Sounds'];
-    soundsIndex.forEach((element) { sounds.removeAt(element);});
+    soundsIndex.forEach((element) {
+      sounds.removeAt(element);
+    });
     soundsList[index]['Sounds'] = sounds;
     await userCollection.doc(uid).update({
       'SaveList': soundsList,
@@ -174,4 +167,19 @@ class DatabaseService {
     return audioFromModel;
   }
 
+  Future<SoundModel> getSaveList(int index) async {
+  DocumentSnapshot ds =
+      await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+  var sounds = ds.get('SaveList');
+  sounds = sounds[index];
+  String bytes = sounds['Image'];
+  SoundModel audioBase = SoundModel(
+    sounds: ds.get('SaveList'),
+    audioList: sounds['Sounds'],
+    name: sounds['Name'],
+    info: sounds['Info'],
+    image: imageFromBase64String(bytes),
+  );
+  return audioBase;
+}
 }

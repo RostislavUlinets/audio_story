@@ -36,7 +36,7 @@ class _ProfileState extends State<EditProfile> {
       bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
-          MyCustomPaint(
+          const MyCustomPaint(
             color: CColors.purpule,
             size: 0.85,
           ),
@@ -162,7 +162,7 @@ class _ProfileState extends State<EditProfile> {
                       }
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       "Сохранить",
                       style: TextStyle(color: CColors.black),
                     ),

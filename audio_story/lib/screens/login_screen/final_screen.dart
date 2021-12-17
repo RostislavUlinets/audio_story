@@ -34,7 +34,7 @@ class FinalScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            MyCustomPaint(
+            const MyCustomPaint(
               color: CColors.purpule,
               size: 0.85,
             ),

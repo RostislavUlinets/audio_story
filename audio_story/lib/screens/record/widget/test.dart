@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
 
 /*
  *
@@ -64,11 +63,6 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     }
   }
 
-  Future<String> _getTempPath(String path) async {
-    var tempDir = await getTemporaryDirectory();
-    var tempPath = tempDir.path;
-    return tempPath + '/' + path;
-  }
 
   Future<void> init() async {
     await _mPlayer.openAudioSession();

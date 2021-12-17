@@ -20,7 +20,7 @@ class CodeSent extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          MyCustomPaint(
+          const MyCustomPaint(
             color: CColors.purpule,
             size: 0.85,
           ),
@@ -99,8 +99,8 @@ class CodeSent extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(15.0),
                         child: Text(
                           "Регистрация привяжет твои сказки\nк облаку, после чего они всегда\nбудут с тобой",
                           textAlign: TextAlign.center,

@@ -1,17 +1,17 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/add_audio.dart';
-import 'package:audio_story/screens/category/category.dart';
+
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,11 +26,11 @@ class CreateCategory extends StatefulWidget {
 }
 
 class _CreateCategoryState extends State<CreateCategory> {
-  File? image = null;
+  File? image;
   late String img64;
-  final _Name = TextEditingController(text: "Название");
-  final _Info = TextEditingController(text: "Описание");
-  var SoundList = null;
+  final _name = TextEditingController(text: "Название");
+  final _info = TextEditingController(text: "Описание");
+  var soundList;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,10 @@ class _CreateCategoryState extends State<CreateCategory> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            MyCustomPaint(color: CColors.green,size: 0.85,),
+            const MyCustomPaint(
+              color: CColors.green,
+              size: 0.85,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
               child: Column(
@@ -79,7 +82,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                               FirebaseAuth.instance.currentUser!.uid);
                           // db.updatePlayList(img64, _Name.text, _Info.text);
                           db.createPlayList(
-                              img64, _Name.text, _Info.text, SoundList);
+                              img64, _name.text, _info.text, soundList);
                           NavigationController navigation =
                               Provider.of<NavigationController>(context,
                                   listen: false);
@@ -101,7 +104,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                       readOnly: false,
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 24),
-                      controller: _Name,
+                      controller: _name,
                     ),
                   ),
                   GestureDetector(
@@ -117,7 +120,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                                 image: FileImage(image!),
                                 fit: BoxFit.cover,
                               )
-                            : DecorationImage(
+                            : const DecorationImage(
                                 image: AssetImage('assets/story.jpg'),
                                 fit: BoxFit.cover,
                               ),
@@ -139,10 +142,10 @@ class _CreateCategoryState extends State<CreateCategory> {
                     child: Text("Введите описание..."),
                   ),
                   TextField(
-                    controller: _Info,
+                    controller: _info,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: CColors.black),
                       ),
@@ -150,16 +153,18 @@ class _CreateCategoryState extends State<CreateCategory> {
                   ),
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 70.0),
+                      padding: const EdgeInsets.only(
+                        top: 70.0,
+                      ),
                       child: TextButton(
                         onPressed: () async {
-                          SoundList = await Navigator.push(
+                          soundList = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => const AddAudio(),
                               ));
                         },
-                        child: Text(
+                        child: const Text(
                           "Добавить аудиофайл",
                           style: TextStyle(
                             fontSize: 14,
@@ -186,7 +191,11 @@ class _CreateCategoryState extends State<CreateCategory> {
   // }
 
   Future selectFile() async {
-    final result = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 25,maxHeight: 300,maxWidth: 400);
+    final result = await ImagePicker.platform.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 25,
+        maxHeight: 300,
+        maxWidth: 400);
     if (result == null) return;
     final bytes = await result.readAsBytes();
     img64 = base64Encode(bytes);
