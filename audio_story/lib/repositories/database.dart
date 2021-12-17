@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:audio_story/models/audio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -146,4 +147,31 @@ class DatabaseService {
     });
     log(sounds.toString());
   }
+
+  Future<List<AudioModel>> audioListDB() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    ListResult result =
+        await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
+    List<Map<String, dynamic>> audio = [];
+    List<AudioModel> audioFromModel = [];
+
+    for (int i = 0; i < result.items.length; i++) {
+      List<String> temp = result.items[i].name.split('_');
+      temp.removeLast();
+
+      audio.add({
+        'name': temp.join('_'),
+        'url': await result.items[i].getDownloadURL(),
+      });
+
+      audioFromModel.add(
+        AudioModel(
+          name: temp.join('_'),
+          url: await result.items[i].getDownloadURL(),
+        ),
+      );
+    }
+    return audioFromModel;
+  }
+
 }

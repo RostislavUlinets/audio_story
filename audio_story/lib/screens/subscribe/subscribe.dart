@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'widget/select_button.dart';
 
 class Subscribe extends StatelessWidget {
-
   static const routeName = '/subscribe';
 
   const Subscribe({Key? key}) : super(key: key);
@@ -21,7 +20,10 @@ class Subscribe extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(0),
       body: Stack(
         children: [
-          MyCustomPaint(color: CColors.purpule,),
+          MyCustomPaint(
+            color: CColors.purpule,
+            size: 0.85,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),
             child: Column(
@@ -30,18 +32,18 @@ class Subscribe extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
-                       Builder(
-                      builder: (ctx) => IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 36,
+                      Builder(
+                        builder: (ctx) => IconButton(
+                          icon: const Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                            size: 36,
+                          ),
+                          onPressed: () {
+                            Scaffold.of(ctx).openDrawer();
+                          },
                         ),
-                        onPressed: () {
-                          Scaffold.of(ctx).openDrawer();
-                        },
                       ),
-                    ),
                       const SizedBox(
                         width: 55,
                       ),
@@ -80,11 +82,11 @@ class Subscribe extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: const [
-                                     Text(
+                                    Text(
                                       "300p",
                                       style: TextStyle(fontSize: 26),
                                     ),
-                                     Text(
+                                    Text(
                                       "в месяц",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -109,12 +111,12 @@ class Subscribe extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children:const [
-                                     Text(
+                                  children: const [
+                                    Text(
                                       "1800р",
                                       style: TextStyle(fontSize: 26),
                                     ),
-                                     Text(
+                                    Text(
                                       "в год",
                                       style: TextStyle(fontSize: 16),
                                     ),
@@ -187,7 +189,7 @@ class Subscribe extends StatelessWidget {
                                 height: 10,
                               ),
                               Row(
-                                children:const [
+                                children: const [
                                   Image(
                                     image:
                                         AssetImage("assets/PaperDownload.png"),
@@ -239,4 +241,3 @@ class Subscribe extends StatelessWidget {
     );
   }
 }
-

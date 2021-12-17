@@ -38,6 +38,7 @@ class _ProfileState extends State<EditProfile> {
         children: [
           MyCustomPaint(
             color: CColors.purpule,
+            size: 0.85,
           ),
           Padding(
             padding: const EdgeInsets.only(

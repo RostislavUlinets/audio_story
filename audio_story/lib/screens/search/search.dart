@@ -1,8 +1,9 @@
+import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
-import 'package:audio_story/screens/audio/custompaint.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
+import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,12 +21,12 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Future<List<Audio>> audioListDB() async {
+  Future<List<AudioModel>> audioListDB() async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     ListResult result =
         await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
     List<Map<String, dynamic>> audio = [];
-    List<Audio> audioFromModel = [];
+    List<AudioModel> audioFromModel = [];
 
     for (int i = 0; i < result.items.length; i++) {
       List<String> temp = result.items[i].name.split('_');
@@ -37,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
       });
 
       audioFromModel.add(
-        Audio(
+        AudioModel(
           name: temp.join('_'),
           url: await result.items[i].getDownloadURL(),
         ),
@@ -47,8 +48,8 @@ class _SearchScreenState extends State<SearchScreen> {
     return audioFromModel;
   }
 
-  late List<Audio> audio;
-  late List<Audio> allAudio;
+  late List<AudioModel> audio;
+  late List<AudioModel> allAudio;
   String query = '';
 
   @override
@@ -68,7 +69,10 @@ class _SearchScreenState extends State<SearchScreen> {
       bottomNavigationBar: const CustomNavigationBar(3),
       body: Stack(
         children: [
-          const CustomP(),
+          const MyCustomPaint(
+            color: CColors.blue,
+            size: 0.85,
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
@@ -111,9 +115,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 40.0),
                   child: buildSearch(),
                 ),
-                SizedBox(
-                  width: 350,
-                  height: 410,
+                Expanded(
                   child: ListView.builder(
                     itemCount: audio.length,
                     itemBuilder: (_, index) {
@@ -123,29 +125,29 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: ListTile(
                             title: Text(
                               audio[index].name,
-                              style: TextStyle(color: Color(0xFF3A3A55)),
+                              style: TextStyle(
+                                color: Color(0xFF3A3A55),
+                              ),
                             ),
                             subtitle: Text(
                               "30 минут",
                               style: TextStyle(color: Color(0x803A3A55)),
                             ),
-                            leading: Builder(
-                              builder: (context) {
-                                return IconButton(
-                                  icon: Image(
-                                    image: AssetImage("assets/Play.png"),
-                                  ),
-                                  onPressed: () {
-                                    Scaffold.of(context).showBottomSheet(
-                                      (context) => PlayerOnProgress(
-                                        url: audio[index].url,
-                                        name: audio[index].name,
-                                      ),
-                                    );
-                                  },
-                                );
-                              }
-                            ),
+                            leading: Builder(builder: (context) {
+                              return IconButton(
+                                icon: Image(
+                                  image: AssetImage("assets/Play.png"),
+                                ),
+                                onPressed: () {
+                                  Scaffold.of(context).showBottomSheet(
+                                    (context) => PlayerOnProgress(
+                                      url: audio[index].url,
+                                      name: audio[index].name,
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
                             trailing: Icon(Icons.more_horiz),
                           ),
                           decoration: BoxDecoration(
@@ -188,5 +190,3 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 }
-
-

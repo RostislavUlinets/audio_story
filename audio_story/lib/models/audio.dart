@@ -1,13 +1,13 @@
-class Audio {
+class AudioModel {
   final String name;
   final String url;
 
-  const Audio({
+  const AudioModel({
     required this.name,
     required this.url,
   });
 
-  factory Audio.fromJson(Map<String, dynamic> json) => Audio(
+  factory AudioModel.fromJson(Map<String, dynamic> json) => AudioModel(
         name: json['name'],
         url: json['url'],
       );

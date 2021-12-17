@@ -3,7 +3,7 @@ import 'package:audio_story/widgets/player.dart';
 import 'package:flutter/material.dart';
 
 class SearchCustomList extends StatefulWidget {
-  List<Audio> audio;
+  List<AudioModel> audio;
 
   SearchCustomList({Key? key, required this.audio}) : super(key: key);
 
@@ -12,7 +12,7 @@ class SearchCustomList extends StatefulWidget {
 }
 
 class _SearchCustomListState extends State<SearchCustomList> {
-  late List<Audio> audio;
+  late List<AudioModel> audio;
 
 
   @override

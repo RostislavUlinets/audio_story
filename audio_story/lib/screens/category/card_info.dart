@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
+import 'widget/delete_audio.dart';
+
 class AudioProperty {
   final sounds;
   final audioList;
@@ -102,7 +104,7 @@ class _CardInfoState extends State<CardInfo> {
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          const MyCustomPaint(color: CColors.green),
+          const MyCustomPaint(color: CColors.green,size: 0.85),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
@@ -157,7 +159,7 @@ class _CardInfoState extends State<CardInfo> {
                                 PopupMenuItem(
                                   child: const Text("Удалить подборку"),
                                   onTap: () {
-                                    _deletePlayList(context, index);
+                                    DeleteAudio.deletePlayList(context, index);
                                   },
                                   value: 3,
                                 ),
@@ -353,98 +355,4 @@ class _ListWidgetState extends State<ListWidget> {
       },
     );
   }
-}
-
-void _deletePlayList(BuildContext context, int index) {
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: const Text(
-      "Нет",
-      style: TextStyle(color: CColors.purpule),
-    ),
-    style: ButtonStyle(
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          side: const BorderSide(color: CColors.purpule),
-        ),
-      ),
-    ),
-    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-  );
-
-  Widget continueButton = TextButton(
-    child: const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
-      child: Text(
-        "Удалить",
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
-    style: ButtonStyle(
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18.0),
-        ),
-      ),
-      backgroundColor: MaterialStateProperty.all(CColors.purpule),
-    ),
-    onPressed: () {
-      dataBase.deletePlayList(index).then(
-            (value) => Navigator.pop(context),
-          );
-    },
-  );
-
-  // set up the AlertDialog
-  Widget alert = AlertDialog(
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-    content: SizedBox(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text("Подтверждаете удаление?",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: CColors.red)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "Ваш файл перенесется в папку “Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
-                style: TextStyle(
-                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35.0),
-              child: Row(
-                children: [
-                  continueButton,
-                  const Spacer(),
-                  cancelButton,
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      height: 180,
-      width: 350,
-    ),
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }

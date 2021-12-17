@@ -120,7 +120,10 @@ class _RecordsState extends State<Records> {
       body: _mplaybackReady
           ? Stack(
               children: [
-                MyCustomPaint(color: CColors.purpule),
+                MyCustomPaint(
+                  color: CColors.purpule,
+                  size: 0.85,
+                ),
                 Column(
                   children: [
                     Padding(
@@ -167,7 +170,7 @@ class _RecordsState extends State<Records> {
                                     await FlutterSoundHelper().convertFile(
                                         pathToSaveTemp,
                                         Codec.aacADTS,
-                                        '/sdcard/Music/audio.mp3',
+                                        '/storage/sdcard0/Downloads/${audioName.text}',
                                         Codec.mp3);
                                   },
                                   icon: Image(
@@ -229,7 +232,10 @@ class _RecordsState extends State<Records> {
             )
           : Stack(
               children: [
-                MyCustomPaint(color: CColors.purpule),
+                MyCustomPaint(
+                  color: CColors.purpule,
+                  size: 0.85,
+                ),
                 Column(
                   children: [
                     Padding(

@@ -36,6 +36,7 @@ class FinalScreen extends StatelessWidget {
           children: [
             MyCustomPaint(
               color: CColors.purpule,
+              size: 0.85,
             ),
             Column(
               children: [

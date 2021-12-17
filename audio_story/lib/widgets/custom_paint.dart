@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 class MyCustomPaint extends StatelessWidget {
 
   final Color color;
+  final double size;
 
-  const MyCustomPaint({Key? key, required this.color}) : super(key: key);
+  const MyCustomPaint({Key? key, required this.color,required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return             CustomPaint(
               size: Size(
                 400,
-                (400 * 0.8913043478260869).toDouble(),
+                (400 * size).toDouble(),
               ), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
               painter: RPSCustomPainter(color),
             );

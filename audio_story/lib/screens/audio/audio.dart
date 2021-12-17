@@ -1,33 +1,33 @@
-import 'dart:developer';
-
+import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
+import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-import 'custompaint.dart';
-import '../../widgets/player.dart';
 
-class Audio extends StatelessWidget {
+class Audio extends StatefulWidget {
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
-  
-  Future<void> AudioListDB() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    ListResult result =
-        await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
-    List<String> url = [];
-    for (var i = 0; i < result.items.length; i++) {
-      url.add(await result.items[i].getDownloadURL());
-    }
-    log(result.items[0].name);
-    url.forEach((element) {
-      log('Found file $element');
-    });
+
+  @override
+  State<Audio> createState() => _AudioState();
+}
+
+class _AudioState extends State<Audio> {
+
+  late List<AudioModel> audio;
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+
+  @override
+  void initState() {
+    super.initState();
+    dataBase.audioListDB().then((value) => audio = value);
   }
 
   @override
@@ -38,7 +38,10 @@ class Audio extends StatelessWidget {
       bottomNavigationBar: const CustomNavigationBar(3),
       body: Stack(
         children: [
-          const CustomP(),
+          const MyCustomPaint(
+            color: CColors.blue,
+            size: 0.7,
+          ),
           Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
@@ -73,9 +76,7 @@ class Audio extends StatelessWidget {
                         color: Colors.white,
                         size: 36,
                       ),
-                      onPressed: () {
-                        
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -98,7 +99,9 @@ class Audio extends StatelessWidget {
                 SizedBox(
                   width: 350,
                   height: 420,
-                  child: ListWidget(),
+                  child: ListWidget(
+                    audio: audio,
+                  ),
                 )
               ],
             ),
@@ -108,51 +111,3 @@ class Audio extends StatelessWidget {
     );
   }
 }
-
-class CustomList extends StatelessWidget {
-  const CustomList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  children: const [
-                    Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
-                    Spacer(),
-                    Text("Открыть все", style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ),
-              Expanded(child: ListWidget()),
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF6F6F6),
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 10,
-              blurRadius: 10,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        height: 400,
-      ),
-    );
-  }
-}
-

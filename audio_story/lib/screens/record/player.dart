@@ -25,7 +25,10 @@ class _PlayerState extends State<Player> {
       bottomNavigationBar: const CustomNavigationBar(2),
       body: Stack(
         children: [
-          MyCustomPaint(color: CColors.purpule),
+          MyCustomPaint(
+            color: CColors.purpule,
+            size: 0.85,
+          ),
           Column(
             children: [
               Padding(

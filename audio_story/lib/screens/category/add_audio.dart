@@ -24,10 +24,14 @@ class AddAudio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
-          MyCustomPaint(color: CColors.green),
+          MyCustomPaint(
+            color: CColors.green,
+            size: 0.7,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
             child: Column(

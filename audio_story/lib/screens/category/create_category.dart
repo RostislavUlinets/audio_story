@@ -39,7 +39,7 @@ class _CreateCategoryState extends State<CreateCategory> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            MyCustomPaint(color: CColors.green),
+            MyCustomPaint(color: CColors.green,size: 0.85,),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
               child: Column(

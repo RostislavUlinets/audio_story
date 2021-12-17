@@ -35,6 +35,7 @@ class _CategoryState extends State<Category> {
         children: [
           MyCustomPaint(
             color: CColors.green,
+            size: 0.85,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 50.0),

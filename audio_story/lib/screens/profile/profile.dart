@@ -100,6 +100,7 @@ class _ProfileState extends State<Profile> {
         children: [
           MyCustomPaint(
             color: CColors.purpule,
+            size: 0.85,
           ),
           Padding(
             padding: const EdgeInsets.only(
