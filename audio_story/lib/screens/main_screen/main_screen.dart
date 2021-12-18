@@ -1,6 +1,9 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../widgets/side_menu.dart';
 import '../../widgets/bottomnavbar.dart';
@@ -14,6 +17,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
+
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(0),
@@ -52,15 +59,20 @@ class MainScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
-                      children: const [
-                        Text(
+                      children:  [
+                        const Text(
                           "Подборки",
                           style: TextStyle(fontSize: 24, color: Colors.white),
                         ),
-                        Spacer(),
-                        Text(
-                          "Открыть все",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {
+                              navigation.changeScreen(Category.routeName);
+                            },
+                          child: const Text(
+                            "Открыть все",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
                         ),
                       ],
                     ),
@@ -170,7 +182,7 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const CustomList(),
+                  CustomList(),
                 ],
               ),
             )

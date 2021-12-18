@@ -1,10 +1,23 @@
+import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/audio/audio.dart';
+import 'package:audio_story/widgets/audio_list.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomList extends StatelessWidget {
-  const CustomList({Key? key}) : super(key: key);
+  CustomList({Key? key}) : super(key: key);
+
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   @override
   Widget build(BuildContext context) {
+    NavigationController navigation =
+        Provider.of<NavigationController>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Container(
@@ -15,14 +28,42 @@ class CustomList extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(
-                  children: const [
-                    Text("Аудиозаписи", style: TextStyle(fontSize: 24)),
-                    Spacer(),
-                    Text("Открыть все", style: TextStyle(fontSize: 16)),
+                  children: [
+                    const Text(
+                      "Аудиозаписи",
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        navigation.changeScreen(Audio.routeName);
+                      },
+                      child: const Text(
+                        "Открыть все",
+                        style: TextStyle(fontSize: 16, color: Colors.black54),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Expanded(child: _buildListView()),
+              FutureBuilder(
+                future: dataBase.audioListDB(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const CircularProgressIndicator(
+                        color: CColors.purpule,
+                        strokeWidth: 1.5,
+                      );
+                    default:
+                      return Expanded(child: ListWidget(audio: snapshot.data));
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -41,41 +82,8 @@ class CustomList extends StatelessWidget {
             ),
           ],
         ),
-        height: 370,
+        height: 350,
       ),
     );
   }
-}
-
-ListView _buildListView() {
-  return ListView.builder(
-    itemCount: 10,
-    itemBuilder: (_, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Container(
-          child: const ListTile(
-            title: Text(
-              "Малышь Кокки 1",
-              style: TextStyle(color: Color(0xFF3A3A55)),
-            ),
-            subtitle: Text(
-              "30 минут",
-              style: TextStyle(color: Color(0x803A3A55)),
-            ),
-            leading: Image(
-              image: AssetImage("assets/Play.png"),
-            ),
-            trailing: Icon(Icons.more_horiz),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(75),
-            border: Border.all(
-              color: Colors.grey,
-            ),
-          ),
-        ),
-      );
-    },
-  );
 }

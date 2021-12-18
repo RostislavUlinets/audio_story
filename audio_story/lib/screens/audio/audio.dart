@@ -18,21 +18,12 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-  late List<AudioModel> audio;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   @override
   void initState() {
     super.initState();
-
-    dataBase.audioListDB().then(
-          (value) => setState(
-            () {
-              audio = value;
-            },
-          ),
-        );
   }
 
   @override
@@ -111,12 +102,27 @@ class _AudioState extends State<Audio> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 350,
-                  height: 420,
-                  child: ListWidget(
-                    audio: audio,
-                  ),
+                FutureBuilder(
+                  future: dataBase.audioListDB(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Container(
+                          height: 250,
+                          width: 250,
+                          child: Center(
+                            child: const CircularProgressIndicator(
+                              color: CColors.purpule,
+                              strokeWidth: 1.5,
+                            ),
+                          ),
+                        );
+                      default:
+                        return Expanded(
+                            child: ListWidget(audio: snapshot.data));
+                    }
+                  },
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -19,32 +20,9 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Future<List<AudioModel>> audioListDB() async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    ListResult result =
-        await FirebaseStorage.instance.ref('Sounds/$uid/').listAll();
-    List<Map<String, dynamic>> audio = [];
-    List<AudioModel> audioFromModel = [];
 
-    for (int i = 0; i < result.items.length; i++) {
-      List<String> temp = result.items[i].name.split('_');
-      temp.removeLast();
-
-      audio.add({
-        'name': temp.join('_'),
-        'url': await result.items[i].getDownloadURL(),
-      });
-
-      audioFromModel.add(
-        AudioModel(
-          name: temp.join('_'),
-          url: await result.items[i].getDownloadURL(),
-        ),
-      );
-    }
-    setState(() {});
-    return audioFromModel;
-  }
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   late List<AudioModel> audio;
   late List<AudioModel> allAudio;
@@ -53,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    audioListDB().then((value) {
+    dataBase.audioListDB().then((value) {
       audio = value;
       allAudio = audio;
     });
@@ -69,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           const MyCustomPaint(
             color: CColors.blue,
-            size: 0.85,
+            size: 0.7,
           ),
           Padding(
             padding:

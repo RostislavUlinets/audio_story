@@ -237,9 +237,31 @@ class _CardInfoState extends State<CardInfo> {
                     padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Text(audioPropeperty.info),
                   ),
-                  const Expanded(
-                    child: ListWidget(),
-                  )
+                  FutureBuilder(
+                    future: dataBase
+                        .getSaveList(index)
+                        .then((value) => audioPropeperty = value),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Container(
+                            height: 250,
+                            width: 250,
+                            child: Center(
+                              child: const CircularProgressIndicator(
+                                color: CColors.purpule,
+                                strokeWidth: 1.5,
+                              ),
+                            ),
+                          );
+                        default:
+                          return Expanded(
+                            child: ListWidget(),
+                          );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
