@@ -60,213 +60,215 @@ class _CardInfoState extends State<CardInfo> {
       extendBody: true,
       drawer: const SideMenu(),
       bottomNavigationBar: const CustomNavigationBar(1),
-      body: Stack(
-        children: [
-          const MyCustomPaint(
-            color: CColors.green,
-            size: 0.85,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: FutureBuilder(
+        future: dataBase.getSaveList(index).then(
+              (value) => audioPropeperty = value,
+            ),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Container(
+                height: 250,
+                width: 250,
+                child: Center(
+                  child: const CircularProgressIndicator(
+                    color: CColors.purpule,
+                    strokeWidth: 1.5,
+                  ),
+                ),
+              );
+            default:
+              return Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Image.asset('assets/ArrowBack.png'),
-                          ),
-                        ),
-                      ),
-                      selectFlag
-                          ? PopupMenuButton(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.more_horiz,
-                                size: 32,
-                                color: Colors.white,
-                              ),
-                              itemBuilder: (context) => [
-                                const PopupMenuItem(
-                                  child: Text("Редактировать"),
-                                  value: 1,
-                                ),
-                                PopupMenuItem(
-                                  child: const Text("Выбрать несколько"),
-                                  onTap: () {
-                                    selectFlag = false;
-                                    setState(() {});
-                                  },
-                                  value: 2,
-                                ),
-                                PopupMenuItem(
-                                  child: const Text("Удалить подборку"),
-                                  onTap: () {
-                                    DeleteAudio.deletePlayList(context, index);
-                                  },
-                                  value: 3,
-                                ),
-                                const PopupMenuItem(
-                                  child: Text("Поделиться"),
-                                  value: 4,
-                                ),
-                              ],
-                            )
-                          : PopupMenuButton(
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.more_horiz,
-                                size: 32,
-                                color: Colors.white,
-                              ),
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: const Text("Отменить выбор"),
-                                  onTap: () {
-                                    selectFlag = true;
-                                    setState(() {});
-                                  },
-                                  value: 1,
-                                ),
-                                const PopupMenuItem(
-                                  child: Text("Добавить в подборку"),
-                                  value: 2,
-                                ),
-                                PopupMenuItem(
-                                  child: const Text("Поделиться"),
-                                  onTap: () {
-                                    Share.shareFiles(
-                                        ['/sdcard/Download/audio.mp3']);
-                                  },
-                                  value: 3,
-                                ),
-                                const PopupMenuItem(
-                                  child: Text("Скачать все"),
-                                  value: 4,
-                                ),
-                                //TODO: CHECK SOLUTION
-                                PopupMenuItem(
-                                  child: const Text("Удалить все"),
-                                  onTap: () => dataBase
-                                      .deleteSounds(index, eraseList)
-                                      .then(
-                                        (value) => Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        super.widget)),
-                                      ),
-                                  value: 4,
-                                ),
-                              ],
-                            ),
-                    ],
+                  const MyCustomPaint(
+                    color: CColors.green,
+                    size: 0.85,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
-                      audioPropeperty.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
-                            SizedBox(
-                              child: Text(
-                                "n аудио\n1:30 часа",
-                                style: TextStyle(
-                                  fontSize: 13,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 60.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
                                   color: Colors.white,
                                 ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Image.asset('assets/ArrowBack.png'),
+                                  ),
+                                ),
                               ),
-                              width: 70,
+                              selectFlag
+                                  ? PopupMenuButton(
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      icon: const Icon(
+                                        Icons.more_horiz,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      itemBuilder: (context) => [
+                                        const PopupMenuItem(
+                                          child: Text("Редактировать"),
+                                          value: 1,
+                                        ),
+                                        PopupMenuItem(
+                                          child:
+                                              const Text("Выбрать несколько"),
+                                          onTap: () {
+                                            selectFlag = false;
+                                            setState(() {});
+                                          },
+                                          value: 2,
+                                        ),
+                                        PopupMenuItem(
+                                          child: const Text("Удалить подборку"),
+                                          onTap: () {
+                                            DeleteAudio.deletePlayList(
+                                                context, index);
+                                          },
+                                          value: 3,
+                                        ),
+                                        const PopupMenuItem(
+                                          child: Text("Поделиться"),
+                                          value: 4,
+                                        ),
+                                      ],
+                                    )
+                                  : PopupMenuButton(
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0),
+                                        ),
+                                      ),
+                                      icon: const Icon(
+                                        Icons.more_horiz,
+                                        size: 32,
+                                        color: Colors.white,
+                                      ),
+                                      itemBuilder: (context) => [
+                                        PopupMenuItem(
+                                          child: const Text("Отменить выбор"),
+                                          onTap: () {
+                                            selectFlag = true;
+                                            setState(() {});
+                                          },
+                                          value: 1,
+                                        ),
+                                        const PopupMenuItem(
+                                          child: Text("Добавить в подборку"),
+                                          value: 2,
+                                        ),
+                                        PopupMenuItem(
+                                          child: const Text("Поделиться"),
+                                          onTap: () {
+                                            Share.shareFiles(
+                                                ['/sdcard/Download/audio.mp3']);
+                                          },
+                                          value: 3,
+                                        ),
+                                        const PopupMenuItem(
+                                          child: Text("Скачать все"),
+                                          value: 4,
+                                        ),
+                                        //TODO: CHECK SOLUTION
+                                        PopupMenuItem(
+                                          child: const Text("Удалить все"),
+                                          onTap: () => dataBase
+                                              .deleteSounds(index, eraseList)
+                                              .then(
+                                                (value) =>
+                                                    Navigator.pushReplacement(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                super.widget)),
+                                              ),
+                                          value: 4,
+                                        ),
+                                      ],
+                                    ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              audioPropeperty.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        image: audioPropeperty.image != null
-                            ? DecorationImage(
-                                image: audioPropeperty.image.image,
-                                fit: BoxFit.cover,
-                              )
-                            : const DecorationImage(
-                                image: AssetImage('assets/story.jpg'),
-                                fit: BoxFit.cover,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: const [
+                                    SizedBox(
+                                      child: Text(
+                                        "n аудио\n1:30 часа",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      width: 70,
+                                    ),
+                                  ],
+                                ),
                               ),
-                        color: Colors.black,
+                              decoration: BoxDecoration(
+                                image: audioPropeperty.image != null
+                                    ? DecorationImage(
+                                        image: audioPropeperty.image.image,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : const DecorationImage(
+                                        image: AssetImage('assets/story.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                color: Colors.black,
+                              ),
+                              height: 210,
+                              width: double.infinity,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5.0),
+                            child: Text(audioPropeperty.info),
+                          ),
+                          Expanded(
+                            child: ListWidget(),
+                          ),
+                        ],
                       ),
-                      height: 210,
-                      width: double.infinity,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: Text(audioPropeperty.info),
-                  ),
-                  FutureBuilder(
-                    future: dataBase
-                        .getSaveList(index)
-                        .then((value) => audioPropeperty = value),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Container(
-                            height: 250,
-                            width: 250,
-                            child: Center(
-                              child: const CircularProgressIndicator(
-                                color: CColors.purpule,
-                                strokeWidth: 1.5,
-                              ),
-                            ),
-                          );
-                        default:
-                          return Expanded(
-                            child: ListWidget(),
-                          );
-                      }
-                    },
-                  ),
                 ],
-              ),
-            ),
-          ),
-        ],
+              );
+          }
+        },
       ),
     );
   }

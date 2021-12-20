@@ -1,6 +1,7 @@
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio/audio.dart';
+import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/category/create_category.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
@@ -58,27 +59,53 @@ class NavApp extends StatelessWidget {
             return true;
           },
           pages: [
-            const MaterialPage(child: WelcomeScreen()),
+            const MaterialPage(
+              child: WelcomeScreen(),
+            ),
             if (navigation.screenName == FinalScreen.routeName)
-              const MaterialPage(child: FinalScreen(duration: 3)),
+              const MaterialPage(
+                child: FinalScreen(duration: 3),
+              ),
             if (navigation.screenName == MainScreen.routeName)
-              const MaterialPage(child: MainScreen()),
+              const MaterialPage(
+                child: MainScreen(),
+              ),
             if (navigation.screenName == Category.routeName)
-              const MaterialPage(child: Category()),
+              const MaterialPage(
+                child: Category(),
+              ),
             if (navigation.screenName == Audio.routeName)
-              const MaterialPage(child: Audio()),
+              const MaterialPage(
+                child: Audio(),
+              ),
             if (navigation.screenName == Profile.routeName)
-              const MaterialPage(child: Profile()),
+              const MaterialPage(
+                child: Profile(),
+              ),
             if (navigation.screenName == Subscribe.routeName)
-              const MaterialPage(child: Subscribe()),
+              const MaterialPage(
+                child: Subscribe(),
+              ),
             if (navigation.screenName == Records.routeName)
-              const MaterialPage(child: Records()),//records
+              const MaterialPage(
+                child: Records(),
+              ), //records
             if (navigation.screenName == Player.routeName)
-              const MaterialPage(child: Player()),
+              const MaterialPage(
+                child: Player(),
+              ),
             if (navigation.screenName == CreateCategory.routeName)
-              const MaterialPage(child: CreateCategory()),
-              if (navigation.screenName == SearchScreen.routeName)
-              const MaterialPage(child: SearchScreen()),
+              const MaterialPage(
+                child: CreateCategory(),
+              ),
+            if (navigation.screenName == SearchScreen.routeName)
+              const MaterialPage(
+                child: SearchScreen(),
+              ),
+            if (navigation.screenName == AudioInfo.routeName)
+              const MaterialPage(
+                child: AudioInfo(),
+              ),
           ],
         ),
       ),

@@ -1,7 +1,10 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -55,11 +58,19 @@ class WelcomeScreen extends StatelessWidget {
                         ElevatedButton(
                           child: const Text("Продолжить"),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()),
-                            );
+                            if (FirebaseAuth.instance.currentUser?.uid ==
+                                null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                              );
+                            } else {
+                              NavigationController navigation =
+                                  Provider.of<NavigationController>(context,
+                                      listen: false);
+                              navigation.changeScreen('/splash');
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 50),
