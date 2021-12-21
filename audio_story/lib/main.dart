@@ -102,10 +102,10 @@ class NavApp extends StatelessWidget {
               const MaterialPage(
                 child: SearchScreen(),
               ),
-            if (navigation.screenName == AudioInfo.routeName)
-              const MaterialPage(
-                child: AudioInfo(),
-              ),
+            // if (navigation.screenName == AudioInfo.routeName)
+            //   const MaterialPage(
+            //     child: AudioInfo(),
+            //   ),
           ],
         ),
       ),

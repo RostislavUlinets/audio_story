@@ -5,6 +5,7 @@ import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animations/animations.dart';
 
 class ListWidget extends StatefulWidget {
   List<AudioModel> audio;
@@ -79,10 +80,13 @@ class _ListWidgetState extends State<ListWidget> {
                   PopupMenuItem(
                     child: Text("Подробнее об аудиозаписи"),
                     onTap: () {
-                      NavigationController navigation =
-                          Provider.of<NavigationController>(context,
-                              listen: false);
-                      navigation.changeScreen(AudioInfo.routeName);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AudioInfo(
+                          url: audio[index].url,
+                          name: audio[index].name,
+                        ),
+                      );
                     },
                     value: 2,
                   ),

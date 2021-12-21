@@ -62,6 +62,9 @@ dependencies:
   #Social share
   share: ^2.0.4
 
+  #Animations
+  animations: ^2.0.2
+
 
 
   #SoundPlayer

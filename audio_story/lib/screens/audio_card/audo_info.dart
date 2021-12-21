@@ -1,7 +1,7 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/screens/record/widget/test.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,10 @@ import 'package:provider/provider.dart';
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
 
-  const AudioInfo({Key? key}) : super(key: key);
+  final String name, url;
+
+  const AudioInfo({Key? key, required this.name, required this.url})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +40,7 @@ class AudioInfo extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () {
-                              NavigationController navigation =
-                                  Provider.of<NavigationController>(context,
-                                      listen: false);
-                              navigation.changeScreen(MainScreen.routeName);
+                              Navigator.pop(context);
                             },
                             icon: Image.asset('assets/Arrow - Left Circle.png'),
                           ),
@@ -57,14 +57,32 @@ class AudioInfo extends StatelessWidget {
                             ),
                             itemBuilder: (context) => [
                               PopupMenuItem(
-                                child: const Text("Удалить"),
+                                child: const Text("Добавить в подборку"),
                                 //TODO: Question
                                 onTap: () {},
                                 value: 1,
                               ),
                               const PopupMenuItem(
-                                child: Text("Подробнее об аудиозаписи"),
+                                child: Text("Редактировать название"),
                                 value: 2,
+                              ),
+                              PopupMenuItem(
+                                child: const Text("Поделиться"),
+                                //TODO: Question
+                                onTap: () {},
+                                value: 3,
+                              ),
+                              PopupMenuItem(
+                                child: const Text("Скачать"),
+                                //TODO: Question
+                                onTap: () {},
+                                value: 4,
+                              ),
+                              PopupMenuItem(
+                                child: const Text("Удалить"),
+                                //TODO: Question
+                                onTap: () {},
+                                value: 5,
                               ),
                             ],
                           ),
@@ -85,11 +103,14 @@ class AudioInfo extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        "Название подборки",
+                        name,
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
-                    const PlayerOnProgress(),
+                    PlayerOnProgress(
+                      name: name,
+                      url: url,
+                    ),
                   ],
                 ),
               ),
