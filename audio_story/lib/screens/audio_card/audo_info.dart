@@ -2,6 +2,7 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,20 @@ class AudioInfo extends StatelessWidget {
                               PopupMenuItem(
                                 child: const Text("Скачать"),
                                 //TODO: Question
-                                onTap: () {},
+                                onTap: () async {
+                                  LocalStorage storage = LocalStorage();
+                                  final message = await storage.downloadFile(
+                                    url,
+                                    name,
+                                    '/sdcard/Download',
+                                  );
+                                  final snackBar = SnackBar(
+                                    content: Text('Downloaded $message'),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
                                 value: 4,
                               ),
                               PopupMenuItem(
