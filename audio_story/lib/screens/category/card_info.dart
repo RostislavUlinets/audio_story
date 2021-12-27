@@ -67,11 +67,11 @@ class _CardInfoState extends State<CardInfo> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Container(
+              return const SizedBox(
                 height: 250,
                 width: 250,
                 child: Center(
-                  child: const CircularProgressIndicator(
+                  child: CircularProgressIndicator(
                     color: CColors.purpule,
                     strokeWidth: 1.5,
                   ),
@@ -258,7 +258,7 @@ class _CardInfoState extends State<CardInfo> {
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(audioPropeperty.info),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: ListWidget(),
                           ),
                         ],

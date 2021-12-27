@@ -1,9 +1,10 @@
+import 'package:audio_story/bloc/record/record_bloc.dart';
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio/audio.dart';
-import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/category/create_category.dart';
+import 'package:audio_story/screens/deleted/deleted.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/record/player.dart';
@@ -12,6 +13,7 @@ import 'package:audio_story/screens/search/search.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'screens/login_screen/welcome_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -24,11 +26,15 @@ import 'service/auth.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(
     MultiProvider(
       providers: [
         ListenableProvider<NavigationController>(
           create: (_) => NavigationController(),
+        ),
+        BlocProvider<MyBloc>(
+          create: (context) => MyBloc(),
         ),
       ],
       child: const NavApp(),
@@ -101,6 +107,10 @@ class NavApp extends StatelessWidget {
             if (navigation.screenName == SearchScreen.routeName)
               const MaterialPage(
                 child: SearchScreen(),
+              ),
+            if (navigation.screenName == DeeltedScreen.routeName)
+              const MaterialPage(
+                child: DeeltedScreen(),
               ),
             // if (navigation.screenName == AudioInfo.routeName)
             //   const MaterialPage(

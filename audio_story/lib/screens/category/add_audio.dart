@@ -12,7 +12,7 @@ import 'widget/player.dart';
 var playList = [];
 
 class AddAudio extends StatefulWidget {
-  AddAudio({Key? key}) : super(key: key);
+  const AddAudio({Key? key}) : super(key: key);
 
   @override
   State<AddAudio> createState() => _AddAudioState();
@@ -25,11 +25,22 @@ class _AddAudioState extends State<AddAudio> {
 
   @override
   void initState() {
+    getData();
     super.initState();
-    dataBase.audioListDB().then((value) {
-      audio = value;
-      allAudio = audio;
-    });
+    
+    // dataBase.audioListDB().then((value) {
+    //   audio = value;
+    //   allAudio = audio;
+    // });
+  }
+
+  Future<void> getData() async {
+    await dataBase.audioListDB().then(
+      (value) {
+        audio = value;
+        allAudio = audio;
+      },
+    );
   }
 
   DatabaseService dataBase =

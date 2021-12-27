@@ -147,13 +147,11 @@ class _ProfileState extends State<EditProfile> {
                       if(file != null){
                         uploadFile();
                       }                    
-                      //final phone = _phoneController.text.trim();
-                      //dataBase.updateUserData(_userName.text, phone);
+
                       if (_userName.text.trim().isNotEmpty) {
                         dataBase.updateUserName(_userName.text.trim());
                       }
-                      //AuthService.instance.loginUser(phone, context);
-                      //navigation.changeScreen('/profile');
+
                       if (_phoneController.text.trim().isNotEmpty) {
                         const _auth = AuthService.instance;
                         _auth.loginUser(_phoneController.text.trim(), context);

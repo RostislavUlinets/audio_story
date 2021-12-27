@@ -1,12 +1,9 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
@@ -118,7 +115,7 @@ class AudioInfo extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         name,
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 24),
                       ),
                     ),
                     PlayerOnProgress(

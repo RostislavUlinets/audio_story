@@ -42,9 +42,11 @@ class DatabaseService {
   }
 
   Future updateUserName(String name) async {
-    return await userCollection.doc(uid).update({
-      'Name': name,
-    });
+    return await userCollection.doc(uid).update(
+      {
+        'Name': name,
+      },
+    );
   }
 
   Future updateUserPhoneNumber(String phoneNumber) async {
@@ -168,18 +170,26 @@ class DatabaseService {
   }
 
   Future<SoundModel> getSaveList(int index) async {
-  DocumentSnapshot ds =
-      await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-  var sounds = ds.get('SaveList');
-  sounds = sounds[index];
-  String bytes = sounds['Image'];
-  SoundModel audioBase = SoundModel(
-    sounds: ds.get('SaveList'),
-    audioList: sounds['Sounds'],
-    name: sounds['Name'],
-    info: sounds['Info'],
-    image: imageFromBase64String(bytes),
-  );
-  return audioBase;
-}
+    DocumentSnapshot ds =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    var sounds = ds.get('SaveList');
+    sounds = sounds[index];
+    String bytes = sounds['Image'];
+    SoundModel audioBase = SoundModel(
+      sounds: ds.get('SaveList'),
+      audioList: sounds['Sounds'],
+      name: sounds['Name'],
+      info: sounds['Info'],
+      image: imageFromBase64String(bytes),
+    );
+    return audioBase;
+  }
+
+  // Future<void>sendMetaData(String name, bool isDeleted) async {
+  //   Map<String, dynamic> newMetadata = {
+  //     'name': name,
+  //     'isDeleted': isDeleted
+  //   };
+  //   Database
+  // }
 }

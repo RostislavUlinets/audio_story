@@ -213,7 +213,7 @@ class SideMenu extends StatelessWidget {
               navigation.changeScreen('/search');
               break;
             case NavigationItem.delete:
-              navigation.changeScreen('/subscribe');
+              navigation.changeScreen('/deleted');
               break;
             case NavigationItem.help:
               navigation.changeScreen('/subscribe');

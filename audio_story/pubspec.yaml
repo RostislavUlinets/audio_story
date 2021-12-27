@@ -65,6 +65,9 @@ dependencies:
   #Animations
   animations: ^2.0.2
 
+  #BLoC
+  flutter_bloc: ^8.0.0
+
 
 
   #SoundPlayer

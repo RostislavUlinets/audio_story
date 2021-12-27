@@ -170,6 +170,7 @@ class _ProfileState extends State<Profile> {
                     elevation: 5,
                     shadowColor: Colors.grey,
                     child: TextField(
+                      readOnly: true,
                       inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
                       controller: TextEditingController(text: phoneNumber),

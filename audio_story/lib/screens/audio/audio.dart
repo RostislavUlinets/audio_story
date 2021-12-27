@@ -1,5 +1,4 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -108,11 +107,11 @@ class _AudioState extends State<Audio> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Container(
+                        return const SizedBox(
                           height: 250,
                           width: 250,
                           child: Center(
-                            child: const CircularProgressIndicator(
+                            child: CircularProgressIndicator(
                               color: CColors.purpule,
                               strokeWidth: 1.5,
                             ),

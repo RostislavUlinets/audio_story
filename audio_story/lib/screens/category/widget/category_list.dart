@@ -116,7 +116,7 @@ class _PlayListState extends State<PlayList> {
                               ),
                             )
                           : DecorationImage(
-                              image: AssetImage('assets/story.jpg'),
+                              image: const AssetImage('assets/story.jpg'),
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
                                 Colors.black.withOpacity(0.8),
