@@ -7,6 +7,7 @@ import 'package:audio_story/screens/category/card_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseService {
   String uid;
@@ -15,6 +16,8 @@ class DatabaseService {
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
+  final CollectionReference soundCollection = 
+      FirebaseFirestore.instance.collection('sounds');
   static ListResult? audioList;
 
   Future<void> initUserData() async {
@@ -28,37 +31,44 @@ class DatabaseService {
             }
           else
             {
-              updateUserData(
-                  'User', FirebaseAuth.instance.currentUser!.phoneNumber)
+              createUserData(),
             }
         });
+  }
+  Future<void> createUserData() async {
+    await userCollection.doc(uid).set({
+      'name' : 'User',
+      'phone' : FirebaseAuth.instance.currentUser!.phoneNumber,
+    });
+    Map<String,dynamic> myMap ={};
+    await soundCollection.doc(uid).set(myMap);
   }
 
   Future updateUserData(String name, String? phonenumber) async {
     return await userCollection.doc(uid).set({
-      'Name': name,
-      'Phone number': phonenumber,
+      'name': name,
+      'phone': phonenumber,
     });
   }
 
   Future updateUserName(String name) async {
     return await userCollection.doc(uid).update(
       {
-        'Name': name,
+        'name': name,
       },
     );
   }
 
   Future updateUserPhoneNumber(String phoneNumber) async {
     return await userCollection.doc(uid).update({
-      'Phone number': phoneNumber,
+      'phone': phoneNumber,
     });
   }
 
   Future<String> getCurrentUserData() async {
     try {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
-      String name = ds.get('Name');
+      String name = ds.get('name');
       return name;
     } catch (e) {
       log(e.toString());
@@ -69,7 +79,7 @@ class DatabaseService {
   Future<String> getCurrentUserPhoneNumber() async {
     try {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
-      String phoneNumber = ds.get('Phone number');
+      String phoneNumber = ds.get('phone');
       return phoneNumber;
     } catch (e) {
       log(e.toString());
@@ -86,45 +96,47 @@ class DatabaseService {
     }
   }
 
-  ListResult? getAudioList() {
-    return audioList;
+  Future<void> addAudio(String destination,String name) async {
+    Reference result =
+         FirebaseStorage.instance.ref(destination);
+    Map<String,dynamic> audioInfo = {
+      'name' : name,
+      'url' : result.getDownloadURL(),
+      'isDeleted' : false
+    };
+    Uuid().
+    await soundCollection.doc(uid).set({
+      audioId : audioInfo
+    });
   }
 
-  Future<void> updatePlayList(String image, String name, String info) async {
-    DocumentSnapshot ds = await userCollection.doc(uid).get();
-    var temp = ds.get('SaveList');
-    temp = temp[0];
-    temp.update('Image', (dynamic val) => val = image);
-    temp.update('Name', (dynamic val) => val = name);
-    temp.update('Info', (dynamic val) => val = info);
-    await userCollection.doc(uid).update({
-      'SaveList': [temp],
-    });
+  ListResult? getAudioList() {
+    return audioList;
   }
 
   Future<void> createPlayList(
       String image, String name, String info, var soundList) async {
     var playList = {
-      'Image': image,
-      'Name': name,
-      'Info': info,
-      'Sounds': soundList,
+      'image': image,
+      'name': name,
+      'info': info,
+      'sounds': soundList,
     };
     log(soundList.toString());
     DocumentSnapshot ds = await userCollection.doc(uid).get();
-    var temp = ds.get('SaveList');
+    var temp = ds.get('saveList');
     temp.add(playList);
     await userCollection.doc(uid).update({
-      'SaveList': temp,
+      'saveList': temp,
     });
   }
 
   Future<void> deletePlayList(int index) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
-    List<dynamic> saveList = ds.get('SaveList');
+    List<dynamic> saveList = ds.get('saveList');
     saveList.removeAt(index);
     await userCollection.doc(uid).update({
-      'SaveList': saveList,
+      'saveList': saveList,
     });
     log("YEAH!");
   }
@@ -154,11 +166,6 @@ class DatabaseService {
       List<String> temp = result.items[i].name.split('_');
       temp.removeLast();
 
-      audio.add({
-        'name': temp.join('_'),
-        'url': await result.items[i].getDownloadURL(),
-      });
-
       audioFromModel.add(
         AudioModel(
           name: temp.join('_'),
@@ -172,24 +179,18 @@ class DatabaseService {
   Future<SoundModel> getSaveList(int index) async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-    var sounds = ds.get('SaveList');
+    var sounds = ds.get('saveList');
     sounds = sounds[index];
-    String bytes = sounds['Image'];
+    String bytes = sounds['image'];
     SoundModel audioBase = SoundModel(
-      sounds: ds.get('SaveList'),
-      audioList: sounds['Sounds'],
-      name: sounds['Name'],
-      info: sounds['Info'],
+      sounds: ds.get('saveList'),
+      audioList: sounds['sounds'],
+      name: sounds['name'],
+      info: sounds['info'],
       image: imageFromBase64String(bytes),
     );
     return audioBase;
   }
 
-  // Future<void>sendMetaData(String name, bool isDeleted) async {
-  //   Map<String, dynamic> newMetadata = {
-  //     'name': name,
-  //     'isDeleted': isDeleted
-  //   };
-  //   Database
-  // }
+
 }
