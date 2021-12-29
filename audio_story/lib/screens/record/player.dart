@@ -30,12 +30,14 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+
   Future<void> saveAudio() async {
     File file = File(pathToSaveAudio);
     String uid = FirebaseAuth.instance.currentUser!.uid;
     DatabaseService dataBase = DatabaseService(uid);
     final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
     dataBase.uploadFile(destination, file);
+    dataBase.addAudio(destination, audioName.text);
   }
 
   @override

@@ -1,7 +1,9 @@
-import 'package:audio_story/bloc/record/record_event.dart';
-import 'package:audio_story/bloc/record/record_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+
+import 'record_event.dart';
+import 'record_state.dart';
+
+
 
 class MyBloc extends Bloc<MyEvent, MyState> {
   MyBloc() : super(StateA()) {

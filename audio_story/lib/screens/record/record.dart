@@ -1,5 +1,5 @@
-
 import 'package:audio_story/bloc/record/record_bloc.dart';
+import 'package:audio_story/bloc/record/record_event.dart';
 import 'package:audio_story/bloc/record/record_state.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/record/player.dart';
@@ -9,6 +9,9 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'recrorder.dart';
+
 class Records extends StatefulWidget {
   static const routeName = '/record';
 
@@ -19,19 +22,21 @@ class Records extends StatefulWidget {
 }
 
 class _RecordsState extends State<Records> {
-
   @override
   Widget build(BuildContext context) {
     NavigationController navigation =
         Provider.of<NavigationController>(context);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBody: true,
-      drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigationBar(2),
-      body: BlocBuilder<MyBloc, MyState>(
-        builder: (_, state) => state is StateA ? const Records() : const Player(),
+    return BlocProvider<MyBloc>(
+      create: (_) => MyBloc(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBody: true,
+        drawer: const SideMenu(),
+        bottomNavigationBar: const CustomNavigationBar(2),
+        body: BlocBuilder<MyBloc, MyState>(
+        builder: (_, state) => state is StateA ? Recorder() : Player(),
+      ),
       ),
     );
   }

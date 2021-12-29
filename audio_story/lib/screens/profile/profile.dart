@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   
 
-  String phoneNumber = "", userName = "USER";
+  String phoneNumber = '', userName = "USER";
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
@@ -75,14 +75,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> getUserPhoneNumber() async {
     if (user!.isAnonymous == false) {
-      try {
-        String? temp = await dataBase.getCurrentUserPhoneNumber();
-        setState(() {
-          phoneNumber = temp;
-        });
-      } catch (e) {
-        log("getUserPhoneNumber error");
-      }
+      phoneNumber = user!.phoneNumber!;
     }
   }
 

@@ -66,10 +66,6 @@ class _RecorderState extends State<Recorder> {
 
   Future<void> stopRecorder() async {
     await _mRecorder!.stopRecorder();
-    // if (_mRecordingDataSubscription != null) {
-    //   await _mRecordingDataSubscription!.cancel();
-    //   _mRecordingDataSubscription = null;
-    // }
     _mplaybackReady = true;
     await FlutterSoundHelper()
         .convertFile(pathToSaveTemp, Codec.aacADTS, pathToSaveAudio, Codec.mp3);
@@ -82,8 +78,8 @@ class _RecorderState extends State<Recorder> {
     return _mRecorder!.isStopped
         ? record
         : () {
-            stopRecorder();
-            context.read<MyBloc>().add(EventB());
+            stopRecorder()
+                .then((value) => context.read<MyBloc>().add(EventB()));
           };
   }
 

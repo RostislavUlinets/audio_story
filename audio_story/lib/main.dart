@@ -33,9 +33,6 @@ void main() async {
         ListenableProvider<NavigationController>(
           create: (_) => NavigationController(),
         ),
-        BlocProvider<MyBloc>(
-          create: (context) => MyBloc(),
-        ),
       ],
       child: const NavApp(),
     ),

@@ -67,8 +67,10 @@ dependencies:
 
   #BLoC
   flutter_bloc: ^8.0.0
+  bloc: ^8.0.1
 
-
+  #Uuid
+  uuid: ^3.0.5
 
   #SoundPlayer
   #audioplayers: ^0.17.1
