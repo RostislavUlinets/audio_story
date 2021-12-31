@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'widget/player.dart';
 
-List<AudioModel> playList = [];
+
 
 class AddAudio extends StatefulWidget {
   const AddAudio({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class AddAudio extends StatefulWidget {
 }
 
 class _AddAudioState extends State<AddAudio> {
+  
+  List<AudioModel> playList = [];
   void _sendDataBack(BuildContext context, var playList) {
     Navigator.pop(context, playList);
   }
@@ -27,7 +31,7 @@ class _AddAudioState extends State<AddAudio> {
   void initState() {
     getData();
     super.initState();
-    
+
     // dataBase.audioListDB().then((value) {
     //   audio = value;
     //   allAudio = audio;
@@ -39,9 +43,7 @@ class _AddAudioState extends State<AddAudio> {
       (value) {
         audio = value;
         allAudio = audio;
-        setState(() {
-          
-        });
+        setState(() {});
       },
     );
   }
@@ -121,6 +123,10 @@ class _AddAudioState extends State<AddAudio> {
                   child: ListView.builder(
                     itemCount: audio.length,
                     itemBuilder: (_, index) {
+                      Image? _something = const Image(
+                        image: AssetImage('assets/TickSquare.png'),
+                        color: Colors.white,
+                      );
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: Container(
@@ -145,9 +151,22 @@ class _AddAudioState extends State<AddAudio> {
                                         ));
                               },
                             ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.add),
-                              onPressed: () => _saveAudio(audio[index]),
+                            trailing: GestureDetector(
+                              onTap: () => {
+                                _saveAudio(audio[index]),
+                                setState(() {
+                                  _something = const Image(
+                                    image: AssetImage('assets/TickSquare.png'),
+                                  );
+                                }),
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                        width: 2, color: Colors.black)),
+                                child: _something,
+                              ),
                             ),
                           ),
                           decoration: BoxDecoration(
@@ -191,5 +210,6 @@ class _AddAudioState extends State<AddAudio> {
 
   void _saveAudio(AudioModel audio) {
     playList.add(audio);
+    log(playList.toString());
   }
 }

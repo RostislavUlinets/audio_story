@@ -17,6 +17,8 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
+  Color _color = Colors.white38;
+
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
@@ -90,13 +92,62 @@ class _AudioState extends State<Audio> {
                     vertical: 40,
                   ),
                   child: Row(
-                    children: const [
-                      Text(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
                         "20 аудио\n10:30 часов",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
                         ),
+                      ),
+                      Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.centerRight,
+                            height: 50,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: _color,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _color == Colors.white38
+                                      ? _color = Colors.white
+                                      : _color = Colors.white38;
+                                  setState(() {});
+                                },
+                                child: Image(
+                                  image: AssetImage("assets/fluent_arrow.png"),
+                                  color: CColors.purpule,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            width: 160,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              children: const [
+                                Image(
+                                  image: AssetImage("assets/Play.png"),
+                                  color: CColors.purpule,
+                                ),
+                                Text(
+                                  "Запустить все",
+                                  style: TextStyle(color: CColors.purpule),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

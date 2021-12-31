@@ -38,6 +38,7 @@ class _CreateCategoryState extends State<CreateCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(1),
       body: SingleChildScrollView(
         child: Stack(
@@ -179,10 +180,13 @@ class _CreateCategoryState extends State<CreateCategory> {
                           ? TextButton(
                               onPressed: () async {
                                 soundList = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const AddAudio(),
-                                    ));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const AddAudio(),
+                                  ),
+                                ).whenComplete(
+                                  () => setState(() {}),
+                                );
                               },
                               child: const Text(
                                 "Добавить аудиофайл",
@@ -194,7 +198,11 @@ class _CreateCategoryState extends State<CreateCategory> {
                                 ),
                               ),
                             )
-                          : Expanded(child: Container(child: ListWidget(audio: soundList!))),
+                          : Container(
+                            height: 250,
+                            width: double.infinity - 50,
+                              child: ListWidget(audio: soundList!),
+                            ),
                     ),
                   )
                 ],

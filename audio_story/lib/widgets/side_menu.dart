@@ -248,7 +248,7 @@ class SideMenu extends StatelessWidget {
         if (navigation.screenName == '/profile') return true;
         break;
       case NavigationItem.delete:
-        if (navigation.screenName == '/audio') return true;
+        if (navigation.screenName == '/deleted') return true;
         break;
     }
     return false;

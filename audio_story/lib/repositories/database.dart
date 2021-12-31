@@ -118,9 +118,13 @@ class DatabaseService {
     return audioList;
   }
 
-  Future<void> createPlayList(String image, String name, String info, List<AudioModel>? soundList) async {
+  Future<void> createPlayList(String image, String name, String info,List<AudioModel>? soundList) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
 
     List<Map<String, dynamic>> soundListJson = [];
+
+    List<dynamic> saveList = ds.get('saveList');
+
     for (int i = 0; i < soundList!.length; i++) {
       soundListJson.add(soundList[i].toJson());
     }
@@ -130,16 +134,10 @@ class DatabaseService {
       'info': info,
       'sounds': soundListJson,
     };
-    DocumentSnapshot ds = await userCollection.doc(uid).get();
-    List<Map<String, dynamic>> temp = [];
-    try {
-      temp = ds.get('saveList');
-    } catch (e) {
-      log("doc not exist");
-    }
-    temp.add(playList);
+
+    saveList.add(playList);
     await userCollection.doc(uid).update({
-      'saveList': temp,
+      'saveList': saveList,
     });
   }
 
