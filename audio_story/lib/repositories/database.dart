@@ -118,7 +118,8 @@ class DatabaseService {
     return audioList;
   }
 
-  Future<void> createPlayList(String image, String name, String info,List<AudioModel>? soundList) async {
+  Future<void> createPlayList(String image, String name, String info,
+      List<AudioModel>? soundList) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
 
     List<Map<String, dynamic>> soundListJson = [];
@@ -163,6 +164,10 @@ class DatabaseService {
       'SaveList': soundsList,
     });
     log(sounds.toString());
+  }
+
+  Future<void> fullDeleteAudio(String id) async {
+    await soundCollection.doc(uid).update({id: FieldValue.delete()});
   }
 
   Future<List<AudioModel>> audioListDB() async {
