@@ -12,13 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:uuid/uuid.dart';
 
 import 'widget/dialog.dart';
 import 'widget/test.dart';
-
-final audioName = TextEditingController(text: 'Аудиозапись 1');
-final pathToSaveTemp = '/sdcard/Download/temp.aac';
-final pathToSaveAudio = '/sdcard/Download/audio.mp3';
 
 class Player extends StatefulWidget {
   static const routeName = '/player';
@@ -30,14 +27,19 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  TextEditingController audioName =
+      TextEditingController(text: 'Аудиозапись 1');
+  final pathToSaveTemp = '/sdcard/Download/temp.aac';
+  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
 
   Future<void> saveAudio() async {
     File file = File(pathToSaveAudio);
     String uid = FirebaseAuth.instance.currentUser!.uid;
     DatabaseService dataBase = DatabaseService(uid);
     final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
-    dataBase.uploadFile(destination, file);
-    dataBase.addAudio(destination, audioName.text);
+    dataBase.uploadFile(destination, file)?.whenComplete(
+          () => dataBase.addAudio(destination, audioName.text),
+        );
   }
 
   @override

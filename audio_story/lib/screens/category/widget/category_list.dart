@@ -27,7 +27,11 @@ class _PlayListState extends State<PlayList> {
   Future getSaveList() async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-    return ds.get('SaveList');
+    try {
+      return ds.get('saveList');
+    } catch (e) {
+      return [];
+    }
   }
 
   Image imageFromBase64String(String base64String) {
@@ -50,8 +54,8 @@ class _PlayListState extends State<PlayList> {
         sounds.isNotEmpty ? sounds.length : 0,
         (index) {
           if (sounds.isNotEmpty) {
-            name = sounds[index]['Name'];
-            String bytes = sounds[index]['Image'];
+            name = sounds[index]['name'];
+            String bytes = sounds[index]['image'];
             image = imageFromBase64String(bytes);
           }
           return SizedBox(

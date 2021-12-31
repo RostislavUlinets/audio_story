@@ -19,12 +19,13 @@ class Recorder extends StatefulWidget {
 }
 
 class _RecorderState extends State<Recorder> {
+  
   final pathToSaveAudio = '/sdcard/Download/audio.mp3';
   final pathToSaveTemp = '/sdcard/Download/temp.aac';
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
-  final audioName = TextEditingController(text: 'Аудиозапись 1');
+  TextEditingController audioName = TextEditingController(text: 'Аудиозапись 1');
   //StreamSubscription? _mRecordingDataSubscription;
 
   Future<void> _openRecorder() async {

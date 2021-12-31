@@ -301,7 +301,7 @@ class _ListWidgetState extends State<ListWidget> {
           child: Container(
             child: ListTile(
               title: Text(
-                audioPropeperty.audioList[index]['Name'],
+                audioPropeperty.audioList[index]['name'],
                 style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
               subtitle: const Text(

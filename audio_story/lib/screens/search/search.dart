@@ -24,8 +24,8 @@ class _SearchScreenState extends State<SearchScreen> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  late List<AudioModel> audio;
-  late List<AudioModel> allAudio;
+  List<AudioModel> audio = [];
+  List<AudioModel> allAudio = [];
   String query = '';
 
   @override
@@ -34,6 +34,9 @@ class _SearchScreenState extends State<SearchScreen> {
     dataBase.audioListDB().then((value) {
       audio = value;
       allAudio = audio;
+      setState(() {
+        
+      });
     });
   }
 

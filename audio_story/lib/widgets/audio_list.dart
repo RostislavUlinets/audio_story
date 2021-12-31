@@ -1,11 +1,16 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/widgets/player.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:animations/animations.dart';
+
+final DatabaseService dataBase =
+    DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
 class ListWidget extends StatefulWidget {
   List<AudioModel> audio;
@@ -42,18 +47,24 @@ class _ListWidgetState extends State<ListWidget> {
                 "30 минут",
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
-              leading: IconButton(
-                icon: const Image(
-                  image: AssetImage("assets/Play.png"),
+              leading: SizedBox(
+                height: 64,
+                width: 64,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  iconSize: 64,
+                  icon: const Image(
+                    image: AssetImage("assets/Play.png"),
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).showBottomSheet(
+                      (context) => PlayerOnProgress(
+                        url: audio[index].url,
+                        name: audio[index].name,
+                      ),
+                    );
+                  },
                 ),
-                onPressed: () {
-                  Scaffold.of(context).showBottomSheet(
-                    (context) => PlayerOnProgress(
-                      url: audio[index].url,
-                      name: audio[index].name,
-                    ),
-                  );
-                },
               ),
               trailing: PopupMenuButton(
                 shape: const RoundedRectangleBorder(
@@ -71,9 +82,10 @@ class _ListWidgetState extends State<ListWidget> {
                     child: const Text("Удалить"),
                     //TODO: Question
                     onTap: () {
-                      FirebaseStorage.instance
-                          .refFromURL(audio[index].url)
-                          .delete();
+                      // FirebaseStorage.instance
+                      //     .refFromURL(audio[index].url)
+                      //     .delete();
+                      dataBase.deleteAudio(audio[index].id);
                     },
                     value: 1,
                   ),

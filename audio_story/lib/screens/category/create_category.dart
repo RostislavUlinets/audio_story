@@ -3,16 +3,19 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/add_audio.dart';
 
 import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,8 +32,8 @@ class _CreateCategoryState extends State<CreateCategory> {
   File? image;
   late String img64;
   final _name = TextEditingController(text: "Название");
-  final _info = TextEditingController(text: "Описание");
-  var soundList;
+  final _info = TextEditingController(text: "");
+  List<AudioModel>? soundList;
 
   @override
   Widget build(BuildContext context) {
@@ -102,28 +105,34 @@ class _CreateCategoryState extends State<CreateCategory> {
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: TextField(
                       readOnly: false,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 24),
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                       controller: _name,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      selectFile();
-                    },
+                    onTap: () => selectFile(),
                     child: Container(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
+                      child: Image.asset(
+                        'assets/Camera.png',
+                        color: Colors.black,
+                      ),
                       decoration: BoxDecoration(
                         image: image != null
                             ? DecorationImage(
                                 image: FileImage(image!),
                                 fit: BoxFit.cover,
                               )
-                            : const DecorationImage(
-                                image: AssetImage('assets/story.jpg'),
-                                fit: BoxFit.cover,
-                              ),
+                            : null,
                         color: Colors.white.withOpacity(0.9),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(30)),
@@ -142,38 +151,50 @@ class _CreateCategoryState extends State<CreateCategory> {
                     child: Text("Введите описание..."),
                   ),
                   TextField(
+                    maxLength: 120,
                     controller: _info,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     decoration: const InputDecoration(
+                      helperText: "Готово",
+                      helperStyle: TextStyle(fontSize: 14, color: Colors.black),
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(color: CColors.black),
                       ),
                     ),
+                    onTap: () {
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                    },
                   ),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(
                         top: 70.0,
                       ),
-                      child: TextButton(
-                        onPressed: () async {
-                          soundList = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const AddAudio(),
-                              ));
-                        },
-                        child: const Text(
-                          "Добавить аудиофайл",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                            color: CColors.black,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
+                      child: soundList == null
+                          ? TextButton(
+                              onPressed: () async {
+                                soundList = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const AddAudio(),
+                                    ));
+                              },
+                              child: const Text(
+                                "Добавить аудиофайл",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                  color: CColors.black,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            )
+                          : Expanded(child: Container(child: ListWidget(audio: soundList!))),
                     ),
                   )
                 ],

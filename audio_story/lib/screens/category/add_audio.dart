@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'widget/player.dart';
 
-var playList = [];
+List<AudioModel> playList = [];
 
 class AddAudio extends StatefulWidget {
   const AddAudio({Key? key}) : super(key: key);
@@ -39,6 +39,9 @@ class _AddAudioState extends State<AddAudio> {
       (value) {
         audio = value;
         allAudio = audio;
+        setState(() {
+          
+        });
       },
     );
   }
@@ -46,9 +49,9 @@ class _AddAudioState extends State<AddAudio> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  late List<AudioModel> audio;
+  List<AudioModel> audio = [];
 
-  late List<AudioModel> allAudio;
+  List<AudioModel> allAudio = [];
 
   String query = '';
 
@@ -144,7 +147,7 @@ class _AddAudioState extends State<AddAudio> {
                             ),
                             trailing: IconButton(
                               icon: const Icon(Icons.add),
-                              onPressed: () => _saveAudio(index),
+                              onPressed: () => _saveAudio(audio[index]),
                             ),
                           ),
                           decoration: BoxDecoration(
@@ -186,10 +189,7 @@ class _AddAudioState extends State<AddAudio> {
     });
   }
 
-  void _saveAudio(int index) {
-    playList.add({
-      'Name': audio[index].name,
-      'URL': audio[index].url,
-    });
+  void _saveAudio(AudioModel audio) {
+    playList.add(audio);
   }
 }

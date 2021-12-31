@@ -66,7 +66,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   Future<void> init() async {
     await _mPlayer.openAudioSession();
-    duration = (await flutterSoundHelper.duration(pathToSaveAudio))!.inMilliseconds;
+    await flutterSoundHelper.duration(pathToSaveAudio).then((value) => duration = value!.inMilliseconds);
     await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
       setPos(e.position.inMilliseconds);
