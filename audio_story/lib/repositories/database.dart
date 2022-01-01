@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -7,6 +8,7 @@ import 'package:audio_story/screens/category/card_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -228,6 +230,10 @@ class DatabaseService {
     return audioFromModel;
   }
 
+  Image imageFromBase64String(String base64String) {
+    return Image.memory(base64Decode(base64String));
+  }
+
   Future<SoundModel> getSaveList(int index) async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
@@ -242,5 +248,38 @@ class DatabaseService {
       image: imageFromBase64String(bytes),
     );
     return audioBase;
+  }
+
+  Future<List<Image>> getPlayListImages() async {
+    DocumentSnapshot ds =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+
+    List<dynamic> playList = ds.get('saveList');
+    List<Image> result = [];
+    if (playList.length > 2) {
+      for (int i = 0; i < 3; i++) {
+        String bytes = playList[i]['image'];
+        result.add(imageFromBase64String(bytes));
+      }
+      return result;
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<String>> getPlayListNames() async {
+    DocumentSnapshot ds =
+        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+
+    List<dynamic> playList = ds.get('saveList');
+    List<String> result = [];
+    if (playList.length > 2) {
+      for (int i = 0; i < 3; i++) {
+        result.add(playList[i]['name']);
+      }
+      return result;
+    } else {
+      return [];
+    }
   }
 }

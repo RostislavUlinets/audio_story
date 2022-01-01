@@ -1,7 +1,11 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/category.dart';
+import 'package:audio_story/screens/main_screen/widget/anon_containers.dart';
+import 'package:audio_story/screens/main_screen/widget/logged_containers.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,15 +13,35 @@ import '../../widgets/side_menu.dart';
 import '../../widgets/bottomnavbar.dart';
 import 'widget/custom_list.dart';
 
-class MainScreen extends StatelessWidget {
-
+class MainScreen extends StatefulWidget {
   static const routeName = '/';
-  
+
   const MainScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<MainScreen> createState() => _MainScreenState();
+}
 
+class _MainScreenState extends State<MainScreen> {
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+
+  List<Image> playListImage = [];
+
+  @override
+  void initState() {
+    super.initState();
+    dataBase.getPlayListImages().then(
+          (value) => setState(
+            () {
+              playListImage = value;
+            },
+          ),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
 
@@ -59,7 +83,7 @@ class MainScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
-                      children:  [
+                      children: [
                         const Text(
                           "Подборки",
                           style: TextStyle(fontSize: 24, color: Colors.white),
@@ -67,8 +91,8 @@ class MainScreen extends StatelessWidget {
                         const Spacer(),
                         TextButton(
                           onPressed: () {
-                              navigation.changeScreen(Category.routeName);
-                            },
+                            navigation.changeScreen(Category.routeName);
+                          },
                           child: const Text(
                             "Открыть все",
                             style: TextStyle(fontSize: 18, color: Colors.white),
@@ -77,110 +101,9 @@ class MainScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: Container(
-                            alignment: Alignment.center,
-                            child: const Text(
-                              "Здесь будет твой набор сказок",
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xD971A59F),
-                              border: Border.all(
-                                color: const Color(0xD971A59F),
-                              ),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 10,
-                                  blurRadius: 10,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            height: 200,
-                          ),
-                          flex: 1,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Flexible(
-                          child: Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Тут",
-                                  style: TextStyle(
-                                      fontSize: 24, color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xD9F1B488),
-                                  border: Border.all(
-                                    color: const Color(0xD9F1B488),
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 10,
-                                      blurRadius: 10,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                height: 94,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "И тут",
-                                  style: TextStyle(
-                                      fontSize: 24, color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xD9678BD2),
-                                  border: Border.all(
-                                    color: const Color(0xD9678BD2),
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 10,
-                                      blurRadius: 10,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
-                                ),
-                                height: 94,
-                              ),
-                            ],
-                          ),
-                          flex: 1,
-                        ),
-                      ],
-                    ),
-                  ),
+                  playListImage.isEmpty
+                      ? AnonimContainers()
+                      : LoggedContainers(),
                   const SizedBox(height: 10),
                   CustomList(),
                 ],
