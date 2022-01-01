@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  List<Image> playListImage = [];
+  List<Map<String, dynamic>> playList = [];
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
     dataBase.getPlayListImages().then(
           (value) => setState(
             () {
-              playListImage = value;
+              playList = value;
             },
           ),
         );
@@ -101,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                   ),
-                  playListImage.isEmpty
+                  playList.isEmpty
                       ? AnonimContainers()
                       : LoggedContainers(),
                   const SizedBox(height: 10),

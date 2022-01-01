@@ -1,5 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/category/card_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,36 +23,73 @@ class LoggedContainers extends StatelessWidget {
             );
           default:
             {
-              List<Image> playListImage = snapshot.data;
+              List<Map<String, dynamic>> playListImage = snapshot.data;
               return Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(
                   children: [
                     Flexible(
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: playListImage[0].image,
-                            fit: BoxFit.fill,
-                          ),
-                          color: const Color(0xD971A59F),
-                          border: Border.all(
-                            color: const Color(0xD971A59F),
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 10,
-                              blurRadius: 10,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CardInfo(
+                                      index: 0,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  playListImage[0]['name'],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    height: 1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  "n аудио\n1:30 часа",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            image: DecorationImage(
+                              image: playListImage[0]['image'].image,
+                              fit: BoxFit.fill,
+                              colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.8),
+                                BlendMode.dstATop,
+                              ),
+                            ),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 10,
+                                blurRadius: 10,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          height: 200,
                         ),
-                        height: 200,
                       ),
                       flex: 1,
                     ),
@@ -61,58 +99,132 @@ class LoggedContainers extends StatelessWidget {
                     Flexible(
                       child: Column(
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: playListImage[1].image,
-                                fit: BoxFit.fill,
-                              ),
-                              color: const Color(0xD9F1B488),
-                              border: Border.all(
-                                color: const Color(0xD9F1B488),
-                              ),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 10,
-                                  blurRadius: 10,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const CardInfo(
+                                          index: 1,
+                                        )),
+                              );
+                            },
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      playListImage[1]['name'],
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        height: 1,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      "n аудио\n1:30 часа",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                image: DecorationImage(
+                                  image: playListImage[1]['image'].image,
+                                  fit: BoxFit.fill,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.8),
+                                    BlendMode.dstATop,
+                                  ),
+                                ),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 10,
+                                    blurRadius: 10,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              height: 94,
                             ),
-                            height: 94,
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: playListImage[2].image,
-                                fit: BoxFit.fill,
-                              ),
-                              color: const Color(0xD9678BD2),
-                              border: Border.all(
-                                color: const Color(0xD9678BD2),
-                              ),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 10,
-                                  blurRadius: 10,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const CardInfo(
+                                          index: 2,
+                                        )),
+                              );
+                            },
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      playListImage[2]['name'],
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        height: 1,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      "n аудио\n1:30 часа",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                image: DecorationImage(
+                                  image: playListImage[2]['image'].image,
+                                  fit: BoxFit.fill,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.8),
+                                    BlendMode.dstATop,
+                                  ),
+                                ),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 10,
+                                    blurRadius: 10,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              height: 94,
                             ),
-                            height: 94,
                           ),
                         ],
                       ),

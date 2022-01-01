@@ -250,18 +250,22 @@ class DatabaseService {
     return audioBase;
   }
 
-  Future<List<Image>> getPlayListImages() async {
+  Future<List<Map<String, dynamic>>> getPlayListImages() async {
     DocumentSnapshot ds =
         await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
 
+    List<Map<String, dynamic>> res = [];
+
     List<dynamic> playList = ds.get('saveList');
-    List<Image> result = [];
     if (playList.length > 2) {
       for (int i = 0; i < 3; i++) {
         String bytes = playList[i]['image'];
-        result.add(imageFromBase64String(bytes));
+        res.add({
+          'name': playList[i]['name'],
+          'image': imageFromBase64String(bytes)
+        });
       }
-      return result;
+      return res;
     } else {
       return [];
     }
