@@ -9,6 +9,8 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'widget/animation.dart';
+
 typedef _Fn = void Function();
 
 class Recorder extends StatefulWidget {
@@ -19,13 +21,13 @@ class Recorder extends StatefulWidget {
 }
 
 class _RecorderState extends State<Recorder> {
-  
   final pathToSaveAudio = '/sdcard/Download/audio.mp3';
   final pathToSaveTemp = '/sdcard/Download/temp.aac';
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   bool _mplaybackReady = false;
-  TextEditingController audioName = TextEditingController(text: 'Аудиозапись 1');
+  TextEditingController audioName =
+      TextEditingController(text: 'Аудиозапись 1');
   //StreamSubscription? _mRecordingDataSubscription;
 
   Future<void> _openRecorder() async {
@@ -146,10 +148,12 @@ class _RecorderState extends State<Recorder> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 100.0),
-                    child: Text(
-                        '-------------------------------------------------------------------'),
+                    child: Container(
+                      child: MusicVisualizer(),
+                      height: 80,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
