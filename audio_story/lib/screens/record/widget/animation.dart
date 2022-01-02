@@ -43,7 +43,7 @@ class _VisualizerComponentState extends State<VisualizerComponent>
   AnimationController? animationController;
   @override
   void dispose() {
-    this.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 

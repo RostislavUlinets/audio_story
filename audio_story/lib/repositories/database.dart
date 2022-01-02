@@ -56,6 +56,13 @@ class DatabaseService {
     });
   }
 
+  Future<void> deleteUser() async {
+    try {
+      userCollection.doc(uid).delete();
+      soundCollection.doc(uid).delete();
+    } catch (e) {}
+  }
+
   Future updateUserName(String name) async {
     return await userCollection.doc(uid).update(
       {
@@ -123,10 +130,15 @@ class DatabaseService {
   Future<void> createPlayList(String image, String name, String info,
       List<AudioModel>? soundList) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
+    List<dynamic> saveList;
 
     List<Map<String, dynamic>> soundListJson = [];
-
-    List<dynamic> saveList = ds.get('saveList');
+    try{
+      saveList = ds.get('saveList');
+    }catch(e){
+      saveList = [];
+    }
+    
 
     for (int i = 0; i < soundList!.length; i++) {
       soundListJson.add(soundList[i].toJson());
@@ -173,22 +185,25 @@ class DatabaseService {
   }
 
   Future<List<AudioModel>> audioListDB() async {
-    List<AudioModel> audioFromModel = [];
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    DocumentSnapshot document = await soundCollection.doc(uid).get();
-    Map<String, dynamic> map = document.data() as Map<String, dynamic>;
-    for (var key in map.keys) {
-      if (map[key]['isDeleted'] == false) {
-        audioFromModel.add(
-          AudioModel(
-            id: map[key]['id'],
-            name: map[key]['name'],
-            url: map[key]['url'],
-          ),
-        );
+    if (!FirebaseAuth.instance.currentUser!.isAnonymous) {
+      List<AudioModel> audioFromModel = [];
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot document = await soundCollection.doc(uid).get();
+      Map<String, dynamic> map = document.data() as Map<String, dynamic>;
+      for (var key in map.keys) {
+        if (map[key]['isDeleted'] == false) {
+          audioFromModel.add(
+            AudioModel(
+              id: map[key]['id'],
+              name: map[key]['name'],
+              url: map[key]['url'],
+            ),
+          );
+        }
       }
-    }
-    return audioFromModel;
+      return audioFromModel;
+    } else
+      return [];
   }
 
   Future<void> deleteAudio(String id) async {
@@ -251,22 +266,26 @@ class DatabaseService {
   }
 
   Future<List<Map<String, dynamic>>> getPlayListImages() async {
-    DocumentSnapshot ds =
-        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+    try {
+      DocumentSnapshot ds = await userCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
-    List<Map<String, dynamic>> res = [];
-
-    List<dynamic> playList = ds.get('saveList');
-    if (playList.length > 2) {
-      for (int i = 0; i < 3; i++) {
-        String bytes = playList[i]['image'];
-        res.add({
-          'name': playList[i]['name'],
-          'image': imageFromBase64String(bytes)
-        });
+      List<Map<String, dynamic>> res = [];
+      List<dynamic> playList = ds.get('saveList');
+      if (playList.length > 2) {
+        for (int i = 0; i < 3; i++) {
+          String bytes = playList[i]['image'];
+          res.add({
+            'name': playList[i]['name'],
+            'image': imageFromBase64String(bytes)
+          });
+        }
+        return res;
+      } else {
+        return [];
       }
-      return res;
-    } else {
+    } catch (e) {
       return [];
     }
   }

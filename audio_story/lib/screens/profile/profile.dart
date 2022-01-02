@@ -18,7 +18,6 @@ import 'package:provider/provider.dart';
 String downloadURL = 'https://picsum.photos/250?image=9';
 
 class Profile extends StatefulWidget {
-
   static const routeName = '/profile';
 
   const Profile({Key? key}) : super(key: key);
@@ -32,9 +31,9 @@ class _ProfileState extends State<Profile> {
   final AuthService _auth = AuthService.instance;
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  
 
   String phoneNumber = '', userName = "USER";
+  Image image = Image.asset('assets/anon_ava.jpg');
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
@@ -53,7 +52,12 @@ class _ProfileState extends State<Profile> {
         downloadURL = await FirebaseStorage.instance
             .ref('Avatars/$uid/avatar.jpg')
             .getDownloadURL();
-        setState(() {});
+        setState(() {
+          image = Image.network(
+            downloadURL,
+            fit: BoxFit.cover,
+          );
+        });
       } catch (e) {
         log("DownloadURL error");
       }
@@ -81,7 +85,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-
     bool flag = user!.isAnonymous;
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
@@ -139,10 +142,7 @@ class _ProfileState extends State<Profile> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
-                    child: !flag ? Image.network(
-                      downloadURL,
-                      fit: BoxFit.cover,
-                    ) : Image.asset('assets/anon_ava.jpg'),
+                    child: image,
                     height: 200,
                     width: 200,
                   ),
@@ -186,7 +186,9 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EditProfile()),
+                              builder: (context) => EditProfile(
+                                    image: image,
+                                  )),
                         );
                       }),
                 ),

@@ -15,7 +15,8 @@ User? currentUser = FirebaseAuth.instance.currentUser;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  Image image;
+  EditProfile({Key? key, required this.image}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _ProfileState();
@@ -98,9 +99,7 @@ class _ProfileState extends State<EditProfile> {
                       width: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: const AssetImage(
-                            "assets/selfi.jpg",
-                          ),
+                          image: widget.image.image,
                           colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.6), BlendMode.dstATop),
                           fit: BoxFit.cover,
@@ -144,9 +143,9 @@ class _ProfileState extends State<EditProfile> {
                   ),
                   TextButton(
                     onPressed: () {
-                      if(file != null){
+                      if (file != null) {
                         uploadFile();
-                      }                    
+                      }
 
                       if (_userName.text.trim().isNotEmpty) {
                         dataBase.updateUserName(_userName.text.trim());
@@ -185,7 +184,11 @@ Future<Widget> userName() async {
 }
 
 Future selectFile() async {
-  final result = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 25,maxHeight: 300,maxWidth: 400);
+  final result = await ImagePicker.platform.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 25,
+      maxHeight: 300,
+      maxWidth: 400);
 
   if (result == null) return;
 
