@@ -179,18 +179,32 @@ class _RecorderState extends State<Recorder> {
     final isRecording = _mRecorder!.isRecording;
 
     final icon = isRecording ? Icons.stop : Icons.mic;
+    final image = isRecording
+        ? Image.asset(
+            'assets/Pause.png',
+            color: CColors.orange,
+          )
+        : Image.asset(
+            'assets/RecordIcon.png',
+            color: CColors.orange,
+          );
     final text = isRecording ? 'STOP' : 'START';
     final primary = isRecording ? Colors.red : Colors.white;
     final onPrimary = isRecording ? Colors.white : Colors.black;
 
-    return ElevatedButton.icon(
-      onPressed: getRecorderFn(),
-      icon: Icon(icon),
-      label: Text(text),
-      style: ElevatedButton.styleFrom(
-        primary: primary,
-        onPrimary: onPrimary,
-      ),
+    return GestureDetector(
+      onTap: getRecorderFn(),
+      child: image,
     );
+
+    // return ElevatedButton.icon(
+    //   onPressed: getRecorderFn(),
+    //   icon: Icon(icon),
+    //   label: Text(text),
+    //   style: ElevatedButton.styleFrom(
+    //     primary: primary,
+    //     onPrimary: onPrimary,
+    //   ),
+    // );
   }
 }

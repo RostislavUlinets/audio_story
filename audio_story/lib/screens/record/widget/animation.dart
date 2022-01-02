@@ -1,14 +1,15 @@
+import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class MusicVisualizer extends StatelessWidget {
   MusicVisualizer({Key? key}) : super(key: key);
 
-  List<Color> colors = [
-    Colors.blueAccent,
-    Colors.greenAccent,
-    Colors.redAccent,
-    Colors.yellowAccent
-  ];
+  // List<Color> colors = [
+  //   Colors.blueAccent,
+  //   Colors.greenAccent,
+  //   Colors.redAccent,
+  //   Colors.yellowAccent
+  // ];
   List<int> duration = [900, 700, 600, 800, 500];
 
   @override
@@ -16,10 +17,10 @@ class MusicVisualizer extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(
-        10,
+        20,
         (index) => VisualizerComponent(
           duration: duration[index % 5],
-          color: colors[index % 4],
+          color: CColors.black,
         ),
       ),
     );
@@ -40,6 +41,11 @@ class _VisualizerComponentState extends State<VisualizerComponent>
     with SingleTickerProviderStateMixin {
   Animation<double>? animation;
   AnimationController? animationController;
+  @override
+  void dispose() {
+    this.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -51,7 +57,9 @@ class _VisualizerComponentState extends State<VisualizerComponent>
 
     animation = Tween<double>(begin: 0, end: 60).animate(curvedAnimation)
       ..addListener(() {
-        setState(() {});
+        try {
+          setState(() {});
+        } catch (e) {}
       });
     animationController!.repeat(reverse: true);
   }
@@ -59,7 +67,7 @@ class _VisualizerComponentState extends State<VisualizerComponent>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 10,
+      width: 5,
       decoration: BoxDecoration(
         color: widget.color,
         borderRadius: BorderRadius.circular(5),
