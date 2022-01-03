@@ -1,5 +1,12 @@
 import 'package:audio_story/models/navigation_item.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/audio/audio.dart';
+import 'package:audio_story/screens/category/category.dart';
+import 'package:audio_story/screens/deleted/deleted.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/profile/profile.dart';
+import 'package:audio_story/screens/search/search.dart';
+import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -90,80 +97,6 @@ class SideMenu extends StatelessWidget {
               ],
             ),
           ),
-          /*
-          ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Category.png'),
-              ),
-            ),
-            title: const Text("Подборки"),
-            onTap: () {},
-          ),
-          ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Paper.png'),
-              ),
-            ),
-            title: const Text("Все аудиозаписи"),
-            onTap: () {},
-          ),
-          ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Search.png'),
-              ),
-            ),
-            title: const Text("Поиск"),
-            onTap: () {},
-          ),
-          ListTile(
-            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Delete.png'),
-              ),
-            ),
-            title: const Text("Недавно удаленные"),
-            onTap: () {},
-          ),
-          SizedBox(height: 25),
-          ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Wallet.png'),
-              ),
-            ),
-            title: const Text("Подписка"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Subscribe(),
-                ),
-              );
-            },
-          ),
-          SizedBox(height: 25),
-          ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Image(
-                image: AssetImage('assets/Edit.png'),
-              ),
-            ),
-            title: const Text("Написать в\nподдержку"),
-            onTap: () {},
-          ),*/
         ],
       ),
     );
@@ -175,9 +108,8 @@ class SideMenu extends StatelessWidget {
     required String text,
     required AssetImage image,
   }) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
-    final isSelected = checker(item, navigation);
+    
+    final isSelected = checker(item, ModalRoute.of(context)!.settings.name);
 
     final color = isSelected ? Colors.red : const Color(0xFF3A3A55);
 
@@ -195,28 +127,28 @@ class SideMenu extends StatelessWidget {
         onTap: () {
           switch (item) {
             case NavigationItem.home:
-              navigation.changeScreen('/');
+              Navigator.pushNamed(context, MainScreen.routeName);
               break;
             case NavigationItem.profile:
-              navigation.changeScreen('/profile');
+              Navigator.pushNamed(context, Profile.routeName);
               break;
             case NavigationItem.subscribe:
-              navigation.changeScreen('/subscribe');
+              Navigator.pushNamed(context, Subscribe.routeName);
               break;
             case NavigationItem.category:
-              navigation.changeScreen('/category');
+              Navigator.pushNamed(context, Category.routeName);
               break;
             case NavigationItem.audio:
-              navigation.changeScreen('/audio');
+              Navigator.pushNamed(context, Audio.routeName);
               break;
             case NavigationItem.search:
-              navigation.changeScreen('/search');
+              Navigator.pushNamed(context, SearchScreen.routeName);
               break;
             case NavigationItem.delete:
-              navigation.changeScreen('/deleted');
+              Navigator.pushNamed(context, DeeltedScreen.routeName);
               break;
             case NavigationItem.help:
-              navigation.changeScreen('/subscribe');
+              Navigator.pushNamed(context, Subscribe.routeName);
               break;
           }
         },
@@ -224,31 +156,31 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  bool checker(NavigationItem item, NavigationController navigation) {
+  bool checker(NavigationItem item, String? navigation) {
     switch (item) {
       case NavigationItem.home:
-        if (navigation.screenName == '/') return true;
+        if (navigation == MainScreen.routeName) return true;
         break;
       case NavigationItem.profile:
-        if (navigation.screenName == '/profile') return true;
+        if (navigation == Profile.routeName) return true;
         break;
       case NavigationItem.subscribe:
-        if (navigation.screenName == '/subscribe') return true;
+        if (navigation == Subscribe.routeName) return true;
         break;
       case NavigationItem.category:
-        if (navigation.screenName == '/category') return true;
+        if (navigation == Category.routeName) return true;
         break;
       case NavigationItem.audio:
-        if (navigation.screenName == '/audio') return true;
+        if (navigation == Audio.routeName) return true;
         break;
       case NavigationItem.search:
-        if (navigation.screenName == '/search') return true;
+        if (navigation == SearchScreen.routeName) return true;
         break;
       case NavigationItem.help:
-        if (navigation.screenName == '/profile') return true;
+        if (navigation == Profile.routeName) return true;
         break;
       case NavigationItem.delete:
-        if (navigation.screenName == '/deleted') return true;
+        if (navigation == DeeltedScreen.routeName) return true;
         break;
     }
     return false;

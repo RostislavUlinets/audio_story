@@ -1,5 +1,4 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/main_screen/widget/anon_containers.dart';
@@ -7,7 +6,6 @@ import 'package:audio_story/screens/main_screen/widget/logged_containers.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../widgets/side_menu.dart';
 import '../../widgets/bottomnavbar.dart';
@@ -42,8 +40,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
 
     return Scaffold(
       extendBody: true,
@@ -91,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: () {
-                            navigation.changeScreen(Category.routeName);
+                            Navigator.pushNamed(context, Category.routeName);
                           },
                           child: const Text(
                             "Открыть все",

@@ -15,7 +15,8 @@ final DatabaseService dataBase =
 class ListWidget extends StatefulWidget {
   List<AudioModel> audio;
 
-  ListWidget({Key? key, required this.audio}) : super(key: key);
+  ListWidget({Key? key, required this.audio})
+      : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
@@ -39,44 +40,43 @@ class _ListWidgetState extends State<ListWidget> {
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
             child: ListTile(
-              title: Text(
-                audio[index].name,
-                style: const TextStyle(color: Color(0xFF3A3A55)),
-              ),
-              subtitle: const Text(
-                "30 минут",
-                style: TextStyle(color: Color(0x803A3A55)),
-              ),
-              leading: SizedBox(
-                height: 64,
-                width: 64,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  iconSize: 64,
-                  icon: const Image(
-                    image: AssetImage("assets/Play.png"),
+                title: Text(
+                  audio[index].name,
+                  style: const TextStyle(color: Color(0xFF3A3A55)),
+                ),
+                subtitle: const Text(
+                  "30 минут",
+                  style: TextStyle(color: Color(0x803A3A55)),
+                ),
+                leading: SizedBox(
+                  height: 64,
+                  width: 64,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    iconSize: 64,
+                    icon: const Image(
+                      image: AssetImage("assets/Play.png"),
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).showBottomSheet(
+                        (context) => PlayerOnProgress(
+                          url: audio[index].url,
+                          name: audio[index].name,
+                        ),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Scaffold.of(context).showBottomSheet(
-                      (context) => PlayerOnProgress(
-                        url: audio[index].url,
-                        name: audio[index].name,
-                      ),
+                ),
+                trailing: GestureDetector(
+                  onTap: () {
+                    dataBase.fullDeleteAudio([audio[index].id]).then(
+                      (value) => setState(() {}),
                     );
                   },
-                ),
-              ),
-              trailing: GestureDetector(
-                onTap: () {
-                  dataBase.fullDeleteAudio([audio[index].id]).then(
-                    (value) => setState(() {}),
-                  );
-                },
-                child: Image(
-                  image: AssetImage("assets/Delete.png"),
-                ),
-              ),
-            ),
+                  child: Image(
+                    image: AssetImage("assets/Delete.png"),
+                  ),
+                )),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),
               border: Border.all(

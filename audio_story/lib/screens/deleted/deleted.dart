@@ -1,20 +1,29 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/deleted/widget/select_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'select.dart';
 import 'widget/custom_list.dart';
 
 final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-class DeeltedScreen extends StatelessWidget {
+class DeeltedScreen extends StatefulWidget {
   const DeeltedScreen({Key? key}) : super(key: key);
 
   static const routeName = '/deleted';
+
+  @override
+  State<DeeltedScreen> createState() => _DeeltedScreenState();
+}
+
+class _DeeltedScreenState extends State<DeeltedScreen> {
+  bool selectMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +43,7 @@ class DeeltedScreen extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20,bottom: 100),
+                  padding: const EdgeInsets.only(top: 20, bottom: 100),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -73,8 +82,11 @@ class DeeltedScreen extends StatelessWidget {
                         itemBuilder: (context) => [
                           PopupMenuItem(
                             child: const Text("Выбрать несколько"),
-                            //TODO: Question
-                            onTap: () {},
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SelectScreen()),
+                            ),
                             value: 1,
                           ),
                           PopupMenuItem(
@@ -110,7 +122,9 @@ class DeeltedScreen extends StatelessWidget {
                         );
                       default:
                         return Expanded(
-                            child: ListWidget(audio: snapshot.data));
+                            child: ListWidget(
+                          audio: snapshot.data,
+                        ));
                     }
                   },
                 ),

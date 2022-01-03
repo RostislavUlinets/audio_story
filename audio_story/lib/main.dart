@@ -14,6 +14,7 @@ import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'route.dart';
 import 'screens/login_screen/welcome_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -34,88 +35,22 @@ void main() async {
           create: (_) => NavigationController(),
         ),
       ],
-      child: const NavApp(),
+      child: const MyApp(),
     ),
   );
 }
 
-class NavApp extends StatelessWidget {
-  const NavApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, //top bar color
     ));
-
-    NavigationController navigation =
-        Provider.of<NavigationController>(context);
-
-    return StreamProvider<CustomUser?>.value(
-      updateShouldNotify: (_, __) => true,
-      value: AuthService.instance.user,
-      initialData: null,
-      child: MaterialApp(
-        home: Navigator(
-          onPopPage: (route, result) {
-            if (!route.didPop(result)) return false;
-            return true;
-          },
-          pages: [
-            const MaterialPage(
-              child: WelcomeScreen(),
-            ),
-            if (navigation.screenName == FinalScreen.routeName)
-              const MaterialPage(
-                child: FinalScreen(duration: 3),
-              ),
-            if (navigation.screenName == MainScreen.routeName)
-              const MaterialPage(
-                child: MainScreen(),
-              ),
-            if (navigation.screenName == Category.routeName)
-              const MaterialPage(
-                child: Category(),
-              ),
-            if (navigation.screenName == Audio.routeName)
-              const MaterialPage(
-                child: Audio(),
-              ),
-            if (navigation.screenName == Profile.routeName)
-              const MaterialPage(
-                child: Profile(),
-              ),
-            if (navigation.screenName == Subscribe.routeName)
-              const MaterialPage(
-                child: Subscribe(),
-              ),
-            if (navigation.screenName == Records.routeName)
-              const MaterialPage(
-                child: Records(),
-              ), //records
-            if (navigation.screenName == Player.routeName)
-              const MaterialPage(
-                child: Player(),
-              ),
-            if (navigation.screenName == CreateCategory.routeName)
-              const MaterialPage(
-                child: CreateCategory(),
-              ),
-            if (navigation.screenName == SearchScreen.routeName)
-              const MaterialPage(
-                child: SearchScreen(),
-              ),
-            if (navigation.screenName == DeeltedScreen.routeName)
-              const MaterialPage(
-                child: DeeltedScreen(),
-              ),
-            // if (navigation.screenName == AudioInfo.routeName)
-            //   const MaterialPage(
-            //     child: AudioInfo(),
-            //   ),
-          ],
-        ),
-      ),
+    return const MaterialApp(
+      initialRoute: WelcomeScreen.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

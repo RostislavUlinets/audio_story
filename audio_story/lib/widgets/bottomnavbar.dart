@@ -135,19 +135,19 @@ class CustomNavigationBar extends StatelessWidget {
           onTap: (buttonIndex) {
             switch (buttonIndex) {
               case 0:
-                navigation.changeScreen(MainScreen.routeName);
+                Navigator.pushNamed(context, MainScreen.routeName);
                 break;
               case 1:
-                navigation.changeScreen(Category.routeName);
+                Navigator.pushNamed(context, Category.routeName);
                 break;
               case 2:
-                navigation.changeScreen(Records.routeName);
+                Navigator.pushNamed(context, Records.routeName);
                 break;
               case 3:
-                navigation.changeScreen(Audio.routeName);
+                Navigator.pushNamed(context, Audio.routeName);
                 break;
               case 4:
-                navigation.changeScreen(Profile.routeName);
+                Navigator.pushNamed(context, Profile.routeName);
                 break;
             }
           },

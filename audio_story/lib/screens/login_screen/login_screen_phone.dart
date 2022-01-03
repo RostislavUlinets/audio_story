@@ -1,5 +1,3 @@
-
-
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/service/auth.dart';
@@ -12,11 +10,13 @@ const AuthService _auth = AuthService.instance;
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
+  static const routeName = '/login';
 
   LoginScreen({Key? key}) : super(key: key);
 
   final _phoneController = TextEditingController();
-  var maskFormatter = MaskTextInputFormatter(mask: '+## (###) ###-##-##', filter: { "#": RegExp(r'[0-9]') });
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -124,4 +124,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-

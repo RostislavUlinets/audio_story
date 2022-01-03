@@ -18,7 +18,7 @@ class FinalScreen extends StatelessWidget {
         Provider.of<NavigationController>(context, listen: false);
 
     Future.delayed(Duration(seconds: duration), () {
-      navigation.changeScreen(MainScreen.routeName);
+      Navigator.pushNamed(context, MainScreen.routeName);
     });
 
     return Scaffold(
