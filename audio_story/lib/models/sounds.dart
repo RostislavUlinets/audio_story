@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class SoundModel {
-  final sounds;
-  final audioList;
+  final List<dynamic> sounds;
   final String name;
   final String info;
   final Image image;
@@ -12,7 +10,6 @@ class SoundModel {
 
   SoundModel({
     required this.sounds,
-    required this.audioList,
     required this.name,
     required this.info,
     required this.image,

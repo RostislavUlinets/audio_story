@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 
 import 'widget/player.dart';
 
-
-
 class AddAudio extends StatefulWidget {
   const AddAudio({Key? key}) : super(key: key);
 
@@ -21,7 +19,6 @@ class AddAudio extends StatefulWidget {
 }
 
 class _AddAudioState extends State<AddAudio> {
-  
   List<AudioModel> playList = [];
   void _sendDataBack(BuildContext context, var playList) {
     Navigator.pop(context, playList);
@@ -43,6 +40,7 @@ class _AddAudioState extends State<AddAudio> {
       (value) {
         audio = value;
         allAudio = audio;
+        select = List.filled(audio.length, false);
         setState(() {});
       },
     );
@@ -56,6 +54,8 @@ class _AddAudioState extends State<AddAudio> {
   List<AudioModel> allAudio = [];
 
   String query = '';
+
+  List<bool> select = [];
 
   @override
   Widget build(BuildContext context) {
@@ -123,10 +123,6 @@ class _AddAudioState extends State<AddAudio> {
                   child: ListView.builder(
                     itemCount: audio.length,
                     itemBuilder: (_, index) {
-                      Image? _something = const Image(
-                        image: AssetImage('assets/TickSquare.png'),
-                        color: Colors.white,
-                      );
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5.0),
                         child: Container(
@@ -152,20 +148,30 @@ class _AddAudioState extends State<AddAudio> {
                               },
                             ),
                             trailing: GestureDetector(
-                              onTap: () => {
-                                _saveAudio(audio[index]),
-                                setState(() {
-                                  _something = const Image(
-                                    image: AssetImage('assets/TickSquare.png'),
+                              onTap: () {
+                                if (select[index] == false) {
+                                  select[index] = true;
+                                  playList.add(audio[index]);
+                                  setState(() {});
+                                } else {
+                                  select[index] = false;
+                                  playList.removeWhere(
+                                    (element) => element.id == audio[index].id,
                                   );
-                                }),
+                                  setState(() {});
+                                }
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
                                     border: Border.all(
                                         width: 2, color: Colors.black)),
-                                child: _something,
+                                child: Image(
+                                  image: AssetImage('assets/TickSquare.png'),
+                                  color: select[index]
+                                      ? Colors.black
+                                      : Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -209,7 +215,6 @@ class _AddAudioState extends State<AddAudio> {
   }
 
   void _saveAudio(AudioModel audio) {
-    playList.add(audio);
     log(playList.toString());
   }
 }

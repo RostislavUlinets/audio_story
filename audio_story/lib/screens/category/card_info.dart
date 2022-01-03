@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -258,8 +259,28 @@ class _CardInfoState extends State<CardInfo> {
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
                             child: Text(audioPropeperty.info),
                           ),
-                          const Expanded(
-                            child: ListWidget(),
+                          FutureBuilder(
+                            future: dataBase
+                                .getPlayListAudio(audioPropeperty.sounds),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<dynamic> snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return const SizedBox(
+                                    height: 250,
+                                    width: 250,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: CColors.purpule,
+                                        strokeWidth: 1.5,
+                                      ),
+                                    ),
+                                  );
+                                default:
+                                  return Expanded(
+                                      child: ListWidget(audio: snapshot.data));
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -275,33 +296,33 @@ class _CardInfoState extends State<CardInfo> {
 }
 
 class ListWidget extends StatefulWidget {
-  const ListWidget({Key? key}) : super(key: key);
+  List<AudioModel> audio;
+  ListWidget({Key? key, required this.audio}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
 }
 
 class _ListWidgetState extends State<ListWidget> {
+  late List<AudioModel> audio;
+
   @override
-  void initState() {
+  initState() {
     super.initState();
-    setState(() {});
+    audio = widget.audio;
   }
 
-//TODO: FIX NAVIGATION.POP
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: audioPropeperty.audioList.isNotEmpty
-          ? audioPropeperty.audioList.length
-          : 0,
+      itemCount: audio.length,
       itemBuilder: (_, index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Container(
             child: ListTile(
               title: Text(
-                audioPropeperty.audioList[index]['name'],
+                audio[index].name,
                 style: const TextStyle(color: Color(0xFF3A3A55)),
               ),
               subtitle: const Text(
@@ -317,8 +338,8 @@ class _ListWidgetState extends State<ListWidget> {
                 onPressed: () {
                   Scaffold.of(context)
                       .showBottomSheet((context) => PlayerOnProgress(
-                            url: audioPropeperty.audioList[index]['URL'],
-                            name: audioPropeperty.audioList[index]['Name'],
+                            url: audio[index].url,
+                            name: audio[index].name,
                           ));
                 },
               ),

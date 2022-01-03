@@ -132,22 +132,21 @@ class DatabaseService {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> saveList;
 
-    List<Map<String, dynamic>> soundListJson = [];
-    try{
+    List<String> sounds = [];
+    try {
       saveList = ds.get('saveList');
-    }catch(e){
+    } catch (e) {
       saveList = [];
     }
-    
 
     for (int i = 0; i < soundList!.length; i++) {
-      soundListJson.add(soundList[i].toJson());
+      sounds.add(soundList[i].id);
     }
     Map<String, dynamic> playList = {
       'image': image,
       'name': name,
       'info': info,
-      'sounds': soundListJson,
+      'sounds': sounds,
     };
 
     saveList.add(playList);
@@ -180,30 +179,49 @@ class DatabaseService {
     log(sounds.toString());
   }
 
-  Future<void> fullDeleteAudio(String id) async {
-    await soundCollection.doc(uid).update({id: FieldValue.delete()});
+  Future<void> fullDeleteAudio(List<String> selected) async {
+    for (int i = 0; i < selected.length; i++) {
+      await soundCollection.doc(uid).update({selected[i]: FieldValue.delete()});
+    }
+  }
+
+  Future<List<AudioModel>> getPlayListAudio(List<dynamic> sounds) async {
+    List<AudioModel> audioFromModel = [];
+    DocumentSnapshot document = await soundCollection.doc(uid).get();
+    Map<String, dynamic> map = document.data() as Map<String, dynamic>;
+    for (int i = 0; i < sounds.length; i++) {
+      if (map[sounds[i]]['isDeleted']) continue;
+
+      audioFromModel.add(
+        AudioModel(
+          id: map[sounds[i]]['id'],
+          name: map[sounds[i]]['name'],
+          url: map[sounds[i]]['url'],
+        ),
+      );
+    }
+    return audioFromModel;
   }
 
   Future<List<AudioModel>> audioListDB() async {
-    if (!FirebaseAuth.instance.currentUser!.isAnonymous) {
-      List<AudioModel> audioFromModel = [];
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-      DocumentSnapshot document = await soundCollection.doc(uid).get();
-      Map<String, dynamic> map = document.data() as Map<String, dynamic>;
-      for (var key in map.keys) {
-        if (map[key]['isDeleted'] == false) {
-          audioFromModel.add(
-            AudioModel(
-              id: map[key]['id'],
-              name: map[key]['name'],
-              url: map[key]['url'],
-            ),
-          );
-        }
+    if (FirebaseAuth.instance.currentUser!.isAnonymous) return [];
+
+    List<AudioModel> audioFromModel = [];
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot document = await soundCollection.doc(uid).get();
+    Map<String, dynamic> map = document.data() as Map<String, dynamic>;
+    for (var key in map.keys) {
+      if (map[key]['isDeleted'] == false) {
+        audioFromModel.add(
+          AudioModel(
+            id: map[key]['id'],
+            name: map[key]['name'],
+            url: map[key]['url'],
+          ),
+        );
       }
-      return audioFromModel;
-    } else
-      return [];
+    }
+    return audioFromModel;
   }
 
   Future<void> deleteAudio(String id) async {
@@ -256,8 +274,7 @@ class DatabaseService {
     sounds = sounds[index];
     String bytes = sounds['image'];
     SoundModel audioBase = SoundModel(
-      sounds: ds.get('saveList'),
-      audioList: sounds['sounds'],
+      sounds: sounds['sounds'],
       name: sounds['name'],
       info: sounds['info'],
       image: imageFromBase64String(bytes),
