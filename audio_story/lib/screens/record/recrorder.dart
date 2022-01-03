@@ -152,7 +152,7 @@ class _RecorderState extends State<Recorder> {
                     padding: EdgeInsets.symmetric(vertical: 100.0),
                     child: Container(
                       child: MusicVisualizer(),
-                      height: 80,
+                      height: 60,
                     ),
                   ),
                   Padding(

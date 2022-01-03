@@ -119,7 +119,7 @@ class _PlayerState extends State<Player> {
                         TextButton(
                           onPressed: () {
                             saveAudio();
-                            navigation.changeScreen(Audio.routeName);
+                            Navigator.pushNamed(context, Audio.routeName);
                           },
                           child: const Text("Сохранить"),
                         ),

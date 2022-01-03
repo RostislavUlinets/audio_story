@@ -186,6 +186,7 @@ class DatabaseService {
   }
 
   Future<List<AudioModel>> getPlayListAudio(List<dynamic> sounds) async {
+    if (sounds.isEmpty) return [];
     List<AudioModel> audioFromModel = [];
     DocumentSnapshot document = await soundCollection.doc(uid).get();
     Map<String, dynamic> map = document.data() as Map<String, dynamic>;

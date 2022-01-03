@@ -15,8 +15,6 @@ class CustomList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -39,7 +37,7 @@ class CustomList extends StatelessWidget {
                     const Spacer(),
                     TextButton(
                       onPressed: () {
-                        navigation.changeScreen(Audio.routeName);
+                        Navigator.pushNamed(context, Audio.routeName);
                       },
                       child: const Text(
                         "Открыть все",

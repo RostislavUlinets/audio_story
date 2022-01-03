@@ -52,10 +52,7 @@ class _CategoryState extends State<Category> {
                         height: 36,
                       ),
                       onPressed: () {
-                        NavigationController navigation =
-                            Provider.of<NavigationController>(context,
-                                listen: false);
-                        navigation.changeScreen(CreateCategory.routeName);
+                        Navigator.pushNamed(context, CreateCategory.routeName);
                         //Scaffold.of(context).openDrawer();
                       },
                     ),

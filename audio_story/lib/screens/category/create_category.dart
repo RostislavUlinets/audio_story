@@ -64,10 +64,8 @@ class _CreateCategoryState extends State<CreateCategory> {
                           padding: const EdgeInsets.all(5.0),
                           child: IconButton(
                             onPressed: () {
-                              NavigationController navigation =
-                                  Provider.of<NavigationController>(context,
-                                      listen: false);
-                              navigation.changeScreen(MainScreen.routeName);
+                              Navigator.pushNamed(
+                                  context, MainScreen.routeName);
                             },
                             icon: Image.asset('assets/ArrowBack.png'),
                           ),
@@ -87,10 +85,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                           // db.updatePlayList(img64, _Name.text, _Info.text);
                           db.createPlayList(
                               img64, _name.text, _info.text, soundList);
-                          NavigationController navigation =
-                              Provider.of<NavigationController>(context,
-                                  listen: false);
-                          navigation.changeScreen(MainScreen.routeName);
+                          Navigator.pushNamed(context, MainScreen.routeName);
                         },
                         child: const Text(
                           "Готово",
@@ -199,8 +194,8 @@ class _CreateCategoryState extends State<CreateCategory> {
                               ),
                             )
                           : Container(
-                            height: 250,
-                            width: double.infinity - 50,
+                              height: 250,
+                              width: double.infinity - 50,
                               child: ListWidget(audio: soundList!),
                             ),
                     ),
