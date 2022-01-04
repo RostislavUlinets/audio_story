@@ -2,6 +2,7 @@ import 'package:audio_story/models/navigation_item.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
+import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/deleted/deleted.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
@@ -10,7 +11,7 @@ import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatelessWidget with RouteAware {
   const SideMenu({Key? key}) : super(key: key);
 
   @override
@@ -108,7 +109,6 @@ class SideMenu extends StatelessWidget {
     required String text,
     required AssetImage image,
   }) {
-    
     final isSelected = checker(item, ModalRoute.of(context)!.settings.name);
 
     final color = isSelected ? Colors.red : const Color(0xFF3A3A55);
@@ -145,7 +145,7 @@ class SideMenu extends StatelessWidget {
               Navigator.pushNamed(context, SearchScreen.routeName);
               break;
             case NavigationItem.delete:
-              Navigator.pushNamed(context, DeeltedScreen.routeName);
+              Navigator.pushNamed(context, DeleteScreen.routeName);
               break;
             case NavigationItem.help:
               Navigator.pushNamed(context, Subscribe.routeName);
@@ -180,7 +180,7 @@ class SideMenu extends StatelessWidget {
         if (navigation == Profile.routeName) return true;
         break;
       case NavigationItem.delete:
-        if (navigation == DeeltedScreen.routeName) return true;
+        if (navigation == DeleteScreen.routeName) return true;
         break;
     }
     return false;

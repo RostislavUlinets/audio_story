@@ -1,3 +1,5 @@
+import 'package:audio_story/screens/deleted/delete_screen.dart';
+import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +73,9 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const SearchScreen(),
         );
-      case DeeltedScreen.routeName:
+      case DeleteScreen.routeName:
         return MaterialPageRoute(
-          builder: (context) => const DeeltedScreen(),
+          builder: (context) => const DeleteScreen(),
         );
       default:
         return _errorRoute();

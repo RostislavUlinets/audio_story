@@ -1,4 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/bloc/delete/delete_bloc.dart';
+import 'package:audio_story/bloc/delete/delete_event.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/deleted/widget/select_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -6,6 +8,7 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 import 'select.dart';
 import 'widget/custom_list.dart';
@@ -13,16 +16,14 @@ import 'widget/custom_list.dart';
 final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-class DeeltedScreen extends StatefulWidget {
-  const DeeltedScreen({Key? key}) : super(key: key);
-
-  static const routeName = '/deleted';
+class DeelteMode extends StatefulWidget {
+  const DeelteMode({Key? key}) : super(key: key);
 
   @override
-  State<DeeltedScreen> createState() => _DeeltedScreenState();
+  State<DeelteMode> createState() => _DeelteModeState();
 }
 
-class _DeeltedScreenState extends State<DeeltedScreen> {
+class _DeelteModeState extends State<DeelteMode> {
   bool selectMode = false;
 
   @override
@@ -82,11 +83,7 @@ class _DeeltedScreenState extends State<DeeltedScreen> {
                         itemBuilder: (context) => [
                           PopupMenuItem(
                             child: const Text("Выбрать несколько"),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SelectScreen()),
-                            ),
+                            onTap: () => context.read<MyBloc>().add(EventB()),
                             value: 1,
                           ),
                           PopupMenuItem(

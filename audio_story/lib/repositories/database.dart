@@ -191,7 +191,7 @@ class DatabaseService {
     DocumentSnapshot document = await soundCollection.doc(uid).get();
     Map<String, dynamic> map = document.data() as Map<String, dynamic>;
     for (int i = 0; i < sounds.length; i++) {
-      if (map[sounds[i]]['isDeleted']) continue;
+      if (map[sounds[i]] == null || map[sounds[i]]['isDeleted']) continue;
 
       audioFromModel.add(
         AudioModel(

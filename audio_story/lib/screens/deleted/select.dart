@@ -1,34 +1,43 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/bloc/delete/delete_bloc.dart';
+import 'package:audio_story/bloc/delete/delete_event.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
+import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
-import 'widget/custom_list.dart';
+class SelectMode extends StatefulWidget {
+  static const String routeName = '/selectDeleted';
 
-final DatabaseService dataBase =
-    DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-
-class SelectScreen extends StatefulWidget {
-  const SelectScreen({Key? key}) : super(key: key);
-
-  static const routeName = '/deleted';
+  const SelectMode({Key? key}) : super(key: key);
 
   @override
-  State<SelectScreen> createState() => _DeeltedScreenState();
+  _SelectModeState createState() => _SelectModeState();
 }
 
-class _DeeltedScreenState extends State<SelectScreen> {
-  bool selectMode = false;
+class _SelectModeState extends State<SelectMode> {
+  final DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+  List<bool> select = [];
+  List<AudioModel> playList = [];
+  List<AudioModel> audio = [];
+
+  @override
+  void initState() {
+    super.initState();
+    dataBase.getDeletedAudio().then((value) {
+      audio = value;
+      select = List.filled(audio.length, false);
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideMenu(),
-      extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(3),
       body: Stack(
         children: [
           const MyCustomPaint(
@@ -41,7 +50,7 @@ class _DeeltedScreenState extends State<SelectScreen> {
             child: Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 100),
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
                   child: Text(
                     "Недавно\nудаленные",
                     style: TextStyle(
@@ -52,29 +61,87 @@ class _DeeltedScreenState extends State<SelectScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                FutureBuilder(
-                  future: dataBase.getDeletedAudio(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const SizedBox(
-                          height: 250,
-                          width: 250,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: CColors.purpule,
-                              strokeWidth: 1.5,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => context.read<MyBloc>().add(EventA()),
+                        child: const Text(
+                          'Отменить',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: audio.length,
+                    itemBuilder: (_, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Container(
+                          child: ListTile(
+                            title: Text(
+                              audio[index].name,
+                              style: const TextStyle(color: Color(0xFF3A3A55)),
+                            ),
+                            subtitle: const Text(
+                              "30 минут",
+                              style: TextStyle(color: Color(0x803A3A55)),
+                            ),
+                            leading: IconButton(
+                              icon: const Image(
+                                image: AssetImage("assets/Play.png"),
+                              ),
+                              onPressed: () {
+                                Scaffold.of(context).showBottomSheet(
+                                    (context) => PlayerOnProgress(
+                                          url: audio[index].url,
+                                          name: audio[index].name,
+                                        ));
+                              },
+                            ),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                if (select[index] == false) {
+                                  select[index] = true;
+                                  playList.add(audio[index]);
+                                  setState(() {});
+                                } else {
+                                  select[index] = false;
+                                  playList.removeWhere(
+                                    (element) => element.id == audio[index].id,
+                                  );
+                                  setState(() {});
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                        width: 2, color: Colors.black)),
+                                child: Image(
+                                  image: AssetImage('assets/TickSquare.png'),
+                                  color: select[index]
+                                      ? Colors.black
+                                      : Colors.white,
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      default:
-                        return Expanded(
-                            child: ListWidget(
-                          audio: snapshot.data,
-                        ));
-                    }
-                  },
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(75),
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
