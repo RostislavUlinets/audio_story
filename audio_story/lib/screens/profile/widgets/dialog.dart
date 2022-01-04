@@ -1,13 +1,10 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
-import 'package:audio_story/repositories/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void showAlertDialog(BuildContext context) {
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   NavigationController navigation =
       Provider.of<NavigationController>(context, listen: false);

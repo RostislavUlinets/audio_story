@@ -94,8 +94,8 @@ class _AudioState extends State<Audio> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "20 аудио\n10:30 часов",
                         style: TextStyle(
                           fontSize: 16,

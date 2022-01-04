@@ -1,11 +1,9 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const routeName = '/welcome';

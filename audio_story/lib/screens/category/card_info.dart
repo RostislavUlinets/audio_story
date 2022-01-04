@@ -187,7 +187,6 @@ class _CardInfoState extends State<CardInfo> {
                                           child: Text("Скачать все"),
                                           value: 4,
                                         ),
-                                        //TODO: CHECK SOLUTION
                                         PopupMenuItem(
                                           child: const Text("Удалить все"),
                                           onTap: () => dataBase

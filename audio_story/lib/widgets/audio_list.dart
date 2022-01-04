@@ -1,13 +1,9 @@
 import 'package:audio_story/models/audio.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:animations/animations.dart';
 
 final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);

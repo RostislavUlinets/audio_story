@@ -2,7 +2,7 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class Repeat extends StatefulWidget {
-  Repeat({Key? key}) : super(key: key);
+  const Repeat({Key? key}) : super(key: key);
 
   @override
   State<Repeat> createState() => _RepeatState();
@@ -32,7 +32,7 @@ class _RepeatState extends State<Repeat> {
                     : _color = Colors.white38;
                 setState(() {});
               },
-              child: Image(
+              child: const Image(
                 image: AssetImage("assets/fluent_arrow.png"),
                 color: CColors.purpule,
               ),

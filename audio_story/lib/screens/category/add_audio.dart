@@ -167,7 +167,7 @@ class _AddAudioState extends State<AddAudio> {
                                     border: Border.all(
                                         width: 2, color: Colors.black)),
                                 child: Image(
-                                  image: AssetImage('assets/TickSquare.png'),
+                                  image: const AssetImage('assets/TickSquare.png'),
                                   color: select[index]
                                       ? Colors.black
                                       : Colors.white,

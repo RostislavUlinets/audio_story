@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/add_audio.dart';
 
@@ -15,8 +14,6 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateCategory extends StatefulWidget {
@@ -108,7 +105,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                         fontWeight: FontWeight.bold,
                       ),
                       controller: _name,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
                     ),
@@ -193,7 +190,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                                 ),
                               ),
                             )
-                          : Container(
+                          : SizedBox(
                               height: 250,
                               width: double.infinity - 50,
                               child: ListWidget(audio: soundList!),

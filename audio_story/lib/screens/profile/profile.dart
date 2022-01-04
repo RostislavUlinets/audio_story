@@ -85,7 +85,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    bool flag = user!.isAnonymous;
     NavigationController navigation =
         Provider.of<NavigationController>(context, listen: false);
     return Scaffold(

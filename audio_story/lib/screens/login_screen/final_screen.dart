@@ -1,9 +1,7 @@
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class FinalScreen extends StatelessWidget {
   static const routeName = '/splash';
@@ -14,8 +12,6 @@ class FinalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
 
     Future.delayed(Duration(seconds: duration), () {
       Navigator.pushNamed(context, MainScreen.routeName);

@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
-import 'package:audio_story/screens/category/card_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -169,9 +168,11 @@ class DatabaseService {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> soundsList = ds.get('SaveList');
     var sounds = soundsList[index]['Sounds'];
-    soundsIndex.forEach((element) {
-      sounds.removeAt(element);
-    });
+    soundsIndex.forEach(
+      (element) {
+        sounds.removeAt(element);
+      },
+    );
     soundsList[index]['Sounds'] = sounds;
     await userCollection.doc(uid).update({
       'SaveList': soundsList,

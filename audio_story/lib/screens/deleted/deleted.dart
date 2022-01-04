@@ -2,7 +2,6 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/bloc/delete/delete_bloc.dart';
 import 'package:audio_story/bloc/delete/delete_event.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/deleted/widget/select_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -10,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
-import 'select.dart';
 import 'widget/custom_list.dart';
 
 final DatabaseService dataBase =
@@ -87,12 +85,12 @@ class _DeelteModeState extends State<DeelteMode> {
                             value: 1,
                           ),
                           PopupMenuItem(
-                            child: Text("Удалить все"),
+                            child: const Text("Удалить все"),
                             onTap: () {},
                             value: 2,
                           ),
                           PopupMenuItem(
-                            child: Text("Восстановить все"),
+                            child: const Text("Восстановить все"),
                             onTap: () {},
                             value: 2,
                           ),

@@ -98,8 +98,8 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                   playList.isEmpty
-                      ? AnonimContainers()
-                      : LoggedContainers(),
+                      ? const AnonimContainers()
+                      : const LoggedContainers(),
                   const SizedBox(height: 10),
                   CustomList(),
                 ],

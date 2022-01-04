@@ -1,17 +1,11 @@
 import 'package:audio_story/screens/deleted/delete_screen.dart';
-import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:provider/provider.dart';
 
-import 'provider/navigation_provider.dart';
 import 'screens/audio/audio.dart';
-import 'screens/audio_card/audo_info.dart';
 import 'screens/category/category.dart';
 import 'screens/category/create_category.dart';
-import 'screens/deleted/deleted.dart';
 import 'screens/login_screen/final_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/profile/profile.dart';

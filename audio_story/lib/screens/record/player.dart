@@ -1,18 +1,13 @@
 import 'dart:io';
 
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio/audio.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:uuid/uuid.dart';
 
 import 'widget/dialog.dart';
 import 'widget/test.dart';
@@ -44,8 +39,6 @@ class _PlayerState extends State<Player> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context);
 
     return Stack(
       children: [

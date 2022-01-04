@@ -1,13 +1,8 @@
 import 'package:audio_story/models/audio.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:animations/animations.dart';
 
 final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -88,7 +83,7 @@ class _ListWidgetState extends State<SelectList> {
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(width: 2, color: Colors.black)),
                   child: Image(
-                    image: AssetImage('assets/TickSquare.png'),
+                    image: const AssetImage('assets/TickSquare.png'),
                     color: select[index] ? Colors.black : Colors.white,
                   ),
                 ),

@@ -22,7 +22,7 @@ class _PlayListState extends State<PlayList> {
 
   var sounds = [];
   String name = '';
-  Image? image = null;
+  Image? image;
 
   Future getSaveList() async {
     DocumentSnapshot ds =

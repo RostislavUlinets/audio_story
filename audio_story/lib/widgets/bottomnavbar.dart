@@ -5,8 +5,6 @@ import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/record/record.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 
 /*
 class CustomNavigation extends StatefulWidget {
@@ -112,8 +110,6 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
 
     return Container(
       decoration: const BoxDecoration(

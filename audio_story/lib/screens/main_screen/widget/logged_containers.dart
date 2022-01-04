@@ -56,7 +56,7 @@ class LoggedContainers extends StatelessWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                Text(
+                                const Text(
                                   "n аудио\n1:30 часа",
                                   style: TextStyle(
                                     fontSize: 13,
@@ -126,7 +126,7 @@ class LoggedContainers extends StatelessWidget {
                                       ),
                                     ),
                                     const Spacer(),
-                                    Text(
+                                    const Text(
                                       "n аудио\n1:30 часа",
                                       style: TextStyle(
                                         fontSize: 13,
@@ -191,7 +191,7 @@ class LoggedContainers extends StatelessWidget {
                                       ),
                                     ),
                                     const Spacer(),
-                                    Text(
+                                    const Text(
                                       "n аудио\n1:30 часа",
                                       style: TextStyle(
                                         fontSize: 13,

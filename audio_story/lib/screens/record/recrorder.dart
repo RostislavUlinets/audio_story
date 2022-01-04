@@ -25,7 +25,6 @@ class _RecorderState extends State<Recorder> {
   final pathToSaveTemp = '/sdcard/Download/temp.aac';
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
-  bool _mplaybackReady = false;
   TextEditingController audioName =
       TextEditingController(text: 'Аудиозапись 1');
   //StreamSubscription? _mRecordingDataSubscription;
@@ -69,7 +68,6 @@ class _RecorderState extends State<Recorder> {
 
   Future<void> stopRecorder() async {
     await _mRecorder!.stopRecorder();
-    _mplaybackReady = true;
     await FlutterSoundHelper()
         .convertFile(pathToSaveTemp, Codec.aacADTS, pathToSaveAudio, Codec.mp3);
   }
@@ -149,8 +147,8 @@ class _RecorderState extends State<Recorder> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 100.0),
-                    child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 100.0),
+                    child: SizedBox(
                       child: MusicVisualizer(),
                       height: 60,
                     ),
@@ -178,7 +176,6 @@ class _RecorderState extends State<Recorder> {
   Widget buildStart() {
     final isRecording = _mRecorder!.isRecording;
 
-    final icon = isRecording ? Icons.stop : Icons.mic;
     final image = isRecording
         ? Image.asset(
             'assets/Pause.png',
@@ -188,9 +185,6 @@ class _RecorderState extends State<Recorder> {
             'assets/RecordIcon.png',
             color: CColors.orange,
           );
-    final text = isRecording ? 'STOP' : 'START';
-    final primary = isRecording ? Colors.red : Colors.white;
-    final onPrimary = isRecording ? Colors.white : Colors.black;
 
     return GestureDetector(
       onTap: getRecorderFn(),

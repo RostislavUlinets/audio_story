@@ -56,7 +56,6 @@ class AudioInfo extends StatelessWidget {
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 child: const Text("Добавить в подборку"),
-                                //TODO: Question
                                 onTap: () {},
                                 value: 1,
                               ),
@@ -66,13 +65,11 @@ class AudioInfo extends StatelessWidget {
                               ),
                               PopupMenuItem(
                                 child: const Text("Поделиться"),
-                                //TODO: Question
                                 onTap: () {},
                                 value: 3,
                               ),
                               PopupMenuItem(
                                 child: const Text("Скачать"),
-                                //TODO: Question
                                 onTap: () async {
                                   LocalStorage storage = LocalStorage();
                                   final message = await storage.downloadFile(
@@ -91,7 +88,6 @@ class AudioInfo extends StatelessWidget {
                               ),
                               PopupMenuItem(
                                 child: const Text("Удалить"),
-                                //TODO: Question
                                 onTap: () {},
                                 value: 5,
                               ),
