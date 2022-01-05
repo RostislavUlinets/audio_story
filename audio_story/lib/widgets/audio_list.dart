@@ -90,11 +90,14 @@ class _ListWidgetState extends State<ListWidget> {
                   PopupMenuItem(
                     child: Text("Подробнее об аудиозаписи"),
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => AudioInfo(
-                          url: audio[index].url,
-                          name: audio[index].name,
+                      Future.delayed(
+                        const Duration(seconds: 0),
+                        () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AudioInfo(
+                            url: audio[index].url,
+                            name: audio[index].name,
+                          ),
                         ),
                       );
                     },

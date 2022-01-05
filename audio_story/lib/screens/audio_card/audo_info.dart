@@ -1,4 +1,5 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -56,7 +57,13 @@ class AudioInfo extends StatelessWidget {
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 child: const Text("Добавить в подборку"),
-                                onTap: () {},
+                                onTap: () {
+                                  Future.delayed(
+                                    Duration(seconds: 0),
+                                    () => Navigator.pushNamed(
+                                        context, CustomCategory.routeName),
+                                  );
+                                },
                                 value: 1,
                               ),
                               const PopupMenuItem(
