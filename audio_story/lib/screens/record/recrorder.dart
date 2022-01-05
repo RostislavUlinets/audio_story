@@ -130,7 +130,7 @@ class _RecorderState extends State<Recorder> {
                         TextButton(
                           child: const Text("Отменить"),
                           onPressed: () {
-                            navigation.changeScreen(MainScreen.routeName);
+                            Navigator.pushNamed(context, MainScreen.routeName);
                           },
                         ),
                       ],

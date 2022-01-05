@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
 import 'package:audio_story/repositories/database.dart';
@@ -223,8 +224,8 @@ class _ProfileState extends State<Profile> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          _auth.signOut();
-                          navigation.changeScreen('');
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pushNamed(context, WelcomeScreen.routeName);
                         },
                         child: const Text("Выйти из приложения",
                             style: TextStyle(

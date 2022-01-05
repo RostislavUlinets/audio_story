@@ -1,3 +1,4 @@
+import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
@@ -39,6 +40,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const Category(),
         );
+      case CreateCategory.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const CreateCategory(),
+        );
+      case CardInfo.routeName:
+        return MaterialPageRoute(
+          builder: (context) => CardInfo(index: settings.arguments as int),
+        );
       case Audio.routeName:
         return MaterialPageRoute(
           builder: (context) => const Audio(),
@@ -58,10 +67,6 @@ class RouteGenerator {
       case Player.routeName:
         return MaterialPageRoute(
           builder: (context) => const Player(),
-        );
-      case CreateCategory.routeName:
-        return MaterialPageRoute(
-          builder: (context) => const CreateCategory(),
         );
       case SearchScreen.routeName:
         return MaterialPageRoute(

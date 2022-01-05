@@ -70,77 +70,127 @@ class _SelectModeState extends State<SelectMode> {
                         onPressed: () => context.read<MyBloc>().add(EventA()),
                         child: const Text(
                           'Отменить',
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: audio.length,
-                    itemBuilder: (_, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Container(
-                          child: ListTile(
-                            title: Text(
-                              audio[index].name,
-                              style: const TextStyle(color: Color(0xFF3A3A55)),
-                            ),
-                            subtitle: const Text(
-                              "30 минут",
-                              style: TextStyle(color: Color(0x803A3A55)),
-                            ),
-                            leading: IconButton(
-                              icon: const Image(
-                                image: AssetImage("assets/Play.png"),
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: audio.length,
+                      itemBuilder: (_, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Container(
+                            child: ListTile(
+                              title: Text(
+                                audio[index].name,
+                                style:
+                                    const TextStyle(color: Color(0xFF3A3A55)),
                               ),
-                              onPressed: () {
-                                Scaffold.of(context).showBottomSheet(
-                                    (context) => PlayerOnProgress(
-                                          url: audio[index].url,
-                                          name: audio[index].name,
-                                        ));
-                              },
-                            ),
-                            trailing: GestureDetector(
-                              onTap: () {
-                                if (select[index] == false) {
-                                  select[index] = true;
-                                  playList.add(audio[index]);
-                                  setState(() {});
-                                } else {
-                                  select[index] = false;
-                                  playList.removeWhere(
-                                    (element) => element.id == audio[index].id,
-                                  );
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        width: 2, color: Colors.black)),
-                                child: Image(
-                                  image: AssetImage('assets/TickSquare.png'),
-                                  color: select[index]
-                                      ? Colors.black
-                                      : Colors.white,
+                              subtitle: const Text(
+                                "30 минут",
+                                style: TextStyle(color: Color(0x803A3A55)),
+                              ),
+                              leading: IconButton(
+                                icon: const Image(
+                                  image: AssetImage("assets/Play.png"),
+                                ),
+                                onPressed: () {
+                                  Scaffold.of(context).showBottomSheet(
+                                      (context) => PlayerOnProgress(
+                                            url: audio[index].url,
+                                            name: audio[index].name,
+                                          ));
+                                },
+                              ),
+                              trailing: GestureDetector(
+                                onTap: () {
+                                  if (select[index] == false) {
+                                    select[index] = true;
+                                    playList.add(audio[index]);
+                                    setState(() {});
+                                  } else {
+                                    select[index] = false;
+                                    playList.removeWhere(
+                                      (element) =>
+                                          element.id == audio[index].id,
+                                    );
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                          width: 2, color: Colors.black)),
+                                  child: Image(
+                                    image: AssetImage('assets/TickSquare.png'),
+                                    color: select[index]
+                                        ? Colors.black
+                                        : Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(75),
-                            border: Border.all(
-                              color: Colors.grey,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(75),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: null,
+                              icon: Image.asset('assets/Swap.png'),
+                            ),
+                            const Text(
+                              'Восстановить все',
+                            ),
+                          ],
                         ),
-                      );
-                    },
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: null,
+                              icon: Image.asset('assets/Delete.png'),
+                            ),
+                            const Text(
+                              'Удалить все',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

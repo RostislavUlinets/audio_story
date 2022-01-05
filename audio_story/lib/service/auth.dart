@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/code_sent.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/login_screen/final_screen.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,9 +51,7 @@ class AuthService {
         User? user = res.user;
 
         if (user != null) {
-          NavigationController navigation =
-              Provider.of<NavigationController>(context, listen: false);
-          navigation.changeScreen('/');
+          Navigator.pushNamed(context, MainScreen.routeName);
         } else {
           log("Error");
         }
@@ -78,9 +77,7 @@ class AuthService {
           DatabaseService _dataBase = DatabaseService(user.uid);
           _dataBase.initUserData();
           Navigator.pop(context, result);
-          NavigationController navigation =
-              Provider.of<NavigationController>(context, listen: false);
-          navigation.changeScreen('/splash');
+          Navigator.pushNamed(context, FinalScreen.routeName);
         } else {
           log("Error");
         }

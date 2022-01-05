@@ -31,7 +31,7 @@ Image imageFromBase64String(String base64String) {
 }
 
 class CardInfo extends StatefulWidget {
-  static const routeName = '/audio';
+  static const routeName = '/cardInfo';
   final int index;
 
   const CardInfo({Key? key, required this.index}) : super(key: key);
@@ -140,8 +140,18 @@ class _CardInfoState extends State<CardInfo> {
                                         PopupMenuItem(
                                           child: const Text("Удалить подборку"),
                                           onTap: () {
-                                            DeleteAudio.deletePlayList(
-                                                context, index);
+                                            Future.delayed(
+                                              const Duration(seconds: 0),
+                                              () => showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return DeleteAlert(
+                                                    index: index,
+                                                  );
+                                                },
+                                              ),
+                                            );
                                           },
                                           value: 3,
                                         ),

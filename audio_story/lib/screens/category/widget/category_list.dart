@@ -63,12 +63,17 @@ class _PlayListState extends State<PlayList> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => CardInfo(
+                  //             index: index,
+                  //           )),
+                  // );
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => CardInfo(
-                              index: index,
-                            )),
+                    '/cardInfo',
+                    arguments: index,
                   );
                 },
                 child: ClipRRect(
