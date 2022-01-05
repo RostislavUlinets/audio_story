@@ -9,7 +9,6 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class SearchScreen extends StatefulWidget {
   static const routeName = '/search';
   const SearchScreen({Key? key}) : super(key: key);
@@ -19,7 +18,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
@@ -33,9 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     dataBase.audioListDB().then((value) {
       audio = value;
       allAudio = audio;
-      setState(() {
-        
-      });
+      setState(() {});
     });
   }
 
@@ -119,8 +115,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
                                     (context) => PlayerOnProgress(
-                                      url: audio[index].url,
-                                      name: audio[index].name,
+                                      soundsList: audio,
+                                      index: index,
                                     ),
                                   );
                                 },

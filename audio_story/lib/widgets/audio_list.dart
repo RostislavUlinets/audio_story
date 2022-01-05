@@ -1,5 +1,6 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,8 +56,8 @@ class _ListWidgetState extends State<ListWidget> {
                   onPressed: () {
                     Scaffold.of(context).showBottomSheet(
                       (context) => PlayerOnProgress(
-                        url: audio[index].url,
-                        name: audio[index].name,
+                        soundsList: audio,
+                        index: index,
                       ),
                     );
                   },

@@ -4,6 +4,7 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -152,6 +153,8 @@ class _CardInfoState extends State<CardInfo> {
                                                 },
                                               ),
                                             );
+                                            Navigator.pushNamed(
+                                                context, MainScreen.routeName);
                                           },
                                           value: 3,
                                         ),
@@ -199,17 +202,20 @@ class _CardInfoState extends State<CardInfo> {
                                         ),
                                         PopupMenuItem(
                                           child: const Text("Удалить все"),
-                                          onTap: () => dataBase
-                                              .deleteSounds(index, eraseList)
-                                              .then(
-                                                (value) =>
-                                                    Navigator.pushReplacement(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                super.widget)),
-                                              ),
+                                          onTap: () {
+                                            dataBase
+                                                .deleteSounds(index, eraseList)
+                                                .then(
+                                                  (value) =>
+                                                      Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            super.widget),
+                                                  ),
+                                                );
+                                          },
                                           value: 4,
                                         ),
                                       ],

@@ -3,6 +3,8 @@ import 'package:audio_story/bloc/delete/delete_bloc.dart';
 import 'package:audio_story/bloc/delete/delete_event.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/deleted/delete_screen.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +24,7 @@ class _SelectModeState extends State<SelectMode> {
   final DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   List<bool> select = [];
-  List<AudioModel> playList = [];
+  List<String> playList = [];
   List<AudioModel> audio = [];
 
   @override
@@ -38,6 +40,59 @@ class _SelectModeState extends State<SelectMode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black,
+            onTap: (buttonIndex) {
+              switch (buttonIndex) {
+                case 0:
+                  dataBase.recoverAudio(playList).then(
+                        (value) => setState(() {}),
+                      );
+                  Navigator.pushNamed(context, MainScreen.routeName);
+                  break;
+                case 1:
+                  dataBase.fullDeleteAudio(playList).then(
+                        (value) => setState(() {}),
+                      );
+                  Navigator.pushNamed(context, MainScreen.routeName);
+                  break;
+              }
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/Swap.png'),
+                label: 'Восстановить все',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/Delete.png'),
+                label: 'Удалить все',
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Stack(
         children: [
           const MyCustomPaint(
@@ -104,8 +159,8 @@ class _SelectModeState extends State<SelectMode> {
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
                                       (context) => PlayerOnProgress(
-                                            url: audio[index].url,
-                                            name: audio[index].name,
+                                            soundsList: audio,
+                                            index: index,
                                           ));
                                 },
                               ),
@@ -113,13 +168,12 @@ class _SelectModeState extends State<SelectMode> {
                                 onTap: () {
                                   if (select[index] == false) {
                                     select[index] = true;
-                                    playList.add(audio[index]);
+                                    playList.add(audio[index].id);
                                     setState(() {});
                                   } else {
                                     select[index] = false;
                                     playList.removeWhere(
-                                      (element) =>
-                                          element.id == audio[index].id,
+                                      (element) => element == audio[index].id,
                                     );
                                     setState(() {});
                                   }
@@ -150,49 +204,39 @@ class _SelectModeState extends State<SelectMode> {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: null,
-                              icon: Image.asset('assets/Swap.png'),
-                            ),
-                            const Text(
-                              'Восстановить все',
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: null,
-                              icon: Image.asset('assets/Delete.png'),
-                            ),
-                            const Text(
-                              'Удалить все',
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Column(
+                //           children: [
+                //             IconButton(
+                //               onPressed: null,
+                //               icon: Image.asset('assets/Swap.png'),
+                //             ),
+                //             const Text(
+                //               'Восстановить все',
+                //             ),
+                //           ],
+                //         ),
+                //         Column(
+                //           children: [
+                //             IconButton(
+                //               onPressed: null,
+                //               icon: Image.asset('assets/Delete.png'),
+                //             ),
+                //             const Text(
+                //               'Удалить все',
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

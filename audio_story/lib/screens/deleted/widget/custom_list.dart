@@ -55,8 +55,8 @@ class _ListWidgetState extends State<ListWidget> {
                     onPressed: () {
                       Scaffold.of(context).showBottomSheet(
                         (context) => PlayerOnProgress(
-                          url: audio[index].url,
-                          name: audio[index].name,
+                          soundsList: audio,
+                          index: index,
                         ),
                       );
                     },

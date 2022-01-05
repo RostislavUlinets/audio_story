@@ -236,14 +236,17 @@ class DatabaseService {
     });
   }
 
-  Future<void> recoverAudio(String id) async {
+  Future<void> recoverAudio(List<String> id) async {
+    log(id.toString());
     String uid = FirebaseAuth.instance.currentUser!.uid;
     DocumentSnapshot document = await soundCollection.doc(uid).get();
-    Map<String, dynamic> doc = document.get(id);
-    doc['isDeleted'] = false;
-    await soundCollection.doc(uid).update({
-      id: doc,
-    });
+    for (int i = 0; i < id.length; i++) {
+      Map<String, dynamic> doc = document.get(id[i]);
+      doc['isDeleted'] = false;
+      await soundCollection.doc(uid).update({
+        id[i]: doc,
+      });
+    }
   }
 
   Future<List<AudioModel>> getDeletedAudio() async {

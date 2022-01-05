@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audio_story/models/audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
@@ -7,28 +8,31 @@ const int tSampleRate = 44000;
 typedef Fn = void Function();
 
 class PlayerOnProgress extends StatefulWidget {
-  final String url, name;
+  final List<AudioModel> soundsList;
+  final int index;
 
-  const PlayerOnProgress({Key? key, required this.url, required this.name})
+  const PlayerOnProgress(
+      {Key? key, required this.soundsList, required this.index})
       : super(key: key);
 
   @override
-  _PlayerOnProgressState createState() => _PlayerOnProgressState(url, name);
+  _PlayerOnProgressState createState() => _PlayerOnProgressState();
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
-  _PlayerOnProgressState(this.url, this.name);
+  List<AudioModel> soundsList = [];
+  int index = 0;
 
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
   int duration = 0;
-  final String url, name;
-
   @override
   void initState() {
     super.initState();
+    soundsList = widget.soundsList;
+    index = widget.index;
     init().then((value) {
       setState(() {
         _mPlayerIsInited = true;
@@ -50,10 +54,11 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       _mPlayerSubscription = null;
     }
   }
-  
+
   Future<void> init() async {
     await _mPlayer.openAudioSession();
-    duration = (await flutterSoundHelper.duration(url))!.inMilliseconds;
+    duration = (await flutterSoundHelper.duration(soundsList[index].url))!
+        .inMilliseconds;
     await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
       setPos(e.position.inMilliseconds);
@@ -64,7 +69,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   void play(FlutterSoundPlayer? player) async {
     await player!.startPlayer(
         codec: Codec.mp3,
-        fromURI: url,
+        fromURI: soundsList[index].url,
         whenFinished: () {
           setState(() {});
         });
@@ -143,7 +148,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    name,
+                    soundsList[index].name,
                     style: const TextStyle(
                       color: Colors.white,
                     ),
