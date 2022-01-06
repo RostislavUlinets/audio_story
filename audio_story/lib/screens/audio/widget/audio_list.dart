@@ -10,11 +10,13 @@ class AudioScreenList extends StatefulWidget {
   List<AudioModel> audio;
 
   bool buttonState;
+  bool cycleState;
 
   AudioScreenList({
     Key? key,
     required this.audio,
     required this.buttonState,
+    required this.cycleState,
   }) : super(key: key);
 
   @override
@@ -65,6 +67,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
                         soundsList: audio,
                         index: index,
                         repeat: widget.buttonState,
+                        cycle: widget.cycleState,
                       ),
                     );
                   },

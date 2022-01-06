@@ -57,6 +57,7 @@ class _ListWidgetState extends State<ListWidget> {
                           soundsList: audio,
                           index: index,
                           repeat: false,
+                          cycle: false,
                         ),
                       );
                     },

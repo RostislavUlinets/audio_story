@@ -118,6 +118,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       soundsList: audio,
                                       index: index,
                                       repeat: false,
+                                      cycle: false,
                                     ),
                                   );
                                 },

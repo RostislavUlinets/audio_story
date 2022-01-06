@@ -14,7 +14,6 @@ class SearchCustomList extends StatefulWidget {
 class _SearchCustomListState extends State<SearchCustomList> {
   late List<AudioModel> audio;
 
-
   @override
   initState() {
     super.initState();
@@ -48,6 +47,7 @@ class _SearchCustomListState extends State<SearchCustomList> {
                       soundsList: audio,
                       index: index,
                       repeat: false,
+                      cycle: false,
                     ),
                   );
                 },

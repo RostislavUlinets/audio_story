@@ -60,6 +60,7 @@ class _ListWidgetState extends State<SelectList> {
                         soundsList: audio,
                         index: index,
                         repeat: false,
+                        cycle: false,
                       ),
                     );
                   },

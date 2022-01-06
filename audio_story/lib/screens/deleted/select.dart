@@ -162,6 +162,7 @@ class _SelectModeState extends State<SelectMode> {
                                       soundsList: audio,
                                       index: index,
                                       repeat: false,
+                                      cycle: false,
                                     ),
                                   );
                                 },

@@ -11,12 +11,14 @@ class PlayerOnProgress extends StatefulWidget {
   final List<AudioModel> soundsList;
   final int index;
   final bool repeat;
+  final bool cycle;
 
   const PlayerOnProgress({
     Key? key,
     required this.soundsList,
     required this.index,
     required this.repeat,
+    required this.cycle,
   }) : super(key: key);
 
   @override
@@ -90,6 +92,9 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
         whenFinished: () async {
           if (widget.repeat) {
             repeatAudio();
+            play(player);
+          } else if (widget.cycle) {
+            playList();
             play(player);
           }
         });

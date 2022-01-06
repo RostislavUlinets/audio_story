@@ -20,6 +20,7 @@ class Audio extends StatefulWidget {
 class _AudioState extends State<Audio> {
   Color _color = Colors.white38;
   bool buttonPressed = false;
+  bool cycleState = false;
 
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -130,24 +131,36 @@ class _AudioState extends State<Audio> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 50,
-                            width: 160,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              children: const [
-                                Image(
-                                  image: AssetImage("assets/Play.png"),
-                                  color: CColors.purpule,
-                                ),
-                                Text(
-                                  "Запустить все",
-                                  style: TextStyle(color: CColors.purpule),
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              cycleState = !cycleState;
+                              buttonPressed = false;
+                              setState(() {});
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 160,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                children: [
+                                  cycleState == false
+                                      ? const Image(
+                                          image: AssetImage("assets/Play.png"),
+                                          color: CColors.purpule,
+                                        )
+                                      : const Image(
+                                          image: AssetImage("assets/Pause.png"),
+                                          color: CColors.purpule,
+                                        ),
+                                  const Text(
+                                    "Запустить все",
+                                    style: TextStyle(color: CColors.purpule),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -176,6 +189,7 @@ class _AudioState extends State<Audio> {
                           child: AudioScreenList(
                             audio: snapshot.data,
                             buttonState: buttonPressed,
+                            cycleState: cycleState,
                           ),
                         );
                     }
