@@ -4,6 +4,7 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/category/widget/description.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -240,11 +241,11 @@ class _CardInfoState extends State<CardInfo> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     SizedBox(
                                       child: Text(
-                                        "n аудио\n1:30 часа",
-                                        style: TextStyle(
+                                        "${audioPropeperty.sounds.length} аудио\n1:30 часа",
+                                        style: const TextStyle(
                                           fontSize: 13,
                                           color: Colors.white,
                                         ),
@@ -272,7 +273,9 @@ class _CardInfoState extends State<CardInfo> {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: Text(audioPropeperty.info),
+                            child: DescriptionTextWidget(
+                              text: audioPropeperty.info,
+                            ),
                           ),
                           FutureBuilder(
                             future: dataBase

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:audio_story/repositories/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,8 @@ class _CustomListCategoryState extends State<CustomListCategory> {
   var sounds = [];
   String name = '';
   Image? image;
+  List<bool> select = [];
+  List<int> playList = [];
 
   Future getSaveList() async {
     DocumentSnapshot ds =
@@ -41,10 +44,11 @@ class _CustomListCategoryState extends State<CustomListCategory> {
   void initState() {
     getSaveList().then((value) => setState(() {
           sounds = value;
+          select = List.filled(value.length, false);
         }));
+
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -62,76 +66,87 @@ class _CustomListCategoryState extends State<CustomListCategory> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => CardInfo(
-                  //             index: index,
-                  //           )),
-                  // );
-                  Navigator.pushNamed(
-                    context,
-                    '/cardInfo',
-                    arguments: index,
-                  );
+                  if (select[index] == false) {
+                    select[index] = true;
+                    playList.add(index);
+                    setState(() {});
+                  } else {
+                    select[index] = false;
+                    playList.removeWhere(
+                      (element) => element == index,
+                    );
+                    setState(() {});
+                  }
+                  log(index.toString());
                 },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0,
-                        vertical: 10,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: (select.isNotEmpty && select[index])
+                        ? DecorationImage(
+                            image: const Image(
+                              image: AssetImage('assets/TickSquare.png'),
+                            ).image,
+                          )
+                        : null,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0,
+                          vertical: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              child: Text(
+                                name,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  height: 1,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              width: 90,
+                            ),
+                            const Spacer(),
+                            const SizedBox(
+                              child: Text(
+                                "n аудио\n1:30 часа",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              width: 70,
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            child: Text(
-                              name,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                height: 1,
-                                fontWeight: FontWeight.bold,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        image: image != null
+                            ? DecorationImage(
+                                image: image!.image,
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.6),
+                                  BlendMode.dstATop,
+                                ),
+                              )
+                            : DecorationImage(
+                                image: const AssetImage('assets/story.jpg'),
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.6),
+                                  BlendMode.dstATop,
+                                ),
                               ),
-                            ),
-                            width: 90,
-                          ),
-                          const Spacer(),
-                          const SizedBox(
-                            child: Text(
-                              "n аудио\n1:30 часа",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                            width: 70,
-                          ),
-                        ],
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      image: image != null
-                          ? DecorationImage(
-                              image: image!.image,
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.7),
-                                BlendMode.dstATop,
-                              ),
-                            )
-                          : DecorationImage(
-                              image: const AssetImage('assets/story.jpg'),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.7),
-                                BlendMode.dstATop,
-                              ),
-                            ),
-                      color: Colors.black,
                     ),
                   ),
                 ),

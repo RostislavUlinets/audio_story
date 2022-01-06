@@ -93,7 +93,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           if (widget.repeat) {
             repeatAudio();
             play(player);
-          } else if (widget.cycle) {
+          } else if (widget.cycle && index < soundsList.length - 1) {
             playList();
             play(player);
           }

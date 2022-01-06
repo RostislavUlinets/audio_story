@@ -42,17 +42,9 @@ class _CategoryState extends State<CustomCategory> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      icon: const Image(
-                        image: AssetImage('assets/PlusIcon.png'),
-                        color: Colors.white,
-                        width: 36,
-                        height: 36,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, CreateCategory.routeName);
-                        //Scaffold.of(context).openDrawer();
-                      },
+                    const SizedBox(
+                      height: 36,
+                      width: 36,
                     ),
                     const Text(
                       "Подборки",
