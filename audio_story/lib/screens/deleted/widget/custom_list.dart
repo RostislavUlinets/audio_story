@@ -10,8 +10,7 @@ final DatabaseService dataBase =
 class ListWidget extends StatefulWidget {
   List<AudioModel> audio;
 
-  ListWidget({Key? key, required this.audio})
-      : super(key: key);
+  ListWidget({Key? key, required this.audio}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
@@ -57,6 +56,7 @@ class _ListWidgetState extends State<ListWidget> {
                         (context) => PlayerOnProgress(
                           soundsList: audio,
                           index: index,
+                          repeat: false,
                         ),
                       );
                     },

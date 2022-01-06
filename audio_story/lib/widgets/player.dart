@@ -10,10 +10,14 @@ typedef Fn = void Function();
 class PlayerOnProgress extends StatefulWidget {
   final List<AudioModel> soundsList;
   final int index;
+  final bool repeat;
 
-  const PlayerOnProgress(
-      {Key? key, required this.soundsList, required this.index})
-      : super(key: key);
+  const PlayerOnProgress({
+    Key? key,
+    required this.soundsList,
+    required this.index,
+    required this.repeat,
+  }) : super(key: key);
 
   @override
   _PlayerOnProgressState createState() => _PlayerOnProgressState();
@@ -66,12 +70,28 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     });
   }
 
+  void playList() async {
+    index++;
+    pos = 0;
+    duration = (await flutterSoundHelper.duration(soundsList[index].url))!
+        .inMilliseconds;
+    setState(() {});
+  }
+
+  void repeatAudio() {
+    pos = 0;
+    setState(() {});
+  }
+
   void play(FlutterSoundPlayer? player) async {
     await player!.startPlayer(
         codec: Codec.mp3,
         fromURI: soundsList[index].url,
-        whenFinished: () {
-          setState(() {});
+        whenFinished: () async {
+          if (widget.repeat) {
+            repeatAudio();
+            play(player);
+          }
         });
     setState(() {});
   }

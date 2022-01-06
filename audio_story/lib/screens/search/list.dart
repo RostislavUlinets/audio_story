@@ -47,6 +47,7 @@ class _SearchCustomListState extends State<SearchCustomList> {
                     (context) => PlayerOnProgress(
                       soundsList: audio,
                       index: index,
+                      repeat: false,
                     ),
                   );
                 },

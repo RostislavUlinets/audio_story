@@ -1,25 +1,31 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
+import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-final DatabaseService dataBase =
-    DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-
-class ListWidget extends StatefulWidget {
+class AudioScreenList extends StatefulWidget {
   List<AudioModel> audio;
 
-  ListWidget({Key? key, required this.audio}) : super(key: key);
+  bool buttonState;
+
+  AudioScreenList({
+    Key? key,
+    required this.audio,
+    required this.buttonState,
+  }) : super(key: key);
 
   @override
-  _ListWidgetState createState() => _ListWidgetState();
+  _AudioScreenListState createState() => _AudioScreenListState();
 }
 
-class _ListWidgetState extends State<ListWidget> {
-  late List<AudioModel> audio;
+class _AudioScreenListState extends State<AudioScreenList> {
+  List<AudioModel> audio = [];
+
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   @override
   initState() {
@@ -58,7 +64,7 @@ class _ListWidgetState extends State<ListWidget> {
                       (context) => PlayerOnProgress(
                         soundsList: audio,
                         index: index,
-                        repeat: true,
+                        repeat: widget.buttonState,
                       ),
                     );
                   },

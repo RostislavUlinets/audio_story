@@ -59,6 +59,7 @@ class _ListWidgetState extends State<SelectList> {
                       (context) => PlayerOnProgress(
                         soundsList: audio,
                         index: index,
+                        repeat: false,
                       ),
                     );
                   },

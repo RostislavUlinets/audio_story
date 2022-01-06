@@ -119,7 +119,7 @@ class _CustomListCategoryState extends State<CustomListCategory> {
                               image: image!.image,
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.8),
+                                Colors.black.withOpacity(0.7),
                                 BlendMode.dstATop,
                               ),
                             )
@@ -127,7 +127,7 @@ class _CustomListCategoryState extends State<CustomListCategory> {
                               image: const AssetImage('assets/story.jpg'),
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(0.8),
+                                Colors.black.withOpacity(0.7),
                                 BlendMode.dstATop,
                               ),
                             ),

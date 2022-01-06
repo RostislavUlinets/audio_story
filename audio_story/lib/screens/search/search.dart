@@ -117,6 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     (context) => PlayerOnProgress(
                                       soundsList: audio,
                                       index: index,
+                                      repeat: false,
                                     ),
                                   );
                                 },

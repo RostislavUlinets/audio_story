@@ -158,10 +158,12 @@ class _SelectModeState extends State<SelectMode> {
                                 ),
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
-                                      (context) => PlayerOnProgress(
-                                            soundsList: audio,
-                                            index: index,
-                                          ));
+                                    (context) => PlayerOnProgress(
+                                      soundsList: audio,
+                                      index: index,
+                                      repeat: false,
+                                    ),
+                                  );
                                 },
                               ),
                               trailing: GestureDetector(
