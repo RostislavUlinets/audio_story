@@ -193,7 +193,11 @@ class _CreateCategoryState extends State<CreateCategory> {
                           : SizedBox(
                               height: 250,
                               width: double.infinity - 50,
-                              child: ListWidget(audio: soundList!),
+                              child: ListWidget(
+                                audio: soundList!,
+                                buttonState: false,
+                                cycleState: false,
+                              ),
                             ),
                     ),
                   )

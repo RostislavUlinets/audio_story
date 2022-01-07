@@ -13,7 +13,6 @@ class CustomList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Container(
@@ -56,7 +55,13 @@ class CustomList extends StatelessWidget {
                         strokeWidth: 1.5,
                       );
                     default:
-                      return Expanded(child: ListWidget(audio: snapshot.data));
+                      return Expanded(
+                        child: ListWidget(
+                          audio: snapshot.data,
+                          buttonState: false,
+                          cycleState: false,
+                        ),
+                      );
                   }
                 },
               ),

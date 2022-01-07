@@ -186,7 +186,7 @@ class _AudioState extends State<Audio> {
                         );
                       default:
                         return Expanded(
-                          child: AudioScreenList(
+                          child: ListWidget(
                             audio: snapshot.data,
                             buttonState: buttonPressed,
                             cycleState: cycleState,

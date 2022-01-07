@@ -1,8 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
@@ -16,8 +16,15 @@ final DatabaseService dataBase =
 
 class ListWidget extends StatefulWidget {
   List<AudioModel> audio;
+  bool buttonState;
+  bool cycleState;
 
-  ListWidget({Key? key, required this.audio}) : super(key: key);
+  ListWidget({
+    Key? key,
+    required this.audio,
+    required this.buttonState,
+    required this.cycleState,
+  }) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();
@@ -26,11 +33,16 @@ class ListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ListWidget> {
   TextEditingController text = TextEditingController();
   late List<AudioModel> audio;
+  bool _onlyRead = false;
+  bool buttonState = false;
+  bool cycleState = false;
 
   @override
   initState() {
     super.initState();
     audio = widget.audio;
+    buttonState = widget.buttonState;
+    cycleState = widget.cycleState;
   }
 
   @override
@@ -38,7 +50,6 @@ class _ListWidgetState extends State<ListWidget> {
     return ListView.builder(
       itemCount: audio.length,
       itemBuilder: (_, index) {
-        bool _onlyRead = true;
         String initialText = audio[index].name;
         TextEditingController _editingController =
             TextEditingController(text: initialText);
@@ -58,6 +69,8 @@ class _ListWidgetState extends State<ListWidget> {
                     audio[index].id,
                     _editingController.text,
                   );
+                  _onlyRead = true;
+                  setState(() {});
                 },
               ),
               subtitle: const Text(
@@ -78,8 +91,8 @@ class _ListWidgetState extends State<ListWidget> {
                       (context) => PlayerOnProgress(
                         soundsList: audio,
                         index: index,
-                        repeat: false,
-                        cycle: false,
+                        repeat: buttonState,
+                        cycle: cycleState,
                       ),
                     );
                   },
@@ -101,7 +114,10 @@ class _ListWidgetState extends State<ListWidget> {
                     child: const Text("Переименовать"),
                     //TODO: Question
                     onTap: () {
-                      _onlyRead = !_onlyRead;
+                      setState(() {
+                        _onlyRead = !_onlyRead;
+                      });
+                      log(_onlyRead.toString());
                     },
                     value: 1,
                   ),

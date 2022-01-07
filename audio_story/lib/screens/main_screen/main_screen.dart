@@ -50,62 +50,64 @@ class _MainScreenState extends State<MainScreen> {
         child: SideMenu(),
       ),
       body: Builder(
-        builder: (ctx) => Stack(
-          children: [
-            const MyCustomPaint(
-              color: CColors.purpule,
-              size: 0.85,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Builder(
-                        builder: (ctx) => IconButton(
-                          icon: const Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                            size: 36,
-                          ),
-                          onPressed: () {
-                            Scaffold.of(ctx).openDrawer();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
+        builder: (ctx) => SingleChildScrollView(
+          child: Stack(
+            children: [
+              const MyCustomPaint(
+                color: CColors.purpule,
+                size: 0.85,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        const Text(
-                          "Подборки",
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, Category.routeName);
-                          },
-                          child: const Text(
-                            "Открыть все",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                        Builder(
+                          builder: (ctx) => IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(ctx).openDrawer();
+                            },
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  playList.isEmpty
-                      ? const AnonimContainers()
-                      : const LoggedContainers(),
-                  const SizedBox(height: 10),
-                  CustomList(),
-                ],
-              ),
-            )
-          ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Подборки",
+                            style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, Category.routeName);
+                            },
+                            child: const Text(
+                              "Открыть все",
+                              style: TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    playList.isEmpty
+                        ? const AnonimContainers()
+                        : const LoggedContainers(),
+                    const SizedBox(height: 10),
+                    CustomList(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
