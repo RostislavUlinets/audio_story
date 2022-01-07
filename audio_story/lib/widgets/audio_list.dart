@@ -99,6 +99,7 @@ class _ListWidgetState extends State<ListWidget> {
                           builder: (BuildContext context) => AudioInfo(
                             url: audio[index].url,
                             name: audio[index].name,
+                            id: audio[index].id,
                           ),
                         ),
                       );

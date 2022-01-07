@@ -47,11 +47,15 @@ class RouteGenerator {
         );
       case CardInfo.routeName:
         return MaterialPageRoute(
-          builder: (context) => CardInfo(index: settings.arguments as int),
+          builder: (context) => CardInfo(
+            index: settings.arguments as int,
+          ),
         );
       case CustomCategory.routeName:
         return MaterialPageRoute(
-          builder: (context) => const CustomCategory(),
+          builder: (context) => CustomCategory(
+            id: settings.arguments as String,
+          ),
         );
       case Audio.routeName:
         return MaterialPageRoute(

@@ -107,6 +107,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
                           builder: (BuildContext context) => AudioInfo(
                             url: audio[index].url,
                             name: audio[index].name,
+                            id: audio[index].id,
                           ),
                         ),
                       );

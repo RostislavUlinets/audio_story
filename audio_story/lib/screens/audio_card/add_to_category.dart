@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 
 class CustomCategory extends StatefulWidget {
   static const routeName = '/addToCategory';
+  final String id;
 
-  const CustomCategory({Key? key}) : super(key: key);
+  const CustomCategory({Key? key, required this.id}) : super(key: key);
 
   @override
   State<CustomCategory> createState() => _CategoryState();
@@ -67,16 +68,10 @@ class _CategoryState extends State<CustomCategory> {
                   "Все в одном месте",
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
-                const SizedBox(height: 30),
-                Container(
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0),
-                    child: CustomListCategory(),
-                  ),
-                  height: 580,
-                  color: const Color(0x0071A59F),
-                ),
-                //_buildListView(),
+
+                CustomListCategory(id: widget.id),
+
+                //_buildListView()
               ],
             ),
           )

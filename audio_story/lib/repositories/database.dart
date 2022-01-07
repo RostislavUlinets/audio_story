@@ -186,6 +186,18 @@ class DatabaseService {
     }
   }
 
+  Future<void> addToPlayList(List<int> playListArray, String id) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    List<dynamic> soundsList = ds.get('saveList');
+    for (int i = 0; i < playListArray.length; i++) {
+      if (soundsList[playListArray[i]]['sounds'].contains(id)) continue;
+      soundsList[playListArray[i]]['sounds'].add(id);
+    }
+    await userCollection.doc(uid).update({
+      'saveList': soundsList,
+    });
+  }
+
   Future<List<AudioModel>> getPlayListAudio(List<dynamic> sounds) async {
     if (sounds.isEmpty) return [];
     List<AudioModel> audioFromModel = [];

@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
 
-  final String name, url;
+  final String name, url, id;
 
-  const AudioInfo({Key? key, required this.name, required this.url})
+  const AudioInfo(
+      {Key? key, required this.name, required this.url, required this.id})
       : super(key: key);
 
   @override
@@ -61,7 +62,10 @@ class AudioInfo extends StatelessWidget {
                                   Future.delayed(
                                     Duration(seconds: 0),
                                     () => Navigator.pushNamed(
-                                        context, CustomCategory.routeName),
+                                      context,
+                                      CustomCategory.routeName,
+                                      arguments: id,
+                                    ),
                                   );
                                 },
                                 value: 1,
