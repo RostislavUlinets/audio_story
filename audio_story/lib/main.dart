@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       initialRoute: WelcomeScreen.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,  
+      
     );
   }
 }

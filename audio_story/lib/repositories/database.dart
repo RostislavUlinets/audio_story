@@ -339,4 +339,13 @@ class DatabaseService {
       return [];
     }
   }
+
+  Future<void> changeSoundName(String id, String text) async {
+    DocumentSnapshot document = await soundCollection.doc(uid).get();
+    Map<String, dynamic> map = document.data() as Map<String, dynamic>;
+    map[id]['name'] = text;
+    await soundCollection.doc(uid).update({
+      id: map[id],
+    });
+  }
 }

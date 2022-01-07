@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
+import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 class AudioScreenList extends StatefulWidget {
   List<AudioModel> audio;
@@ -86,14 +91,10 @@ class _AudioScreenListState extends State<AudioScreenList> {
                 ),
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: const Text("Удалить"),
+                    child: const Text("Переименовать"),
                     //TODO: Question
                     onTap: () {
-                      // FirebaseStorage.instance
-                      //     .refFromURL(audio[index].url)
-                      //     .delete();
-
-                      dataBase.deleteAudio(audio[index].id);
+                      
                     },
                     value: 1,
                   ),
@@ -113,6 +114,30 @@ class _AudioScreenListState extends State<AudioScreenList> {
                       );
                     },
                     value: 2,
+                  ),
+                  PopupMenuItem(
+                    child: const Text("Удалить"),
+                    //TODO: Question
+                    onTap: () => dataBase.deleteAudio(audio[index].id),
+                    value: 3,
+                  ),
+                  PopupMenuItem(
+                    child: const Text("Поделиться"),
+                    //TODO: Question
+                    onTap: () async {
+                      LocalStorage storage = LocalStorage();
+                      Directory dir = await getTemporaryDirectory();
+                      final message = await storage
+                          .downloadFile(
+                            audio[index].url,
+                            audio[index].name,
+                            dir.path,
+                          )
+                          .then(
+                            (value) => Share.shareFiles([value]),
+                          );
+                    },
+                    value: 4,
                   ),
                 ],
               ),
