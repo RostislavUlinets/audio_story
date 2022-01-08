@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:flutter/material.dart';

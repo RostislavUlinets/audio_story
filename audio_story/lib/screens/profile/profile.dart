@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
@@ -86,8 +85,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),

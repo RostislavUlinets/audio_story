@@ -1,7 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/bloc/record/record_bloc.dart';
 import 'package:audio_story/bloc/record/record_event.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +85,6 @@ class _RecorderState extends State<Recorder> {
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context);
 
     return Stack(
       children: [

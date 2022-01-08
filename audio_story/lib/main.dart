@@ -1,5 +1,3 @@
-
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'route.dart';
@@ -14,14 +12,7 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(
-    MultiProvider(
-      providers: [
-        ListenableProvider<NavigationController>(
-          create: (_) => NavigationController(),
-        ),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -35,8 +26,7 @@ class MyApp extends StatelessWidget {
     ));
     return const MaterialApp(
       initialRoute: WelcomeScreen.routeName,
-      onGenerateRoute: RouteGenerator.generateRoute,  
-      
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

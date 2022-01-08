@@ -1,14 +1,9 @@
-
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 void showAlertDialog(BuildContext context) {
-  NavigationController navigation =
-      Provider.of<NavigationController>(context, listen: false);
   // set up the buttons
   Widget cancelButton = TextButton(
     child: const Text(
@@ -43,7 +38,7 @@ void showAlertDialog(BuildContext context) {
     ),
     onPressed: () {
       Navigator.of(context, rootNavigator: true).pop();
-      navigation.changeScreen(MainScreen.routeName);
+      Navigator.pushNamed(context, MainScreen.routeName);
     },
   );
 
