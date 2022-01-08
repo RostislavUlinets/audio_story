@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,18 +15,15 @@ class Anonim extends StatefulWidget {
 }
 
 class _AnonimState extends State<Anonim> {
-
   final AuthService _auth = AuthService.instance;
 
   @override
   Widget build(BuildContext context) {
-    NavigationController navigation =
-        Provider.of<NavigationController>(context, listen: false);
     return GestureDetector(
       onTap: () async {
         CustomUser? res = await _auth.signInAnon();
         if (res != null) {
-          navigation.changeScreen('/');
+          Navigator.pushNamed(context, MainScreen.routeName);
         } else {
           log("Error with anonim auth");
         }

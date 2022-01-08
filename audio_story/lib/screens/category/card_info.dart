@@ -6,6 +6,7 @@ import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -56,6 +57,8 @@ class _CardInfoState extends State<CardInfo> {
     selectFlag = true;
     super.initState();
   }
+
+  bool playAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -154,8 +157,7 @@ class _CardInfoState extends State<CardInfo> {
                                                 },
                                               ),
                                             );
-                                            Navigator.pushNamed(
-                                                context, MainScreen.routeName);
+                                            
                                           },
                                           value: 3,
                                         ),
@@ -240,7 +242,8 @@ class _CardInfoState extends State<CardInfo> {
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
                                       child: Text(
@@ -251,6 +254,41 @@ class _CardInfoState extends State<CardInfo> {
                                         ),
                                       ),
                                       width: 70,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        playAll = !playAll;
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        height: 50,
+                                        width: 160,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          color: Colors.white.withOpacity(0.6),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            playAll == false
+                                                ? const Image(
+                                                    image: AssetImage(
+                                                        "assets/Play.png"),
+                                                    color: Colors.white,
+                                                  )
+                                                : const Image(
+                                                    image: AssetImage(
+                                                        "assets/Pause.png"),
+                                                    color: Colors.white,
+                                                  ),
+                                            const Text(
+                                              "Запустить все",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -296,7 +334,12 @@ class _CardInfoState extends State<CardInfo> {
                                   );
                                 default:
                                   return Expanded(
-                                      child: ListWidget(audio: snapshot.data));
+                                    child: ListWidget(
+                                      audio: snapshot.data,
+                                      buttonState: false,
+                                      cycleState: playAll,
+                                    ),
+                                  );
                               }
                             },
                           ),
@@ -313,70 +356,70 @@ class _CardInfoState extends State<CardInfo> {
   }
 }
 
-class ListWidget extends StatefulWidget {
-  List<AudioModel> audio;
-  ListWidget({Key? key, required this.audio}) : super(key: key);
+// class ListWidget extends StatefulWidget {
+//   List<AudioModel> audio;
+//   ListWidget({Key? key, required this.audio}) : super(key: key);
 
-  @override
-  _ListWidgetState createState() => _ListWidgetState();
-}
+//   @override
+//   _ListWidgetState createState() => _ListWidgetState();
+// }
 
-class _ListWidgetState extends State<ListWidget> {
-  late List<AudioModel> audio;
+// class _ListWidgetState extends State<ListWidget> {
+//   late List<AudioModel> audio;
 
-  @override
-  initState() {
-    super.initState();
-    audio = widget.audio;
-  }
+//   @override
+//   initState() {
+//     super.initState();
+//     audio = widget.audio;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: audio.length,
-      itemBuilder: (_, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Container(
-            child: ListTile(
-              title: Text(
-                audio[index].name,
-                style: const TextStyle(color: Color(0xFF3A3A55)),
-              ),
-              subtitle: const Text(
-                "30 минут",
-                style: TextStyle(color: Color(0x803A3A55)),
-              ),
-              leading: IconButton(
-                iconSize: 32,
-                icon: const Image(
-                  image: AssetImage("assets/Play.png"),
-                  color: CColors.green,
-                ),
-                onPressed: () {
-                  Scaffold.of(context)
-                      .showBottomSheet((context) => PlayerOnProgress(
-                            url: audio[index].url,
-                            name: audio[index].name,
-                          ));
-                },
-              ),
-              trailing: selectFlag
-                  ? const Icon(Icons.more_horiz)
-                  : IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () => eraseList.add(index),
-                    ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(75),
-              border: Border.all(
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       itemCount: audio.length,
+//       itemBuilder: (_, index) {
+//         return Padding(
+//           padding: const EdgeInsets.symmetric(vertical: 5.0),
+//           child: Container(
+//             child: ListTile(
+//               title: Text(
+//                 audio[index].name,
+//                 style: const TextStyle(color: Color(0xFF3A3A55)),
+//               ),
+//               subtitle: const Text(
+//                 "30 минут",
+//                 style: TextStyle(color: Color(0x803A3A55)),
+//               ),
+//               leading: IconButton(
+//                 iconSize: 32,
+//                 icon: const Image(
+//                   image: AssetImage("assets/Play.png"),
+//                   color: CColors.green,
+//                 ),
+//                 onPressed: () {
+//                   Scaffold.of(context)
+//                       .showBottomSheet((context) => PlayerOnProgress(
+//                             url: audio[index].url,
+//                             name: audio[index].name,
+//                           ));
+//                 },
+//               ),
+//               trailing: selectFlag
+//                   ? const Icon(Icons.more_horiz)
+//                   : IconButton(
+//                       icon: const Icon(Icons.add),
+//                       onPressed: () => eraseList.add(index),
+//                     ),
+//             ),
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(75),
+//               border: Border.all(
+//                 color: Colors.grey,
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

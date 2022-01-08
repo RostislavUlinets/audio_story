@@ -1,6 +1,7 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio/audio.dart';
+import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -44,27 +45,44 @@ class CustomList extends StatelessWidget {
                   ],
                 ),
               ),
-              FutureBuilder(
-                future: dataBase.audioListDB(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                      return const CircularProgressIndicator(
-                        color: CColors.purpule,
-                        strokeWidth: 1.5,
-                      );
-                    default:
-                      return Expanded(
-                        child: ListWidget(
-                          audio: snapshot.data,
-                          buttonState: false,
-                          cycleState: false,
+              AuthService.isAnonymous()
+                  ? Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: Text(
+                            'Как только ты запишешь\nаудио, она появится здесь.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
-                      );
-                  }
-                },
-              ),
+                        Image.asset('assets/Arrow - Down.png'),
+                      ],
+                    )
+                  : FutureBuilder(
+                      future: dataBase.audioListDB(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return const CircularProgressIndicator(
+                              color: CColors.purpule,
+                              strokeWidth: 1.5,
+                            );
+                          default:
+                            return Expanded(
+                              child: ListWidget(
+                                audio: snapshot.data,
+                                buttonState: false,
+                                cycleState: false,
+                              ),
+                            );
+                        }
+                      },
+                    ),
             ],
           ),
         ),

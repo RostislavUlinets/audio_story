@@ -1,5 +1,6 @@
 import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/screens/category/card_info.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAlert extends StatelessWidget {
@@ -89,8 +90,13 @@ class DeleteAlert extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all(CColors.purpule),
       ),
       onPressed: () {
-        dataBase.deletePlayList(index).then(
+        dataBase
+            .deletePlayList(index)
+            .then(
               (value) => Navigator.pop(context),
+            )
+            .then(
+              (value) => Navigator.pushNamed(context, MainScreen.routeName),
             );
       },
     );

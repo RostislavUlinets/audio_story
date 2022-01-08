@@ -2,6 +2,8 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/search/search_field.dart';
+import 'package:audio_story/service/auth.dart';
+import 'package:audio_story/widgets/anon_message.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
@@ -37,112 +39,115 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const SideMenu(),
-      extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(3),
-      body: Stack(
-        children: [
-          const MyCustomPaint(
-            color: CColors.blue,
-            size: 0.7,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 60.0),
-            child: Column(
+    return AuthService.isAnonymous()
+        ? const AnonMessage()
+        : Scaffold(
+            drawer: const SideMenu(),
+            extendBody: true,
+            bottomNavigationBar: const CustomNavigationBar(3),
+            body: Stack(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Builder(
-                      builder: (ctx) => IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 36,
-                        ),
-                        onPressed: () {
-                          Scaffold.of(ctx).openDrawer();
-                        },
-                      ),
-                    ),
-                    const Text(
-                      "Поиск",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.more_horiz,
-                        color: Colors.white,
-                        size: 36,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
+                const MyCustomPaint(
+                  color: CColors.blue,
+                  size: 0.7,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40.0),
-                  child: buildSearch(),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: audio.length,
-                    itemBuilder: (_, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Container(
-                          child: ListTile(
-                            title: Text(
-                              audio[index].name,
-                              style: const TextStyle(
-                                color: Color(0xFF3A3A55),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 60.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Builder(
+                            builder: (ctx) => IconButton(
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                                size: 36,
                               ),
+                              onPressed: () {
+                                Scaffold.of(ctx).openDrawer();
+                              },
                             ),
-                            subtitle: const Text(
-                              "30 минут",
-                              style: TextStyle(color: Color(0x803A3A55)),
+                          ),
+                          const Text(
+                            "Поиск",
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
-                            leading: Builder(builder: (context) {
-                              return IconButton(
-                                icon: const Image(
-                                  image: AssetImage("assets/Play.png"),
-                                ),
-                                onPressed: () {
-                                  Scaffold.of(context).showBottomSheet(
-                                    (context) => PlayerOnProgress(
-                                      soundsList: audio,
-                                      index: index,
-                                      repeat: false,
-                                      cycle: false,
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.more_horiz,
+                              color: Colors.white,
+                              size: 36,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 40.0),
+                        child: buildSearch(),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: audio.length,
+                          itemBuilder: (_, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Container(
+                                child: ListTile(
+                                  title: Text(
+                                    audio[index].name,
+                                    style: const TextStyle(
+                                      color: Color(0xFF3A3A55),
                                     ),
-                                  );
-                                },
-                              );
-                            }),
-                            trailing: const Icon(Icons.more_horiz),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(75),
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                          ),
+                                  ),
+                                  subtitle: const Text(
+                                    "30 минут",
+                                    style: TextStyle(color: Color(0x803A3A55)),
+                                  ),
+                                  leading: Builder(builder: (context) {
+                                    return IconButton(
+                                      icon: const Image(
+                                        image: AssetImage("assets/Play.png"),
+                                      ),
+                                      onPressed: () {
+                                        Scaffold.of(context).showBottomSheet(
+                                          (context) => PlayerOnProgress(
+                                            soundsList: audio,
+                                            index: index,
+                                            repeat: false,
+                                            cycle: false,
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }),
+                                  trailing: const Icon(Icons.more_horiz),
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(75),
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 
   Widget buildSearch() => SearchWidget(

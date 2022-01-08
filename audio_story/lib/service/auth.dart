@@ -30,6 +30,10 @@ class AuthService {
     await _auth.signOut();
   }
 
+  static bool isAnonymous() {
+    return _auth.currentUser!.isAnonymous;
+  }
+
   // sign in anon
   Future signInAnon() async {
     try {

@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  List<Map<String, dynamic>> playList = [];
+  bool emptyList = true;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     dataBase.getPlayListImages().then(
           (value) => setState(
             () {
-              playList = value;
+              emptyList = value.isEmpty;
             },
           ),
         );
@@ -40,7 +40,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(0),
@@ -49,66 +48,60 @@ class _MainScreenState extends State<MainScreen> {
             topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
         child: SideMenu(),
       ),
-      body: Builder(
-        builder: (ctx) => SingleChildScrollView(
-          child: Stack(
-            children: [
-              const MyCustomPaint(
-                color: CColors.purpule,
-                size: 0.85,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Column(
+      body: Stack(
+        children: [
+          const MyCustomPaint(
+            color: CColors.purpule,
+            size: 0.85,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 50.0),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Builder(
-                          builder: (ctx) => IconButton(
-                            icon: const Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                              size: 36,
-                            ),
-                            onPressed: () {
-                              Scaffold.of(ctx).openDrawer();
-                            },
-                          ),
+                    Builder(builder: (context) {
+                      return IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 36,
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          const Text(
-                            "Подборки",
-                            style: TextStyle(fontSize: 24, color: Colors.white),
-                          ),
-                          const Spacer(),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, Category.routeName);
-                            },
-                            child: const Text(
-                              "Открыть все",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    playList.isEmpty
-                        ? const AnonimContainers()
-                        : const LoggedContainers(),
-                    const SizedBox(height: 10),
-                    CustomList(),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      );
+                    }),
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Подборки",
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      const Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, Category.routeName);
+                        },
+                        child: const Text(
+                          "Открыть все",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                emptyList ? const AnonimContainers() : const LoggedContainers(),
+                const SizedBox(height: 10),
+                CustomList(),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
