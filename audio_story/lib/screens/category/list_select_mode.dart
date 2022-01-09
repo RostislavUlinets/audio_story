@@ -1,23 +1,16 @@
 import 'dart:convert';
 
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/category/widget/description.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:audio_story/widgets/select_list.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-
-import 'list_select_mode.dart';
-import 'widget/delete_audio.dart';
-import 'widget/player.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -34,21 +27,19 @@ Image imageFromBase64String(String base64String) {
   return Image.memory(base64Decode(base64String));
 }
 
-class CardInfo extends StatefulWidget {
-  static const routeName = '/cardInfo';
-
+class SelectModeList extends StatefulWidget {
   final int index;
 
-  const CardInfo({Key? key, required this.index}) : super(key: key);
+  const SelectModeList({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<CardInfo> createState() => _CardInfoState(index);
+  State<SelectModeList> createState() => _SelectModeListState(index);
 }
 
-class _CardInfoState extends State<CardInfo> {
+class _SelectModeListState extends State<SelectModeList> {
   final int index;
 
-  _CardInfoState(this.index);
+  _SelectModeListState(this.index);
 
   @override
   void initState() {
@@ -118,122 +109,62 @@ class _CardInfoState extends State<CardInfo> {
                                   ),
                                 ),
                               ),
-                              selectFlag
-                                  ? PopupMenuButton(
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0),
-                                        ),
-                                      ),
-                                      icon: const Icon(
-                                        Icons.more_horiz,
-                                        size: 32,
-                                        color: Colors.white,
-                                      ),
-                                      itemBuilder: (context) => [
-                                        const PopupMenuItem(
-                                          child: Text("Редактировать"),
-                                          value: 1,
-                                        ),
-                                        PopupMenuItem(
-                                          child:
-                                              const Text("Выбрать несколько"),
-                                          onTap: () {
-                                            Future.delayed(
-                                              Duration(seconds: 0),
-                                              () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SelectModeList(
-                                                    index: index,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          value: 2,
-                                        ),
-                                        PopupMenuItem(
-                                          child: const Text("Удалить подборку"),
-                                          onTap: () {
-                                            Future.delayed(
-                                              const Duration(seconds: 0),
-                                              () => showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return DeleteAlert(
-                                                    index: index,
-                                                  );
-                                                },
-                                              ),
-                                            );
-                                          },
-                                          value: 3,
-                                        ),
-                                        const PopupMenuItem(
-                                          child: Text("Поделиться"),
-                                          value: 4,
-                                        ),
-                                      ],
-                                    )
-                                  : PopupMenuButton(
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0),
-                                        ),
-                                      ),
-                                      icon: const Icon(
-                                        Icons.more_horiz,
-                                        size: 32,
-                                        color: Colors.white,
-                                      ),
-                                      itemBuilder: (context) => [
-                                        PopupMenuItem(
-                                          child: const Text("Отменить выбор"),
-                                          onTap: () {
-                                            selectFlag = true;
-                                            setState(() {});
-                                          },
-                                          value: 1,
-                                        ),
-                                        const PopupMenuItem(
-                                          child: Text("Добавить в подборку"),
-                                          value: 2,
-                                        ),
-                                        PopupMenuItem(
-                                          child: const Text("Поделиться"),
-                                          onTap: () {
-                                            Share.shareFiles(
-                                                ['/sdcard/Download/audio.mp3']);
-                                          },
-                                          value: 3,
-                                        ),
-                                        const PopupMenuItem(
-                                          child: Text("Скачать все"),
-                                          value: 4,
-                                        ),
-                                        PopupMenuItem(
-                                          child: const Text("Удалить все"),
-                                          onTap: () {
-                                            dataBase
-                                                .deleteSounds(index, eraseList)
-                                                .then(
-                                                  (value) =>
-                                                      Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            super.widget),
-                                                  ),
-                                                );
-                                          },
-                                          value: 4,
-                                        ),
-                                      ],
-                                    ),
+                              PopupMenuButton(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.more_horiz,
+                                  size: 32,
+                                  color: Colors.white,
+                                ),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    child: const Text("Отменить выбор"),
+                                    onTap: () {
+                                      selectFlag = true;
+                                      setState(() {});
+                                    },
+                                    value: 1,
+                                  ),
+                                  const PopupMenuItem(
+                                    child: Text("Добавить в подборку"),
+                                    value: 2,
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text("Поделиться"),
+                                    onTap: () {
+                                      Share.shareFiles(
+                                          ['/sdcard/Download/audio.mp3']);
+                                    },
+                                    value: 3,
+                                  ),
+                                  const PopupMenuItem(
+                                    child: Text("Скачать все"),
+                                    value: 4,
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text("Удалить все"),
+                                    onTap: () {
+                                      dataBase
+                                          .deleteSounds(index, eraseList)
+                                          .then(
+                                            (value) =>
+                                                Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          super.widget),
+                                            ),
+                                          );
+                                    },
+                                    value: 4,
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                           Padding(
@@ -320,12 +251,6 @@ class _CardInfoState extends State<CardInfo> {
                               width: double.infinity,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: DescriptionTextWidget(
-                              text: audioPropeperty.info,
-                            ),
-                          ),
                           FutureBuilder(
                             future: dataBase
                                 .getPlayListAudio(audioPropeperty.sounds),
@@ -345,10 +270,8 @@ class _CardInfoState extends State<CardInfo> {
                                   );
                                 default:
                                   return Expanded(
-                                    child: ListWidget(
+                                    child: SelectList(
                                       audio: snapshot.data,
-                                      buttonState: false,
-                                      cycleState: playAll,
                                     ),
                                   );
                               }

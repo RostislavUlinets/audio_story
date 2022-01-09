@@ -13,7 +13,6 @@ import 'package:flutter_sound/flutter_sound.dart';
  *
  */
 
-
 const int tSampleRate = 44000;
 
 ///
@@ -34,7 +33,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
   int duration = 0;
-  
+
   @override
   void initState() {
     super.initState();
@@ -63,15 +62,16 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     }
   }
 
-
   Future<void> init() async {
     await _mPlayer.openAudioSession();
-    await flutterSoundHelper.duration(pathToSaveAudio).then((value) => duration = value!.inMilliseconds);
     await _mPlayer.setSubscriptionDuration(const Duration(milliseconds: 50));
     _mPlayerSubscription = _mPlayer.onProgress!.listen((e) {
       setPos(e.position.inMilliseconds);
       setState(() {});
     });
+    await flutterSoundHelper
+        .duration(pathToSaveAudio)
+        .then((value) => duration = value!.inMilliseconds);
   }
 
   Future<Uint8List> getAssetData(String path) async {
@@ -130,7 +130,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           };
   }
 
-  format(Duration d) => d.toString().split('.').first.padLeft(8, "0"); 
+  format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +142,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 60.0,bottom: 10),
+            padding: const EdgeInsets.only(top: 60.0, bottom: 10),
             child: SliderTheme(
               data: const SliderThemeData(
                 thumbColor: Colors.black,
@@ -161,11 +161,10 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [        
+            children: [
               Text("${format(Duration(milliseconds: pos))}"),
               Text("${format(Duration(milliseconds: duration))}"),
             ],
-            
           ),
           Padding(
             padding: const EdgeInsets.only(

@@ -183,9 +183,10 @@ class _ProfileState extends State<Profile> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => EditProfile(
-                                    image: image,
-                                  )),
+                            builder: (context) => EditProfile(
+                              image: image,
+                            ),
+                          ),
                         );
                       }),
                 ),

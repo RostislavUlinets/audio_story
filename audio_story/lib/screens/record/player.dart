@@ -32,14 +32,15 @@ class _PlayerState extends State<Player> {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     DatabaseService dataBase = DatabaseService(uid);
     final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
-    dataBase.uploadFile(destination, file)?.whenComplete(
-          () => dataBase.addAudio(destination, audioName.text),
-        );
+    dataBase.uploadFile(destination, file)?.whenComplete(() {
+      File(pathToSaveTemp).delete();
+      File(pathToSaveAudio).delete();
+      dataBase.addAudio(destination, audioName.text);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         const MyCustomPaint(
