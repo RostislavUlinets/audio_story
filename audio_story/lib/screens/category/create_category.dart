@@ -97,6 +97,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: TextField(
+                      maxLength: 14,
                       readOnly: false,
                       textAlign: TextAlign.start,
                       style: const TextStyle(
@@ -165,8 +166,8 @@ class _CreateCategoryState extends State<CreateCategory> {
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 70.0,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 35.0,
                       ),
                       child: soundList == null
                           ? TextButton(

@@ -123,7 +123,8 @@ class _AudioState extends State<Audio> {
                                     child: GestureDetector(
                                       onTap: () {
                                         buttonPressed = !buttonPressed;
-                                        _color == Colors.white38
+                                        cycleState = false;
+                                        buttonPressed
                                             ? _color = Colors.white
                                             : _color = Colors.white38;
                                         setState(() {});
