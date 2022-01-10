@@ -186,12 +186,26 @@ class DatabaseService {
     }
   }
 
-  Future<void> addToPlayList(List<int> playListArray, String id) async {
+  // Future<void> addToPlayList(List<int> playListArray, String id) async {
+  //   DocumentSnapshot ds = await userCollection.doc(uid).get();
+  //   List<dynamic> soundsList = ds.get('saveList');
+  //   for (int i = 0; i < playListArray.length; i++) {
+  //     if (soundsList[playListArray[i]]['sounds'].contains(id)) continue;
+  //     soundsList[playListArray[i]]['sounds'].add(id);
+  //   }
+  //   await userCollection.doc(uid).update({
+  //     'saveList': soundsList,
+  //   });
+  // }
+
+  Future<void> addToPlayList(List<int> playListArray, List<String> id) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> soundsList = ds.get('saveList');
     for (int i = 0; i < playListArray.length; i++) {
       if (soundsList[playListArray[i]]['sounds'].contains(id)) continue;
-      soundsList[playListArray[i]]['sounds'].add(id);
+      for(int j = 0;j < id.length;j++){
+        soundsList[playListArray[i]]['sounds'].add(id[j]);
+      }
     }
     await userCollection.doc(uid).update({
       'saveList': soundsList,
@@ -349,12 +363,14 @@ class DatabaseService {
     });
   }
 
-  Future<void> downloadAllAudio(List<AudioModel> sounds) async {
+  Future<List<String>> downloadAllAudio(List<AudioModel> sounds) async {
     LocalStorage local = LocalStorage();
-    List<File> sendFiles = [];
+    List<String> sendFiles = [];
     for (int i = 0; i < sounds.length; i++) {
-      await local.downloadFile(
-          sounds[i].url, sounds[i].name, '/sdcard/Download');
+      await local
+          .downloadFile(sounds[i].url, sounds[i].name, '/sdcard/Download')
+          .then((value) => sendFiles.add(value));
     }
+    return sendFiles;
   }
 }

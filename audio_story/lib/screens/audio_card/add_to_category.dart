@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class CustomCategory extends StatefulWidget {
   static const routeName = '/addToCategory';
-  final String id;
+  final List<String> id;
 
   const CustomCategory({Key? key, required this.id}) : super(key: key);
 

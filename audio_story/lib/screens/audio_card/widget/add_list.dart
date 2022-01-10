@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomListCategory extends StatefulWidget {
-  final String id;
+  final List<String> id;
   const CustomListCategory({Key? key, required this.id}) : super(key: key);
 
   @override

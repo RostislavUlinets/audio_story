@@ -152,8 +152,8 @@ class _SelectModeListState extends State<SelectModeList> {
                                   PopupMenuItem(
                                     child: const Text("Поделиться"),
                                     onTap: () {
-                                      Share.shareFiles(
-                                          ['/sdcard/Download/audio.mp3']);
+                                      dataBase.downloadAllAudio(playList).then(
+                                          (value) => Share.shareFiles(value));
                                     },
                                     value: 3,
                                   ),
