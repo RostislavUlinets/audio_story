@@ -22,20 +22,29 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  FlutterSoundHelper helper = FlutterSoundHelper();
+
   TextEditingController audioName =
       TextEditingController(text: 'Аудиозапись 1');
   final pathToSaveTemp = '/sdcard/Download/temp.aac';
   final pathToSaveAudio = '/sdcard/Download/audio.mp3';
 
   Future<void> saveAudio() async {
-    File file = File(pathToSaveAudio);
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseService dataBase = DatabaseService(uid);
-    final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
-    dataBase.uploadFile(destination, file)?.whenComplete(() {
+    if (FirebaseAuth.instance.currentUser!.isAnonymous) {
+      await helper.convertFile(pathToSaveTemp, Codec.aacADTS,
+          '/sdcard/Download/${audioName.text}.mp3', Codec.mp3);
+    } else {
+      File file = File(pathToSaveAudio);
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      DatabaseService dataBase = DatabaseService(uid);
+      final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
+      dataBase.uploadFile(destination, file)?.whenComplete(() {
+        dataBase.addAudio(destination, audioName.text);
+      });
+    }
+    Future.delayed(const Duration(seconds: 3), () {
       File(pathToSaveTemp).delete();
       File(pathToSaveAudio).delete();
-      dataBase.addAudio(destination, audioName.text);
     });
   }
 
@@ -89,7 +98,7 @@ class _PlayerState extends State<Player> {
                         ),
                         IconButton(
                           onPressed: () async {
-                            await FlutterSoundHelper().convertFile(
+                            await helper.convertFile(
                                 pathToSaveTemp,
                                 Codec.aacADTS,
                                 '/storage/sdcard0/Downloads/${audioName.text}',

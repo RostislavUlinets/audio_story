@@ -29,6 +29,7 @@ class PlayerOnProgress extends StatefulWidget {
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
   final pathToSaveAudio = '/sdcard/Download/audio.mp3';
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
+  late FlutterSoundHelper _helper;
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
@@ -36,6 +37,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   @override
   void initState() {
+    _helper = FlutterSoundHelper();
     super.initState();
     init().then((value) {
       setState(() {
@@ -69,7 +71,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       setPos(e.position.inMilliseconds);
       setState(() {});
     });
-    await flutterSoundHelper
+    await _helper
         .duration(pathToSaveAudio)
         .then((value) => duration = value!.inMilliseconds);
   }

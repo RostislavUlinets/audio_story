@@ -374,4 +374,33 @@ class DatabaseService {
     }
     return sendFiles;
   }
+
+  void updatePlayList(String img64, String text, String text2, List soundList,
+      int index) async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    List<dynamic> saveList;
+
+    List<String> sounds = [];
+    try {
+      saveList = ds.get('saveList');
+    } catch (e) {
+      saveList = [];
+    }
+
+    if (img64.isEmpty) {
+      img64 = saveList[index]['image'];
+    }
+
+    Map<String, dynamic> playList = {
+      'image': img64,
+      'name': text,
+      'info': text2,
+      'sounds': soundList,
+    };
+
+    saveList[index] = playList;
+    await userCollection.doc(uid).update({
+      'saveList': saveList,
+    });
+  }
 }
