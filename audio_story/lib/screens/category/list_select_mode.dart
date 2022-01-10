@@ -143,7 +143,7 @@ class _SelectModeListState extends State<SelectModeList> {
                                         () => Navigator.pushNamed(
                                           context,
                                           CustomCategory.routeName,
-                                          arguments: playList[0].id,
+                                          arguments: playList,
                                         ),
                                       );
                                     },

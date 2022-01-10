@@ -1,3 +1,4 @@
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/screens/audio_card/widget/add_list.dart';
 import 'package:audio_story/screens/category/create_category.dart';
 import 'package:audio_story/screens/category/widget/category_list.dart';
@@ -8,8 +9,9 @@ import 'package:audio_story/Colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomCategory extends StatefulWidget {
+
   static const routeName = '/addToCategory';
-  final List<String> id;
+  final List<AudioModel> id;
 
   const CustomCategory({Key? key, required this.id}) : super(key: key);
 
@@ -70,7 +72,6 @@ class _CategoryState extends State<CustomCategory> {
                 ),
 
                 CustomListCategory(id: widget.id),
-
                 //_buildListView()
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
@@ -64,7 +65,9 @@ class AudioInfo extends StatelessWidget {
                                     () => Navigator.pushNamed(
                                       context,
                                       CustomCategory.routeName,
-                                      arguments: id,
+                                      arguments: [
+                                        AudioModel(id: id, name: '', url: '')
+                                      ],
                                     ),
                                   );
                                 },

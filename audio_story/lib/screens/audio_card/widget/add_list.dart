@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -9,7 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CustomListCategory extends StatefulWidget {
-  final List<String> id;
+  final List<AudioModel> id;
+
   const CustomListCategory({Key? key, required this.id}) : super(key: key);
 
   @override

@@ -1,3 +1,4 @@
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
@@ -54,7 +55,7 @@ class RouteGenerator {
       case CustomCategory.routeName:
         return MaterialPageRoute(
           builder: (context) => CustomCategory(
-            id: settings.arguments as String,
+            id: settings.arguments as List<AudioModel>
           ),
         );
       case Audio.routeName:

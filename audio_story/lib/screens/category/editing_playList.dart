@@ -1,30 +1,19 @@
 import 'dart:convert';
 
 import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/category/editing_playList.dart';
-import 'package:audio_story/screens/category/widget/description.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
 
-import 'list_select_mode.dart';
-import 'widget/delete_audio.dart';
-import 'widget/player.dart';
+import 'widget/description.dart';
 
-final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-final CollectionReference userCollection =
-    FirebaseFirestore.instance.collection('users');
 
 bool selectFlag = true;
 late List<int> eraseList;
@@ -35,29 +24,21 @@ Image imageFromBase64String(String base64String) {
   return Image.memory(base64Decode(base64String));
 }
 
-class CardInfo extends StatefulWidget {
-  static const routeName = '/cardInfo';
-
+class EditingPlayList extends StatefulWidget {
   final int index;
 
-  const CardInfo({Key? key, required this.index}) : super(key: key);
+  EditingPlayList({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<CardInfo> createState() => _CardInfoState(index);
+  _EditingPlayListState createState() => _EditingPlayListState();
 }
 
-class _CardInfoState extends State<CardInfo> {
-  final int index;
-
-  _CardInfoState(this.index);
-
+class _EditingPlayListState extends State<EditingPlayList> {
   @override
   void initState() {
-    dataBase.getSaveList(index).then((value) => setState(() {
+    dataBase.getSaveList(widget.index).then((value) => setState(() {
           audioPropeperty = value;
         }));
-    eraseList = [];
-    selectFlag = true;
     super.initState();
   }
 
@@ -70,7 +51,7 @@ class _CardInfoState extends State<CardInfo> {
       drawer: const SideMenu(),
       bottomNavigationBar: const CustomNavigationBar(1),
       body: FutureBuilder(
-        future: dataBase.getSaveList(index).then(
+        future: dataBase.getSaveList(widget.index).then(
               (value) => audioPropeperty = value,
             ),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -119,77 +100,10 @@ class _CardInfoState extends State<CardInfo> {
                                   ),
                                 ),
                               ),
-                              PopupMenuButton(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20.0),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.more_horiz,
-                                  size: 32,
-                                  color: Colors.white,
-                                ),
-                                itemBuilder: (context) => [
-                                  PopupMenuItem(
-                                    child: Text("Редактировать"),
-                                    onTap: () {
-                                      Future.delayed(
-                                        Duration(seconds: 0),
-                                        () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditingPlayList(
-                                              index: index,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    value: 1,
-                                  ),
-                                  PopupMenuItem(
-                                    child: const Text("Выбрать несколько"),
-                                    onTap: () {
-                                      Future.delayed(
-                                        Duration(seconds: 0),
-                                        () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelectModeList(
-                                              index: index,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    value: 2,
-                                  ),
-                                  PopupMenuItem(
-                                    child: const Text("Удалить подборку"),
-                                    onTap: () {
-                                      Future.delayed(
-                                        const Duration(seconds: 0),
-                                        () => showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return DeleteAlert(
-                                              index: index,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    value: 3,
-                                  ),
-                                  const PopupMenuItem(
-                                    child: Text("Поделиться"),
-                                    value: 4,
-                                  ),
-                                ],
-                              )
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text('Сохранить'),
+                              ),
                             ],
                           ),
                           Padding(
@@ -322,71 +236,3 @@ class _CardInfoState extends State<CardInfo> {
     );
   }
 }
-
-// class ListWidget extends StatefulWidget {
-//   List<AudioModel> audio;
-//   ListWidget({Key? key, required this.audio}) : super(key: key);
-
-//   @override
-//   _ListWidgetState createState() => _ListWidgetState();
-// }
-
-// class _ListWidgetState extends State<ListWidget> {
-//   late List<AudioModel> audio;
-
-//   @override
-//   initState() {
-//     super.initState();
-//     audio = widget.audio;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: audio.length,
-//       itemBuilder: (_, index) {
-//         return Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 5.0),
-//           child: Container(
-//             child: ListTile(
-//               title: Text(
-//                 audio[index].name,
-//                 style: const TextStyle(color: Color(0xFF3A3A55)),
-//               ),
-//               subtitle: const Text(
-//                 "30 минут",
-//                 style: TextStyle(color: Color(0x803A3A55)),
-//               ),
-//               leading: IconButton(
-//                 iconSize: 32,
-//                 icon: const Image(
-//                   image: AssetImage("assets/Play.png"),
-//                   color: CColors.green,
-//                 ),
-//                 onPressed: () {
-//                   Scaffold.of(context)
-//                       .showBottomSheet((context) => PlayerOnProgress(
-//                             url: audio[index].url,
-//                             name: audio[index].name,
-//                           ));
-//                 },
-//               ),
-//               trailing: selectFlag
-//                   ? const Icon(Icons.more_horiz)
-//                   : IconButton(
-//                       icon: const Icon(Icons.add),
-//                       onPressed: () => eraseList.add(index),
-//                     ),
-//             ),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(75),
-//               border: Border.all(
-//                 color: Colors.grey,
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
