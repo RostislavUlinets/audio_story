@@ -216,20 +216,7 @@ class _CardInfoState extends State<CardInfo> {
                                         ),
                                         PopupMenuItem(
                                           child: const Text("Удалить все"),
-                                          onTap: () {
-                                            dataBase
-                                                .deleteSounds(index, eraseList)
-                                                .then(
-                                                  (value) =>
-                                                      Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                            super.widget),
-                                                  ),
-                                                );
-                                          },
+                                          onTap: () {},
                                           value: 4,
                                         ),
                                       ],

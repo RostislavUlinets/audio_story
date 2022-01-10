@@ -4,10 +4,12 @@ import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
+import 'package:audio_story/service/local_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -164,18 +166,16 @@ class DatabaseService {
     log("YEAH!");
   }
 
-  Future<void> deleteSounds(int index, List<int> soundsIndex) async {
+  Future<void> deleteSounds(int index, List<AudioModel> soundsID) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
-    List<dynamic> soundsList = ds.get('SaveList');
-    var sounds = soundsList[index]['Sounds'];
-    soundsIndex.forEach(
-      (element) {
-        sounds.removeAt(element);
-      },
-    );
-    soundsList[index]['Sounds'] = sounds;
+    List<dynamic> soundsList = ds.get('saveList');
+    List<dynamic> sounds = soundsList[index]['sounds'];
+    for (int i = 0; i < soundsID.length; i++) {
+      sounds.removeWhere((element) => element == soundsID[i].id);
+    }
+    soundsList[index]['sounds'] = sounds;
     await userCollection.doc(uid).update({
-      'SaveList': soundsList,
+      'saveList': soundsList,
     });
     log(sounds.toString());
   }
@@ -347,5 +347,14 @@ class DatabaseService {
     await soundCollection.doc(uid).update({
       id: map[id],
     });
+  }
+
+  Future<void> downloadAllAudio(List<AudioModel> sounds) async {
+    LocalStorage local = LocalStorage();
+    List<File> sendFiles = [];
+    for (int i = 0; i < sounds.length; i++) {
+      await local.downloadFile(
+          sounds[i].url, sounds[i].name, '/sdcard/Download');
+    }
   }
 }

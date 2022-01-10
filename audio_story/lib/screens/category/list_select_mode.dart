@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:audio_story/widgets/player.dart';
 import 'package:audio_story/widgets/select_list.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,11 +41,15 @@ class SelectModeList extends StatefulWidget {
 
 class _SelectModeListState extends State<SelectModeList> {
   final int index;
+  List<AudioModel> playList = [];
+  List<AudioModel> audio = [];
+  List<bool> select = [];
 
   _SelectModeListState(this.index);
 
   @override
   void initState() {
+    select = List.filled(50, false);
     dataBase.getSaveList(index).then((value) => setState(() {
           audioPropeperty = value;
         }));
@@ -124,13 +131,22 @@ class _SelectModeListState extends State<SelectModeList> {
                                   PopupMenuItem(
                                     child: const Text("Отменить выбор"),
                                     onTap: () {
-                                      selectFlag = true;
-                                      setState(() {});
+                                      Navigator.pop(context);
                                     },
                                     value: 1,
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     child: Text("Добавить в подборку"),
+                                    onTap: () {
+                                      Future.delayed(
+                                        const Duration(seconds: 0),
+                                        () => Navigator.pushNamed(
+                                          context,
+                                          CustomCategory.routeName,
+                                          arguments: playList[0].id,
+                                        ),
+                                      );
+                                    },
                                     value: 2,
                                   ),
                                   PopupMenuItem(
@@ -141,25 +157,17 @@ class _SelectModeListState extends State<SelectModeList> {
                                     },
                                     value: 3,
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     child: Text("Скачать все"),
+                                    onTap: () {
+                                      dataBase.downloadAllAudio(playList);
+                                    },
                                     value: 4,
                                   ),
                                   PopupMenuItem(
                                     child: const Text("Удалить все"),
                                     onTap: () {
-                                      dataBase
-                                          .deleteSounds(index, eraseList)
-                                          .then(
-                                            (value) =>
-                                                Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          super.widget),
-                                            ),
-                                          );
+                                      dataBase.deleteSounds(index, playList);
                                     },
                                     value: 4,
                                   ),
@@ -253,7 +261,8 @@ class _SelectModeListState extends State<SelectModeList> {
                           ),
                           FutureBuilder(
                             future: dataBase
-                                .getPlayListAudio(audioPropeperty.sounds),
+                                .getPlayListAudio(audioPropeperty.sounds)
+                                .then((value) => audio = value),
                             builder: (BuildContext context,
                                 AsyncSnapshot<dynamic> snapshot) {
                               switch (snapshot.connectionState) {
@@ -270,8 +279,95 @@ class _SelectModeListState extends State<SelectModeList> {
                                   );
                                 default:
                                   return Expanded(
-                                    child: SelectList(
-                                      audio: snapshot.data,
+                                    child: ListView.builder(
+                                      itemCount: audio.length,
+                                      itemBuilder: (_, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(75),
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            child: ListTile(
+                                              title: Text(
+                                                audio[index].name,
+                                                style: const TextStyle(
+                                                    color: Color(0xFF3A3A55)),
+                                              ),
+                                              subtitle: const Text(
+                                                "30 минут",
+                                                style: TextStyle(
+                                                    color: Color(0x803A3A55)),
+                                              ),
+                                              leading: SizedBox(
+                                                height: 64,
+                                                width: 64,
+                                                child: IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  iconSize: 64,
+                                                  icon: const Image(
+                                                    image: AssetImage(
+                                                        "assets/Play.png"),
+                                                  ),
+                                                  onPressed: () {
+                                                    Scaffold.of(context)
+                                                        .showBottomSheet(
+                                                      (context) =>
+                                                          PlayerOnProgress(
+                                                        cycle: false,
+                                                        index: index,
+                                                        repeat: false,
+                                                        soundsList: audio,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              trailing: GestureDetector(
+                                                onTap: () {
+                                                  if (select[index] == false) {
+                                                    setState(() {
+                                                      select[index] = true;
+                                                      playList
+                                                          .add(audio[index]);
+                                                    });
+                                                  } else {
+                                                    setState(() {
+                                                      select[index] = false;
+                                                      playList.removeWhere(
+                                                        (element) =>
+                                                            element.id ==
+                                                            audio[index].id,
+                                                      );
+                                                    });
+                                                  }
+                                                },
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: Colors.black)),
+                                                  child: Image(
+                                                    image: const AssetImage(
+                                                        'assets/TickSquare.png'),
+                                                    color: select[index]
+                                                        ? Colors.black
+                                                        : Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   );
                               }
@@ -289,71 +385,3 @@ class _SelectModeListState extends State<SelectModeList> {
     );
   }
 }
-
-// class ListWidget extends StatefulWidget {
-//   List<AudioModel> audio;
-//   ListWidget({Key? key, required this.audio}) : super(key: key);
-
-//   @override
-//   _ListWidgetState createState() => _ListWidgetState();
-// }
-
-// class _ListWidgetState extends State<ListWidget> {
-//   late List<AudioModel> audio;
-
-//   @override
-//   initState() {
-//     super.initState();
-//     audio = widget.audio;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: audio.length,
-//       itemBuilder: (_, index) {
-//         return Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 5.0),
-//           child: Container(
-//             child: ListTile(
-//               title: Text(
-//                 audio[index].name,
-//                 style: const TextStyle(color: Color(0xFF3A3A55)),
-//               ),
-//               subtitle: const Text(
-//                 "30 минут",
-//                 style: TextStyle(color: Color(0x803A3A55)),
-//               ),
-//               leading: IconButton(
-//                 iconSize: 32,
-//                 icon: const Image(
-//                   image: AssetImage("assets/Play.png"),
-//                   color: CColors.green,
-//                 ),
-//                 onPressed: () {
-//                   Scaffold.of(context)
-//                       .showBottomSheet((context) => PlayerOnProgress(
-//                             url: audio[index].url,
-//                             name: audio[index].name,
-//                           ));
-//                 },
-//               ),
-//               trailing: selectFlag
-//                   ? const Icon(Icons.more_horiz)
-//                   : IconButton(
-//                       icon: const Icon(Icons.add),
-//                       onPressed: () => eraseList.add(index),
-//                     ),
-//             ),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(75),
-//               border: Border.all(
-//                 color: Colors.grey,
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
