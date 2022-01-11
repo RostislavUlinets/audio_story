@@ -71,6 +71,7 @@ dependencies:
 
   #Uuid
   uuid: ^3.0.5
+  equatable: ^2.0.3
 
   #SoundPlayer
   #audioplayers: ^0.17.1
