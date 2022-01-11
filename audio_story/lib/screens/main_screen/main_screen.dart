@@ -12,7 +12,7 @@ import '../../widgets/bottomnavbar.dart';
 import 'widget/custom_list.dart';
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/mainScreen';
 
   const MainScreen({Key? key}) : super(key: key);
 
@@ -41,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(0),
       drawer: const ClipRRect(

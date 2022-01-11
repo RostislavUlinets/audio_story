@@ -12,29 +12,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'audio_content.dart';
+import 'widget/audio_content.dart';
 
-class Audio extends StatefulWidget {
+class Audio extends StatelessWidget {
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
-
-  @override
-  State<Audio> createState() => _AudioState();
-}
-
-class _AudioState extends State<Audio> {
-  Color _color = Colors.white38;
-  bool buttonPressed = false;
-  bool cycleState = false;
-
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,73 +97,7 @@ class _AudioState extends State<Audio> {
                                   color: Colors.white,
                                 ),
                               ),
-                              AudioContent(),
-                              // Stack(
-                              //   children: [
-                              //     Container(
-                              //       alignment: Alignment.centerRight,
-                              //       height: 50,
-                              //       width: 200,
-                              //       decoration: BoxDecoration(
-                              //         borderRadius: BorderRadius.circular(40),
-                              //         color: _color,
-                              //       ),
-                              //       child: Padding(
-                              //         padding: const EdgeInsets.only(right: 8.0),
-                              //         child: GestureDetector(
-                              //           onTap: () {
-                              //             buttonPressed = !buttonPressed;
-                              //             cycleState = false;
-                              //             buttonPressed
-                              //                 ? _color = Colors.white
-                              //                 : _color = Colors.white38;
-                              //             setState(() {});
-                              //           },
-                              //           child: const Image(
-                              //             image: AssetImage(
-                              //                 "assets/fluent_arrow.png"),
-                              //             color: CColors.purpule,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //     GestureDetector(
-                              //       onTap: () {
-                              //         cycleState = !cycleState;
-                              //         buttonPressed = false;
-                              //         setState(() {});
-                              //       },
-                              //       child: Container(
-                              //         height: 50,
-                              //         width: 160,
-                              //         decoration: BoxDecoration(
-                              //           borderRadius: BorderRadius.circular(40),
-                              //           color: Colors.white,
-                              //         ),
-                              //         child: Row(
-                              //           children: [
-                              //             cycleState == false
-                              //                 ? const Image(
-                              //                     image: AssetImage(
-                              //                         "assets/Play.png"),
-                              //                     color: CColors.purpule,
-                              //                   )
-                              //                 : const Image(
-                              //                     image: AssetImage(
-                              //                         "assets/Pause.png"),
-                              //                     color: CColors.purpule,
-                              //                   ),
-                              //             const Text(
-                              //               "Запустить все",
-                              //               style:
-                              //                   TextStyle(color: CColors.purpule),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
+                              AudioButton(),
                             ],
                           ),
                         ),

@@ -3,8 +3,8 @@ import 'package:audio_story/bloc/repeat_cycle/repeat_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AudioContent extends StatelessWidget {
-  const AudioContent({Key? key}) : super(key: key);
+class AudioButton extends StatelessWidget {
+  const AudioButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

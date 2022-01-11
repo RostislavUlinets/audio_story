@@ -29,6 +29,7 @@ class _ProfileState extends State<EditProfile> {
   final _phoneController = TextEditingController();
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
+  final _auth = AuthService.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +139,8 @@ class _ProfileState extends State<EditProfile> {
                             borderRadius: BorderRadius.circular(60.0),
                           ),
                         ),
+                        onEditingComplete: () => _auth.loginUser(
+                            _phoneController.text.trim(), context),
                       ),
                     ),
                   ),
@@ -152,10 +155,9 @@ class _ProfileState extends State<EditProfile> {
                       }
 
                       if (_phoneController.text.trim().isNotEmpty) {
-                        const _auth = AuthService.instance;
-                        _auth.loginUser(_phoneController.text.trim(), context);
                         dataBase.updateUserPhoneNumber(
-                            _phoneController.text.trim());
+                          _phoneController.text.trim(),
+                        );
                       }
                       Navigator.pop(context);
                     },

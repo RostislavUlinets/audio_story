@@ -1,10 +1,13 @@
 import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void showAlertDialog(BuildContext context) {
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
   // set up the buttons
   Widget cancelButton = TextButton(
     child: const Text(
@@ -38,7 +41,9 @@ void showAlertDialog(BuildContext context) {
       backgroundColor: MaterialStateProperty.all(CColors.red),
     ),
     onPressed: () async {
-      FirebaseAuth.instance.currentUser!.delete();
+      // FirebaseAuth.instance.currentUser!.delete();
+      dataBase.deleteUser();
+      FirebaseAuth.instance.signOut();
       Navigator.of(context, rootNavigator: true).pop();
       Navigator.pushNamed(context, WelcomeScreen.routeName);
     },
