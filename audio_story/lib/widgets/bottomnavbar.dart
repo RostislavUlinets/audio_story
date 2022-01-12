@@ -1,5 +1,6 @@
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/routes/route.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -8,13 +9,12 @@ import 'package:audio_story/screens/record/record.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatelessWidget {
-  final int activeButtonIndex;
-
-  const CustomNavigationBar(this.activeButtonIndex, {Key? key})
-      : super(key: key);
+  const CustomNavigationBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    int activeButtonIndex = 0;
+
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -35,19 +35,26 @@ class CustomNavigationBar extends StatelessWidget {
           onTap: (buttonIndex) {
             switch (buttonIndex) {
               case 0:
-                Navigator.pushNamed(context, MainScreen.routeName);
+                RouteGenerator.navigationKey.currentState!
+                    .pushNamed(MainScreen.routeName);
+                activeButtonIndex = 0;
                 break;
               case 1:
-                Navigator.pushNamed(context, Category.routeName);
+                RouteGenerator.navigationKey.currentState!
+                    .pushNamed(Category.routeName);
+                activeButtonIndex = 1;
                 break;
               case 2:
-                Navigator.pushNamed(context, Records.routeName);
+                RouteGenerator.navigationKey.currentState!
+                    .pushNamed(Records.routeName);
                 break;
               case 3:
-                Navigator.pushNamed(context, Audio.routeName);
+                RouteGenerator.navigationKey.currentState!
+                    .pushNamed(Audio.routeName);
                 break;
               case 4:
-                Navigator.pushNamed(context, Profile.routeName);
+                RouteGenerator.navigationKey.currentState!
+                    .pushNamed(Profile.routeName);
                 break;
             }
           },

@@ -1,4 +1,3 @@
-
 import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
@@ -27,9 +26,6 @@ class Audio extends StatelessWidget {
         : BlocProvider(
             create: (context) => ButtonBloc(),
             child: Scaffold(
-              drawer: const SideMenu(),
-              extendBody: true,
-              bottomNavigationBar: const CustomNavigationBar(3),
               body: Stack(
                 children: [
                   const MyCustomPaint(

@@ -1,4 +1,5 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
@@ -18,6 +19,9 @@ import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
+  
+  static final navigationKey = GlobalKey<NavigatorState>();
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
@@ -33,6 +37,10 @@ class RouteGenerator {
       case LoginScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => LoginScreen(),
+        );
+      case Initilizer.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const Initilizer(),
         );
       case MainScreen.routeName:
         return MaterialPageRoute(
@@ -54,9 +62,8 @@ class RouteGenerator {
         );
       case CustomCategory.routeName:
         return MaterialPageRoute(
-          builder: (context) => CustomCategory(
-            id: settings.arguments as List<AudioModel>
-          ),
+          builder: (context) =>
+              CustomCategory(id: settings.arguments as List<AudioModel>),
         );
       case Audio.routeName:
         return MaterialPageRoute(

@@ -60,7 +60,6 @@ class _AddAudioState extends State<AddAudio> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
           const MyCustomPaint(

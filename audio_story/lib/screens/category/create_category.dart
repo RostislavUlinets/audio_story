@@ -36,8 +36,6 @@ class _CreateCategoryState extends State<CreateCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(1),
       body: SingleChildScrollView(
         child: Stack(
           children: [

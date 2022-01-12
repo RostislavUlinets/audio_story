@@ -1,4 +1,3 @@
-
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +10,7 @@ class AnonMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      drawer: SideMenu(),
       extendBody: true,
-      bottomNavigationBar: CustomNavigationBar(0),
       body: Center(
         child: Text(
           'Данная функция станет\nдоступной после авторизации',

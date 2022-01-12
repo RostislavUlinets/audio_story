@@ -32,8 +32,6 @@ class _CategoryState extends State<Category> {
         ? const AnonMessage()
         : Scaffold(
             extendBody: true,
-            drawer: const SideMenu(),
-            bottomNavigationBar: const CustomNavigationBar(1),
             body: Stack(
               children: [
                 const MyCustomPaint(

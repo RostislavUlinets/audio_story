@@ -21,8 +21,6 @@ class Subscribe extends StatelessWidget {
         ? const AnonMessage()
         : Scaffold(
             extendBody: true,
-            drawer: const SideMenu(),
-            bottomNavigationBar: const CustomNavigationBar(0),
             body: Stack(
               children: [
                 const MyCustomPaint(
@@ -199,7 +197,7 @@ class Subscribe extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Row(
-                                      children:  [
+                                      children: [
                                         Image(
                                           image: AppIcons.paperDownload,
                                         ),

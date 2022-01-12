@@ -1,5 +1,6 @@
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class FinalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: duration), () {
-      Navigator.pushNamed(context, MainScreen.routeName);
+      Navigator.pushReplacementNamed(context, Initilizer.routeName);
     });
 
     return Scaffold(

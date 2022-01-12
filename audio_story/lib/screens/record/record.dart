@@ -21,17 +21,15 @@ class Records extends StatefulWidget {
 class _RecordsState extends State<Records> {
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider<MyBloc>(
       create: (_) => MyBloc(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         extendBody: true,
-        drawer: const SideMenu(),
-        bottomNavigationBar: const CustomNavigationBar(2),
         body: BlocBuilder<MyBloc, MyState>(
-        builder: (_, state) => state is StateA ? const Recorder() : const Player(),
-      ),
+          builder: (_, state) =>
+              state is StateA ? const Recorder() : const Player(),
+        ),
       ),
     );
   }

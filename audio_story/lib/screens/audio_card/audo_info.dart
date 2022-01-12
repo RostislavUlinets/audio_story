@@ -21,7 +21,6 @@ class AudioInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(2),
       body: Stack(
         children: [
           const MyCustomPaint(

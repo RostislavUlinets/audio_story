@@ -43,9 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return AuthService.isAnonymous()
         ? const AnonMessage()
         : Scaffold(
-            drawer: const SideMenu(),
             extendBody: true,
-            bottomNavigationBar: const CustomNavigationBar(3),
             body: Stack(
               children: [
                 const MyCustomPaint(

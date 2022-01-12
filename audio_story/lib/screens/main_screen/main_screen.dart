@@ -43,12 +43,6 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(0),
-      drawer: const ClipRRect(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
-        child: SideMenu(),
-      ),
       body: Stack(
         children: [
           const MyCustomPaint(
@@ -61,18 +55,16 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 Row(
                   children: [
-                    Builder(builder: (context) {
-                      return IconButton(
-                        icon: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                          size: 36,
-                        ),
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      );
-                    }),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                        size: 36,
+                      ),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
                   ],
                 ),
                 Padding(

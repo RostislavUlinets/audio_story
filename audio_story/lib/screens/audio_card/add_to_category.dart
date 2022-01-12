@@ -29,7 +29,6 @@ class _CategoryState extends State<CustomCategory> {
     return Scaffold(
       extendBody: true,
       drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigationBar(1),
       body: Stack(
         children: [
           const MyCustomPaint(

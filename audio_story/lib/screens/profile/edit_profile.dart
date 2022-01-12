@@ -35,7 +35,6 @@ class _ProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
           const MyCustomPaint(

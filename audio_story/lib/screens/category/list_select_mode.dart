@@ -64,8 +64,6 @@ class _SelectModeListState extends State<SelectModeList> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigationBar(1),
       body: FutureBuilder(
         future: dataBase.getSaveList(index).then(
               (value) => audioPropeperty = value,

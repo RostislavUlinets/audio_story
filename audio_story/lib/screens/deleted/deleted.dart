@@ -27,9 +27,7 @@ class _DeelteModeState extends State<DeelteMode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideMenu(),
       extendBody: true,
-      bottomNavigationBar: const CustomNavigationBar(3),
       body: Stack(
         children: [
           const MyCustomPaint(

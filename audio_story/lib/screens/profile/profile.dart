@@ -89,8 +89,6 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      drawer: const SideMenu(),
-      bottomNavigationBar: const CustomNavigationBar(4),
       body: Stack(
         children: [
           const MyCustomPaint(
