@@ -1,5 +1,6 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,8 @@ class _ListWidgetState extends State<SelectList> {
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   iconSize: 64,
-                  icon: const Image(
-                    image: AssetImage("assets/Play.png"),
+                  icon: Image(
+                    image: AppIcons.play,
                   ),
                   onPressed: () {
                     Scaffold.of(context).showBottomSheet(
@@ -85,7 +86,7 @@ class _ListWidgetState extends State<SelectList> {
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(width: 2, color: Colors.black)),
                   child: Image(
-                    image: const AssetImage('assets/TickSquare.png'),
+                    image: AppIcons.complite,
                     color: select[index] ? Colors.black : Colors.white,
                   ),
                 ),

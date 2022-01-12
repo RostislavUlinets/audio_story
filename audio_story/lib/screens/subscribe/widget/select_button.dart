@@ -1,3 +1,4 @@
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 
 class OutButton extends StatefulWidget {
@@ -18,8 +19,8 @@ class _OutButtonState extends State<OutButton> {
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          _localWidget = const Image(
-            image: AssetImage("assets/TickSquare.png"),
+          _localWidget = Image(
+            image: AppIcons.complite,
           );
         });
       },

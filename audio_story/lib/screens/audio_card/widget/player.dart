@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
@@ -89,7 +90,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
     await setPos(d.floor() - 600);
   }
 
-    Future<void> seekFoward(double d) async {
+  Future<void> seekFoward(double d) async {
     await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor() + 600));
     await setPos(d.floor() + 600);
   }
@@ -175,21 +176,27 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                         onPressed: () {
                           seekBack(pos + 0.0);
                         },
-                        icon: Image.asset('assets/PlayBack.png',color: Colors.black,),
+                        icon: Image(
+                          image: AppIcons.playBack,
+                          color: Colors.black,
+                        ),
                         iconSize: 32,
                       ),
                       IconButton(
                         onPressed: getPlaybackFn(_mPlayer),
                         icon: _mPlayer.isPlaying
-                            ? Image.asset('assets/PlayRec.png')
-                            : Image.asset('assets/PlayRec.png'),
+                            ? Image(image: AppIcons.playRec)
+                            : Image(image: AppIcons.pause),
                         iconSize: 80,
                       ),
                       IconButton(
                         onPressed: () {
                           seekFoward(pos + 0.0);
                         },
-                        icon: Image.asset('assets/PlayFront.png',color: Colors.black,),
+                        icon: Image(
+                          image: AppIcons.playFoward,
+                          color: Colors.black,
+                        ),
                         iconSize: 32,
                       ),
                     ],

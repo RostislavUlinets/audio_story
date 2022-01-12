@@ -1,4 +1,5 @@
 import 'package:audio_story/models/navigation_item.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
@@ -42,37 +43,37 @@ class SideMenu extends StatelessWidget with RouteAware {
                   context,
                   item: NavigationItem.home,
                   text: 'Главная',
-                  image: const AssetImage('assets/Home.png'),
+                  image: AppIcons.home,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.profile,
                   text: 'Профиль',
-                  image: const AssetImage('assets/Profile.png'),
+                  image: AppIcons.profile,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.category,
                   text: 'Подборки',
-                  image: const AssetImage('assets/Category.png'),
+                  image: AppIcons.category,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.audio,
                   text: 'Все аудиозаписи',
-                  image: const AssetImage('assets/Paper.png'),
+                  image: AppIcons.paper,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.search,
                   text: 'Поиск',
-                  image: const AssetImage('assets/Search.png'),
+                  image: AppIcons.search,
                 ),
                 buildMenuItem(
                   context,
                   item: NavigationItem.delete,
                   text: 'Недавно удаленные',
-                  image: const AssetImage('assets/Delete.png'),
+                  image: AppIcons.delete,
                 ),
                 const SizedBox(
                   height: 30,
@@ -81,7 +82,7 @@ class SideMenu extends StatelessWidget with RouteAware {
                   context,
                   item: NavigationItem.subscribe,
                   text: 'Подписка',
-                  image: const AssetImage('assets/Wallet.png'),
+                  image: AppIcons.wallet,
                 ),
                 const SizedBox(
                   height: 30,
@@ -90,7 +91,7 @@ class SideMenu extends StatelessWidget with RouteAware {
                   context,
                   item: NavigationItem.help,
                   text: 'Написать в\nподдержку',
-                  image: const AssetImage('assets/Edit.png'),
+                  image: AppIcons.edit,
                 ),
               ],
             ),

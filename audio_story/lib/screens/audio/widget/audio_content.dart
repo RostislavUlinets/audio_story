@@ -1,6 +1,6 @@
-
 import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,8 +29,8 @@ class AudioButton extends StatelessWidget {
                     onTap: () {
                       context.read<ButtonBloc>().add(const ButtonStopEvent());
                     },
-                    child: const Image(
-                      image: AssetImage("assets/fluent_arrow.png"),
+                    child: Image(
+                      image: AppIcons.cycleArrow,
                       color: AppColors.purpule,
                     ),
                   ),
@@ -52,8 +52,8 @@ class AudioButton extends StatelessWidget {
                     onTap: () {
                       context.read<ButtonBloc>().add(const ButtonCycleEvent());
                     },
-                    child: const Image(
-                      image: AssetImage("assets/fluent_arrow.png"),
+                    child: Image(
+                      image: AppIcons.cycleArrow,
                       color: AppColors.purpule,
                     ),
                   ),
@@ -79,16 +79,16 @@ class AudioButton extends StatelessWidget {
                   children: [
                     if (state is ButtonInitialState ||
                         state is ButtonCycleState) ...[
-                      const Image(
-                        image: AssetImage("assets/Play.png"),
+                      Image(
+                        image: AppIcons.play,
                         height: 48,
                         width: 48,
                         color: AppColors.purpule,
                       )
                     ],
                     if (state is ButtonPlayAllState) ...[
-                      const Image(
-                        image: AssetImage("assets/Pause.png"),
+                      Image(
+                        image: AppIcons.pause,
                         height: 48,
                         width: 48,
                         color: AppColors.purpule,

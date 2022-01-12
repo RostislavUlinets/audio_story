@@ -1,6 +1,7 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -85,7 +86,9 @@ class _AddAudioState extends State<AddAudio> {
                           onPressed: () {
                             _sendDataBack(context, playList);
                           },
-                          icon: Image.asset('assets/ArrowBack.png'),
+                          icon: Image(
+                            image: AppIcons.arrowLeftInCircle,
+                          ),
                         ),
                       ),
                     ),
@@ -134,8 +137,8 @@ class _AddAudioState extends State<AddAudio> {
                               style: TextStyle(color: Color(0x803A3A55)),
                             ),
                             leading: IconButton(
-                              icon: const Image(
-                                image: AssetImage("assets/Play.png"),
+                              icon: Image(
+                                image: AppIcons.play,
                               ),
                               onPressed: () {
                                 Scaffold.of(context).showBottomSheet(
@@ -165,8 +168,7 @@ class _AddAudioState extends State<AddAudio> {
                                     border: Border.all(
                                         width: 2, color: Colors.black)),
                                 child: Image(
-                                  image:
-                                      const AssetImage('assets/TickSquare.png'),
+                                  image: AppIcons.complite,
                                   color: select[index]
                                       ? Colors.black
                                       : Colors.white,

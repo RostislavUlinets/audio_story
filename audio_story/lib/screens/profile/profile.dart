@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
@@ -32,7 +33,9 @@ class _ProfileState extends State<Profile> {
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   String phoneNumber = '', userName = "USER";
-  Image image = Image.asset('assets/anon_ava.jpg');
+  Image image = Image(
+    image: AppIcons.defaultAvatar,
+  );
 
   var maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});

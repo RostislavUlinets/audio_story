@@ -1,6 +1,6 @@
-
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
@@ -44,7 +44,9 @@ class AudioInfo extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Image.asset('assets/Arrow - Left Circle.png'),
+                            icon: Image(
+                              image: AppIcons.arrowDownInCircle,
+                            ),
                           ),
                           PopupMenuButton(
                             shape: const RoundedRectangleBorder(

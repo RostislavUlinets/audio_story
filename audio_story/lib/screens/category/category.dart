@@ -1,4 +1,5 @@
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/category/create_category.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
@@ -47,8 +48,8 @@ class _CategoryState extends State<Category> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            icon: const Image(
-                              image: AssetImage('assets/PlusIcon.png'),
+                            icon: Image(
+                              image: AppIcons.plus,
                               color: Colors.white,
                               width: 36,
                               height: 36,

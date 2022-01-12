@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -105,7 +106,8 @@ class _EditingPlayListState extends State<EditingPlayList> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: Image.asset('assets/ArrowBack.png'),
+                                    icon: Image(
+                                        image: AppIcons.arrowLeftInCircle),
                                   ),
                                 ),
                               ),
@@ -152,8 +154,8 @@ class _EditingPlayListState extends State<EditingPlayList> {
                             child: Container(
                               height: 200,
                               width: MediaQuery.of(context).size.width,
-                              child: Image.asset(
-                                'assets/Camera.png',
+                              child: Image(
+                                image: AppIcons.camera,
                                 color: Colors.black,
                               ),
                               decoration: BoxDecoration(

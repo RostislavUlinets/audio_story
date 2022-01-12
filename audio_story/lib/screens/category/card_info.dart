@@ -4,6 +4,7 @@ import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/category/editing_playList.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -115,7 +116,9 @@ class _CardInfoState extends State<CardInfo> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: Image.asset('assets/ArrowBack.png'),
+                                    icon: Image(
+                                      image: AppIcons.arrowLeftInCircle,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -238,14 +241,12 @@ class _CardInfoState extends State<CardInfo> {
                                         child: Row(
                                           children: [
                                             playAll == false
-                                                ? const Image(
-                                                    image: AssetImage(
-                                                        "assets/Play.png"),
+                                                ? Image(
+                                                    image: AppIcons.play,
                                                     color: Colors.white,
                                                   )
-                                                : const Image(
-                                                    image: AssetImage(
-                                                        "assets/Pause.png"),
+                                                : Image(
+                                                    image: AppIcons.pause,
                                                     color: Colors.white,
                                                   ),
                                             const Text(

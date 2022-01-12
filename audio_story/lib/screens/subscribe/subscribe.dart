@@ -1,4 +1,5 @@
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -164,15 +165,14 @@ class Subscribe extends StatelessWidget {
                                       ),
                                     ),
                                     Row(
-                                      children: const [
+                                      children: [
                                         Image(
-                                          image:
-                                              AssetImage("assets/Infinity.png"),
+                                          image: AppIcons.infinity,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
+                                        const Text(
                                           "Неограниченая память",
                                           style: TextStyle(fontSize: 14),
                                         ),
@@ -182,15 +182,14 @@ class Subscribe extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Row(
-                                      children: const [
+                                      children: [
                                         Image(
-                                          image: AssetImage(
-                                              "assets/CloudUpload.png"),
+                                          image: AppIcons.cloudUpload,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
+                                        const Text(
                                           "Все файлы хранятся в облаке",
                                           style: TextStyle(fontSize: 14),
                                         ),
@@ -200,15 +199,14 @@ class Subscribe extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Row(
-                                      children: const [
+                                      children:  [
                                         Image(
-                                          image: AssetImage(
-                                              "assets/PaperDownload.png"),
+                                          image: AppIcons.paperDownload,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
+                                        const Text(
                                           "Возможность скачивать без ограничений",
                                           style: TextStyle(fontSize: 14),
                                         ),

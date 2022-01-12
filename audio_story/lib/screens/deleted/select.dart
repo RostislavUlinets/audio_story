@@ -3,6 +3,7 @@ import 'package:audio_story/blocs/delete/delete_event.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -82,11 +83,15 @@ class _SelectModeState extends State<SelectMode> {
             },
             items: [
               BottomNavigationBarItem(
-                icon: Image.asset('assets/Swap.png'),
+                icon: Image(
+                  image: AppIcons.swap,
+                ),
                 label: 'Восстановить все',
               ),
               BottomNavigationBarItem(
-                icon: Image.asset('assets/Delete.png'),
+                icon: Image(
+                  image: AppIcons.delete,
+                ),
                 label: 'Удалить все',
               ),
             ],
@@ -153,8 +158,8 @@ class _SelectModeState extends State<SelectMode> {
                                 style: TextStyle(color: Color(0x803A3A55)),
                               ),
                               leading: IconButton(
-                                icon: const Image(
-                                  image: AssetImage("assets/Play.png"),
+                                icon: Image(
+                                  image: AppIcons.play,
                                 ),
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
@@ -187,7 +192,7 @@ class _SelectModeState extends State<SelectMode> {
                                       border: Border.all(
                                           width: 2, color: Colors.black)),
                                   child: Image(
-                                    image: AssetImage('assets/TickSquare.png'),
+                                    image: AppIcons.complite,
                                     color: select[index]
                                         ? Colors.black
                                         : Colors.white,

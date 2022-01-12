@@ -3,6 +3,7 @@ import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -111,7 +112,8 @@ class _SelectModeListState extends State<SelectModeList> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    icon: Image.asset('assets/ArrowBack.png'),
+                                    icon: Image(
+                                        image: AppIcons.arrowLeftInCircle),
                                   ),
                                 ),
                               ),
@@ -227,14 +229,12 @@ class _SelectModeListState extends State<SelectModeList> {
                                         child: Row(
                                           children: [
                                             playAll == false
-                                                ? const Image(
-                                                    image: AssetImage(
-                                                        "assets/Play.png"),
+                                                ? Image(
+                                                    image: AppIcons.play,
                                                     color: Colors.white,
                                                   )
-                                                : const Image(
-                                                    image: AssetImage(
-                                                        "assets/Pause.png"),
+                                                : Image(
+                                                    image: AppIcons.pause,
                                                     color: Colors.white,
                                                   ),
                                             const Text(
@@ -316,9 +316,8 @@ class _SelectModeListState extends State<SelectModeList> {
                                                 child: IconButton(
                                                   padding: EdgeInsets.zero,
                                                   iconSize: 64,
-                                                  icon: const Image(
-                                                    image: AssetImage(
-                                                        "assets/Play.png"),
+                                                  icon: Image(
+                                                    image: AppIcons.play,
                                                   ),
                                                   onPressed: () {
                                                     Scaffold.of(context)
@@ -362,8 +361,7 @@ class _SelectModeListState extends State<SelectModeList> {
                                                           width: 2,
                                                           color: Colors.black)),
                                                   child: Image(
-                                                    image: const AssetImage(
-                                                        'assets/TickSquare.png'),
+                                                    image: AppIcons.complite,
                                                     color: select[index]
                                                         ? Colors.black
                                                         : Colors.white,

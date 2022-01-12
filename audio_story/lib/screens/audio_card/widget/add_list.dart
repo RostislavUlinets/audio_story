@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -175,8 +176,7 @@ class _CustomListCategoryState extends State<CustomListCategory> {
                                         width: 2, color: Colors.white),
                                   ),
                                   child: Image(
-                                    image: const AssetImage(
-                                        'assets/TickSquare.png'),
+                                    image: AppIcons.complite,
                                     color: select[index]
                                         ? Colors.white
                                         : Colors.black.withOpacity(0),

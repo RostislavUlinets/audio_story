@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -181,21 +182,29 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                   onPressed: () {
                     seekBack(pos + 0.0);
                   },
-                  icon: Image.asset('assets/PlayBack.png'),
+                  icon: Image(
+                    image: AppIcons.playBack,
+                  ),
                   iconSize: 32,
                 ),
                 IconButton(
                   onPressed: getPlaybackFn(_mPlayer),
                   icon: _mPlayer.isPlaying
-                      ? Image.asset('assets/PlayRec.png')
-                      : Image.asset('assets/PlayRec.png'),
+                      ? Image(
+                          image: AppIcons.pause,
+                        )
+                      : Image(
+                          image: AppIcons.playRec,
+                        ),
                   iconSize: 124,
                 ),
                 IconButton(
                   onPressed: () {
                     seekFoward(pos + 0.0);
                   },
-                  icon: Image.asset('assets/PlayFront.png'),
+                  icon: Image(
+                    image: AppIcons.playFoward,
+                  ),
                   iconSize: 32,
                 ),
               ],

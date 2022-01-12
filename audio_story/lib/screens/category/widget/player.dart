@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
@@ -49,7 +50,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       _mPlayerSubscription = null;
     }
   }
-  
+
   Future<void> init() async {
     await _mPlayer.openAudioSession();
     duration = (await flutterSoundHelper.duration(url))!.inMilliseconds;
@@ -124,12 +125,12 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
           IconButton(
             onPressed: getPlaybackFn(_mPlayer),
             icon: _mPlayer.isPlaying
-                ? Image.asset(
-                    'assets/Pause.png',
+                ? Image(
+                    image: AppIcons.pause,
                     color: Colors.white,
                   )
-                : Image.asset(
-                    'assets/PlayRec.png',
+                : Image(
+                    image: AppIcons.playRec,
                     color: Colors.white,
                   ),
             iconSize: 64,

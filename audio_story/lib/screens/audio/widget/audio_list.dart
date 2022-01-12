@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
@@ -61,8 +62,8 @@ class _AudioScreenListState extends State<AudioScreenList> {
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       iconSize: 64,
-                      icon: const Image(
-                        image: AssetImage("assets/Play.png"),
+                      icon: Image(
+                        image: AppIcons.play,
                       ),
                       onPressed: () {
                         Scaffold.of(context).showBottomSheet(

@@ -1,6 +1,7 @@
 import 'package:audio_story/blocs/record/record_bloc.dart';
 import 'package:audio_story/blocs/record/record_event.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,6 @@ class _RecorderState extends State<Recorder> {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: [
         const MyCustomPaint(
@@ -174,12 +174,12 @@ class _RecorderState extends State<Recorder> {
     final isRecording = _mRecorder!.isRecording;
 
     final image = isRecording
-        ? Image.asset(
-            'assets/Pause.png',
+        ? Image(
+            image: AppIcons.pause,
             color: AppColors.orange,
           )
-        : Image.asset(
-            'assets/RecordIcon.png',
+        : Image(
+            image: AppIcons.record,
             color: AppColors.orange,
           );
 

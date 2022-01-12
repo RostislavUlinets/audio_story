@@ -1,4 +1,5 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,8 @@ class _SearchCustomListState extends State<SearchCustomList> {
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
               leading: IconButton(
-                icon: const Image(
-                  image: AssetImage("assets/Play.png"),
+                icon: Image(
+                  image: AppIcons.play,
                 ),
                 onPressed: () {
                   Scaffold.of(context).showBottomSheet(

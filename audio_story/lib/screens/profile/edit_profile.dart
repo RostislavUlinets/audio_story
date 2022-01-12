@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -63,7 +64,9 @@ class _ProfileState extends State<EditProfile> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Image.asset('assets/ArrowBack.png'),
+                            icon: Image(
+                              image: AppIcons.arrowLeftInCircle,
+                            ),
                           ),
                         ),
                       ),
@@ -93,7 +96,9 @@ class _ProfileState extends State<EditProfile> {
                         onPressed: () {
                           selectFile();
                         },
-                        icon: Image.asset('assets/Camera.png'),
+                        icon: Image(
+                          image: AppIcons.camera,
+                        ),
                       ),
                       height: 200,
                       width: 200,

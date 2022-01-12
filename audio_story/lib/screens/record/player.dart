@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,8 +89,8 @@ class _PlayerState extends State<Player> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Image(
-                            image: AssetImage("assets/Upload.png"),
+                          icon: Image(
+                            image: AppIcons.upload,
                           ),
                           onPressed: () {
                             Share.shareFiles([pathToSaveAudio]);
@@ -103,13 +104,13 @@ class _PlayerState extends State<Player> {
                                 '/storage/sdcard0/Downloads/${audioName.text}',
                                 Codec.mp3);
                           },
-                          icon: const Image(
-                            image: AssetImage("assets/PaperDownload1.png"),
+                          icon: Image(
+                            image: AppIcons.paperDownload,
                           ),
                         ),
                         IconButton(
-                          icon: const Image(
-                            image: AssetImage("assets/Delete.png"),
+                          icon: Image(
+                            image: AppIcons.delete,
                           ),
                           onPressed: () {
                             showAlertDialog(context);

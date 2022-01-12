@@ -1,5 +1,6 @@
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/audio_list.dart';
@@ -59,7 +60,9 @@ class CustomList extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Image.asset('assets/Arrow - Down.png'),
+                        Image(
+                          image: AppIcons.arrowDown,
+                        ),
                       ],
                     )
                   : FutureBuilder(

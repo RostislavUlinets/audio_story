@@ -1,5 +1,6 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +49,8 @@ class _ListWidgetState extends State<ListWidget> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     iconSize: 64,
-                    icon: const Image(
-                      image: AssetImage("assets/Play.png"),
+                    icon: Image(
+                      image: AppIcons.play,
                     ),
                     onPressed: () {
                       Scaffold.of(context).showBottomSheet(
@@ -69,8 +70,8 @@ class _ListWidgetState extends State<ListWidget> {
                       (value) => setState(() {}),
                     );
                   },
-                  child: const Image(
-                    image: AssetImage("assets/Delete.png"),
+                  child: Image(
+                    image: AppIcons.delete,
                   ),
                 )),
             decoration: BoxDecoration(
