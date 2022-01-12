@@ -1,7 +1,6 @@
 import 'dart:io';
-
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,7 +52,7 @@ class _PlayerState extends State<Player> {
     return Stack(
       children: [
         const MyCustomPaint(
-          color: CColors.purpule,
+          color: AppColors.purpule,
           size: 0.85,
         ),
         Column(

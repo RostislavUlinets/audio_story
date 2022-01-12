@@ -1,7 +1,7 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/delete/delete_bloc.dart';
-import 'package:audio_story/bloc/delete/delete_event.dart';
+import 'package:audio_story/blocs/delete/delete_bloc.dart';
+import 'package:audio_story/blocs/delete/delete_event.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/side_menu.dart';
@@ -33,7 +33,7 @@ class _DeelteModeState extends State<DeelteMode> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.blue,
+            color: AppColors.blue,
             size: 0.7,
           ),
           Padding(
@@ -110,7 +110,7 @@ class _DeelteModeState extends State<DeelteMode> {
                           width: 250,
                           child: Center(
                             child: CircularProgressIndicator(
-                              color: CColors.purpule,
+                              color: AppColors.purpule,
                               strokeWidth: 1.5,
                             ),
                           ),

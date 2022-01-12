@@ -1,8 +1,6 @@
-import 'dart:developer';
-
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -65,7 +63,7 @@ class _AddAudioState extends State<AddAudio> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.green,
+            color: AppColors.green,
             size: 0.7,
           ),
           Padding(
@@ -167,7 +165,8 @@ class _AddAudioState extends State<AddAudio> {
                                     border: Border.all(
                                         width: 2, color: Colors.black)),
                                 child: Image(
-                                  image: const AssetImage('assets/TickSquare.png'),
+                                  image:
+                                      const AssetImage('assets/TickSquare.png'),
                                   color: select[index]
                                       ? Colors.black
                                       : Colors.white,
@@ -212,9 +211,5 @@ class _AddAudioState extends State<AddAudio> {
       this.query = query;
       audio = audioList;
     });
-  }
-
-  void _saveAudio(AudioModel audio) {
-    log(playList.toString());
   }
 }

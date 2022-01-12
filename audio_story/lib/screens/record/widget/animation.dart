@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MusicVisualizer extends StatelessWidget {
@@ -20,7 +20,7 @@ class MusicVisualizer extends StatelessWidget {
         20,
         (index) => VisualizerComponent(
           duration: duration[index % 5],
-          color: CColors.black,
+          color: AppColors.black,
         ),
       ),
     );

@@ -1,8 +1,8 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/delete/delete_bloc.dart';
-import 'package:audio_story/bloc/delete/delete_event.dart';
+import 'package:audio_story/blocs/delete/delete_bloc.dart';
+import 'package:audio_story/blocs/delete/delete_event.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -96,7 +96,7 @@ class _SelectModeState extends State<SelectMode> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.blue,
+            color: AppColors.blue,
             size: 0.7,
           ),
           Padding(
@@ -207,39 +207,6 @@ class _SelectModeState extends State<SelectMode> {
                     ),
                   ),
                 ),
-                // Container(
-
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       children: [
-                //         Column(
-                //           children: [
-                //             IconButton(
-                //               onPressed: null,
-                //               icon: Image.asset('assets/Swap.png'),
-                //             ),
-                //             const Text(
-                //               'Восстановить все',
-                //             ),
-                //           ],
-                //         ),
-                //         Column(
-                //           children: [
-                //             IconButton(
-                //               onPressed: null,
-                //               icon: Image.asset('assets/Delete.png'),
-                //             ),
-                //             const Text(
-                //               'Удалить все',
-                //             ),
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

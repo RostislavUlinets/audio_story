@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -39,7 +38,7 @@ class _ProfileState extends State<EditProfile> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.85,
           ),
           Padding(
@@ -163,7 +162,7 @@ class _ProfileState extends State<EditProfile> {
                     },
                     child: const Text(
                       "Сохранить",
-                      style: TextStyle(color: CColors.black),
+                      style: TextStyle(color: AppColors.black),
                     ),
                   ),
                 ],

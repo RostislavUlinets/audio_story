@@ -1,5 +1,5 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/audio_list.dart';
@@ -69,7 +69,7 @@ class CustomList extends StatelessWidget {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
                             return const CircularProgressIndicator(
-                              color: CColors.purpule,
+                              color: AppColors.purpule,
                               strokeWidth: 1.5,
                             );
                           default:

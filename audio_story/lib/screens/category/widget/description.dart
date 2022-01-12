@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionTextWidget extends StatefulWidget {
@@ -45,7 +45,7 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
                     children: <Widget>[
                       Text(
                         flag ? "Подробнее" : "Скрыть",
-                        style: const TextStyle(color: CColors.black),
+                        style: const TextStyle(color: AppColors.black),
                       ),
                     ],
                   ),

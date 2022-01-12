@@ -1,6 +1,6 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
@@ -48,7 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
             body: Stack(
               children: [
                 const MyCustomPaint(
-                  color: CColors.blue,
+                  color: AppColors.blue,
                   size: 0.7,
                 ),
                 Padding(

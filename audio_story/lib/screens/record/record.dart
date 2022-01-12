@@ -1,5 +1,5 @@
-import 'package:audio_story/bloc/record/record_bloc.dart';
-import 'package:audio_story/bloc/record/record_state.dart';
+import 'package:audio_story/blocs/record/record_bloc.dart';
+import 'package:audio_story/blocs/record/record_state.dart';
 import 'package:audio_story/screens/record/player.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/side_menu.dart';

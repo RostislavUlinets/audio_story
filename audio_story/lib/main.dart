@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'route.dart';
+import 'routes/route.dart';
 import 'screens/login_screen/welcome_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';

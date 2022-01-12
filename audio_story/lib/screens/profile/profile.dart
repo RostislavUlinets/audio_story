@@ -1,6 +1,5 @@
 import 'dart:developer';
-
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
@@ -92,7 +91,7 @@ class _ProfileState extends State<Profile> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.85,
           ),
           Padding(
@@ -227,7 +226,7 @@ class _ProfileState extends State<Profile> {
                         },
                         child: const Text("Выйти из приложения",
                             style: TextStyle(
-                              color: CColors.black,
+                              color: AppColors.black,
                             )),
                       ),
                       const Spacer(),

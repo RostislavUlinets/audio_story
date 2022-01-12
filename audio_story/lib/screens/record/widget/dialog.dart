@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,13 +8,13 @@ void showAlertDialog(BuildContext context) {
   Widget cancelButton = TextButton(
     child: const Text(
       "Нет",
-      style: TextStyle(color: CColors.purpule),
+      style: TextStyle(color: AppColors.purpule),
     ),
     style: ButtonStyle(
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
-          side: const BorderSide(color: CColors.purpule),
+          side: const BorderSide(color: AppColors.purpule),
         ),
       ),
     ),
@@ -34,7 +34,7 @@ void showAlertDialog(BuildContext context) {
           borderRadius: BorderRadius.circular(18.0),
         ),
       ),
-      backgroundColor: MaterialStateProperty.all(CColors.purpule),
+      backgroundColor: MaterialStateProperty.all(AppColors.purpule),
     ),
     onPressed: () {
       Navigator.of(context, rootNavigator: true).pop();
@@ -57,14 +57,14 @@ void showAlertDialog(BuildContext context) {
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: CColors.red)),
+                      color: AppColors.red)),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 "Ваш файл перенесется в папку\n“Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
                 style: TextStyle(
-                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                    fontSize: 14, color: AppColors.black.withOpacity(0.5)),
                 textAlign: TextAlign.center,
               ),
             ),

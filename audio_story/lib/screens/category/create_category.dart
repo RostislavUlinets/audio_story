@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'dart:io';
 
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/add_audio.dart';
 
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -41,7 +41,7 @@ class _CreateCategoryState extends State<CreateCategory> {
         child: Stack(
           children: [
             const MyCustomPaint(
-              color: CColors.green,
+              color: AppColors.green,
               size: 0.85,
             ),
             Padding(
@@ -153,7 +153,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                       helperText: "Готово",
                       helperStyle: TextStyle(fontSize: 14, color: Colors.black),
                       border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: CColors.black),
+                        borderSide: BorderSide(color: AppColors.black),
                       ),
                     ),
                     onTap: () {
@@ -186,7 +186,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
-                                  color: CColors.black,
+                                  color: AppColors.black,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),

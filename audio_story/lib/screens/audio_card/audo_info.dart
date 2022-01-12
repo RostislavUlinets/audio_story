@@ -1,5 +1,6 @@
-import 'package:audio_story/Colors/colors.dart';
+
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
@@ -24,7 +25,7 @@ class AudioInfo extends StatelessWidget {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.7,
           ),
           Padding(

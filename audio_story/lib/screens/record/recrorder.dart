@@ -1,6 +1,6 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/record/record_bloc.dart';
-import 'package:audio_story/bloc/record/record_event.dart';
+import 'package:audio_story/blocs/record/record_bloc.dart';
+import 'package:audio_story/blocs/record/record_event.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +89,7 @@ class _RecorderState extends State<Recorder> {
     return Stack(
       children: [
         const MyCustomPaint(
-          color: CColors.purpule,
+          color: AppColors.purpule,
           size: 0.85,
         ),
         Column(
@@ -176,11 +176,11 @@ class _RecorderState extends State<Recorder> {
     final image = isRecording
         ? Image.asset(
             'assets/Pause.png',
-            color: CColors.orange,
+            color: AppColors.orange,
           )
         : Image.asset(
             'assets/RecordIcon.png',
-            color: CColors.orange,
+            color: AppColors.orange,
           );
 
     return GestureDetector(

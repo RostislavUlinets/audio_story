@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -16,7 +16,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.85,
           ),
           Padding(

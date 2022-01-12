@@ -1,10 +1,8 @@
 import 'dart:io';
-
-import 'package:audio_story/bloc/repeat_cycle/repeat_bloc.dart';
+import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
-import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';

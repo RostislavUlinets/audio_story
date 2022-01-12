@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -25,7 +25,7 @@ class Subscribe extends StatelessWidget {
             body: Stack(
               children: [
                 const MyCustomPaint(
-                  color: CColors.purpule,
+                  color: AppColors.purpule,
                   size: 0.85,
                 ),
                 Padding(

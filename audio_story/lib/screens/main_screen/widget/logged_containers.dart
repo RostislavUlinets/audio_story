@@ -1,5 +1,5 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class LoggedContainers extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return const CircularProgressIndicator(
-              color: CColors.purpule,
+              color: AppColors.purpule,
               strokeWidth: 1.5,
             );
           default:

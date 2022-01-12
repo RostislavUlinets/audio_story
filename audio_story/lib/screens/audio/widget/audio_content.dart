@@ -1,5 +1,6 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/repeat_cycle/repeat_bloc.dart';
+
+import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class AudioButton extends StatelessWidget {
                     },
                     child: const Image(
                       image: AssetImage("assets/fluent_arrow.png"),
-                      color: CColors.purpule,
+                      color: AppColors.purpule,
                     ),
                   ),
                 ),
@@ -53,7 +54,7 @@ class AudioButton extends StatelessWidget {
                     },
                     child: const Image(
                       image: AssetImage("assets/fluent_arrow.png"),
-                      color: CColors.purpule,
+                      color: AppColors.purpule,
                     ),
                   ),
                 ),
@@ -82,7 +83,7 @@ class AudioButton extends StatelessWidget {
                         image: AssetImage("assets/Play.png"),
                         height: 48,
                         width: 48,
-                        color: CColors.purpule,
+                        color: AppColors.purpule,
                       )
                     ],
                     if (state is ButtonPlayAllState) ...[
@@ -90,12 +91,12 @@ class AudioButton extends StatelessWidget {
                         image: AssetImage("assets/Pause.png"),
                         height: 48,
                         width: 48,
-                        color: CColors.purpule,
+                        color: AppColors.purpule,
                       ),
                     ],
                     const Text(
                       "Запустить все",
-                      style: TextStyle(color: CColors.purpule),
+                      style: TextStyle(color: AppColors.purpule),
                     ),
                   ],
                 ),

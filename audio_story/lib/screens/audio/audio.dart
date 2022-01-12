@@ -1,6 +1,7 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/repeat_cycle/repeat_bloc.dart';
+
+import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio/widget/audio_list.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
@@ -32,7 +33,7 @@ class Audio extends StatelessWidget {
               body: Stack(
                 children: [
                   const MyCustomPaint(
-                    color: CColors.blue,
+                    color: AppColors.blue,
                     size: 0.7,
                   ),
                   Padding(
@@ -112,7 +113,7 @@ class Audio extends StatelessWidget {
                                   width: 250,
                                   child: Center(
                                     child: CircularProgressIndicator(
-                                      color: CColors.purpule,
+                                      color: AppColors.purpule,
                                       strokeWidth: 1.5,
                                     ),
                                   ),

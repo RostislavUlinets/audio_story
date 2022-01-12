@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/editing_playList.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -81,7 +81,7 @@ class _CardInfoState extends State<CardInfo> {
                 width: 250,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: CColors.purpule,
+                    color: AppColors.purpule,
                     strokeWidth: 1.5,
                   ),
                 ),
@@ -90,7 +90,7 @@ class _CardInfoState extends State<CardInfo> {
               return Stack(
                 children: [
                   const MyCustomPaint(
-                    color: CColors.green,
+                    color: AppColors.green,
                     size: 0.85,
                   ),
                   Padding(
@@ -294,7 +294,7 @@ class _CardInfoState extends State<CardInfo> {
                                     width: 250,
                                     child: Center(
                                       child: CircularProgressIndicator(
-                                        color: CColors.purpule,
+                                        color: AppColors.purpule,
                                         strokeWidth: 1.5,
                                       ),
                                     ),
@@ -322,71 +322,3 @@ class _CardInfoState extends State<CardInfo> {
     );
   }
 }
-
-// class ListWidget extends StatefulWidget {
-//   List<AudioModel> audio;
-//   ListWidget({Key? key, required this.audio}) : super(key: key);
-
-//   @override
-//   _ListWidgetState createState() => _ListWidgetState();
-// }
-
-// class _ListWidgetState extends State<ListWidget> {
-//   late List<AudioModel> audio;
-
-//   @override
-//   initState() {
-//     super.initState();
-//     audio = widget.audio;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: audio.length,
-//       itemBuilder: (_, index) {
-//         return Padding(
-//           padding: const EdgeInsets.symmetric(vertical: 5.0),
-//           child: Container(
-//             child: ListTile(
-//               title: Text(
-//                 audio[index].name,
-//                 style: const TextStyle(color: Color(0xFF3A3A55)),
-//               ),
-//               subtitle: const Text(
-//                 "30 минут",
-//                 style: TextStyle(color: Color(0x803A3A55)),
-//               ),
-//               leading: IconButton(
-//                 iconSize: 32,
-//                 icon: const Image(
-//                   image: AssetImage("assets/Play.png"),
-//                   color: CColors.green,
-//                 ),
-//                 onPressed: () {
-//                   Scaffold.of(context)
-//                       .showBottomSheet((context) => PlayerOnProgress(
-//                             url: audio[index].url,
-//                             name: audio[index].name,
-//                           ));
-//                 },
-//               ),
-//               trailing: selectFlag
-//                   ? const Icon(Icons.more_horiz)
-//                   : IconButton(
-//                       icon: const Icon(Icons.add),
-//                       onPressed: () => eraseList.add(index),
-//                     ),
-//             ),
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(75),
-//               border: Border.all(
-//                 color: Colors.grey,
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

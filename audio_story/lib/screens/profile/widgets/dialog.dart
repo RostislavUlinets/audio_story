@@ -1,9 +1,8 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void showAlertDialog(BuildContext context) {
   DatabaseService dataBase =
@@ -12,13 +11,13 @@ void showAlertDialog(BuildContext context) {
   Widget cancelButton = TextButton(
     child: const Text(
       "Нет",
-      style: TextStyle(color: CColors.purpule),
+      style: TextStyle(color: AppColors.purpule),
     ),
     style: ButtonStyle(
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
-          side: const BorderSide(color: CColors.purpule),
+          side: const BorderSide(color: AppColors.purpule),
         ),
       ),
     ),
@@ -38,7 +37,7 @@ void showAlertDialog(BuildContext context) {
           borderRadius: BorderRadius.circular(18.0),
         ),
       ),
-      backgroundColor: MaterialStateProperty.all(CColors.red),
+      backgroundColor: MaterialStateProperty.all(AppColors.red),
     ),
     onPressed: () async {
       // FirebaseAuth.instance.currentUser!.delete();
@@ -64,14 +63,14 @@ void showAlertDialog(BuildContext context) {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: CColors.black)),
+                      color: AppColors.black)),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
                 style: TextStyle(
-                    fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                    fontSize: 14, color: AppColors.black.withOpacity(0.5)),
                 textAlign: TextAlign.center,
               ),
             ),

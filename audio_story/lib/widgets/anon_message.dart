@@ -1,4 +1,5 @@
-import 'package:audio_story/Colors/colors.dart';
+
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class AnonMessage extends StatelessWidget {
           'Данная функция станет\nдоступной после авторизации',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: CColors.black,
+            color: AppColors.black,
             fontSize: 18,
           ),
         ),

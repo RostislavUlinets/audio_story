@@ -1,4 +1,4 @@
-import 'package:audio_story/Colors/colors.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +24,14 @@ class DeleteAlert extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: CColors.red)),
+                        color: AppColors.red)),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Ваш файл перенесется в папку “Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
                   style: TextStyle(
-                      fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                      fontSize: 14, color: AppColors.black.withOpacity(0.5)),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -58,13 +58,13 @@ class DeleteAlert extends StatelessWidget {
     return TextButton(
       child: const Text(
         "Нет",
-        style: TextStyle(color: CColors.purpule),
+        style: TextStyle(color: AppColors.purpule),
       ),
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(color: CColors.purpule),
+            side: const BorderSide(color: AppColors.purpule),
           ),
         ),
       ),
@@ -87,7 +87,7 @@ class DeleteAlert extends StatelessWidget {
             borderRadius: BorderRadius.circular(18.0),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(CColors.purpule),
+        backgroundColor: MaterialStateProperty.all(AppColors.purpule),
       ),
       onPressed: () {
         dataBase
@@ -109,13 +109,13 @@ class DeleteAudio {
     Widget cancelButton = TextButton(
       child: const Text(
         "Нет",
-        style: TextStyle(color: CColors.purpule),
+        style: TextStyle(color: AppColors.purpule),
       ),
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(color: CColors.purpule),
+            side: const BorderSide(color: AppColors.purpule),
           ),
         ),
       ),
@@ -136,7 +136,7 @@ class DeleteAudio {
             borderRadius: BorderRadius.circular(18.0),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all(CColors.purpule),
+        backgroundColor: MaterialStateProperty.all(AppColors.purpule),
       ),
       onPressed: () {
         dataBase.deletePlayList(index).then(
@@ -160,14 +160,14 @@ class DeleteAudio {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: CColors.red)),
+                        color: AppColors.red)),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   "Ваш файл перенесется в папку “Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
                   style: TextStyle(
-                      fontSize: 14, color: CColors.black.withOpacity(0.5)),
+                      fontSize: 14, color: AppColors.black.withOpacity(0.5)),
                   textAlign: TextAlign.center,
                 ),
               ),

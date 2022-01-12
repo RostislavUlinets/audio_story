@@ -1,12 +1,9 @@
-import 'package:audio_story/Colors/colors.dart';
-import 'package:audio_story/bloc/delete/delete_bloc.dart';
-import 'package:audio_story/bloc/delete/delete_state.dart';
+import 'package:audio_story/blocs/delete/delete_bloc.dart';
+import 'package:audio_story/blocs/delete/delete_state.dart';
 import 'package:audio_story/screens/deleted/deleted.dart';
 import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

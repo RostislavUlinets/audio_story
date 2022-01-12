@@ -1,5 +1,5 @@
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.85,
           ),
           Column(
@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           "Регистрация привяжет твои сказки\nк облаку, после чего они всегда\nбудут с тобой",
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: CColors.black),
+                          style: TextStyle(color: AppColors.black),
                         ),
                       ),
                     ),

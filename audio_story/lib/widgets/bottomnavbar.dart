@@ -1,4 +1,5 @@
-import 'package:audio_story/Colors/colors.dart';
+
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -156,7 +157,7 @@ class CustomNavigationBar extends StatelessWidget {
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/Home.png'),
-                  color: CColors.purpule,
+                  color: AppColors.purpule,
                 ),
                 label: "Главная"),
             const BottomNavigationBarItem(
@@ -166,7 +167,7 @@ class CustomNavigationBar extends StatelessWidget {
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/Category.png'),
-                  color: CColors.purpule,
+                  color: AppColors.purpule,
                 ),
                 label: 'Подборки'),
             BottomNavigationBarItem(
@@ -200,7 +201,7 @@ class CustomNavigationBar extends StatelessWidget {
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/Paper.png'),
-                  color: CColors.purpule,
+                  color: AppColors.purpule,
                 ),
                 label: 'Аудиозаписи'),
             const BottomNavigationBarItem(
@@ -210,7 +211,7 @@ class CustomNavigationBar extends StatelessWidget {
                 ),
                 activeIcon: Image(
                   image: AssetImage('assets/Profile.png'),
-                  color: CColors.purpule,
+                  color: AppColors.purpule,
                 ),
                 label: 'Профиль'),
           ],

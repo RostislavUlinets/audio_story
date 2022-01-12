@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -72,7 +71,7 @@ class _EditingPlayListState extends State<EditingPlayList> {
                 width: 250,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: CColors.purpule,
+                    color: AppColors.purpule,
                     strokeWidth: 1.5,
                   ),
                 ),
@@ -81,7 +80,7 @@ class _EditingPlayListState extends State<EditingPlayList> {
               return Stack(
                 children: [
                   const MyCustomPaint(
-                    color: CColors.green,
+                    color: AppColors.green,
                     size: 0.85,
                   ),
                   Padding(
@@ -185,7 +184,7 @@ class _EditingPlayListState extends State<EditingPlayList> {
                             child: TextField(
                               controller: _infoField,
                               style: const TextStyle(
-                                color: CColors.black,
+                                color: AppColors.black,
                                 fontSize: 16,
                               ),
                             ),
@@ -202,7 +201,7 @@ class _EditingPlayListState extends State<EditingPlayList> {
                                     width: 250,
                                     child: Center(
                                       child: CircularProgressIndicator(
-                                        color: CColors.purpule,
+                                        color: AppColors.purpule,
                                         strokeWidth: 1.5,
                                       ),
                                     ),

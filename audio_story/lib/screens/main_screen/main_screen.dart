@@ -1,5 +1,5 @@
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/main_screen/widget/anon_containers.dart';
 import 'package:audio_story/screens/main_screen/widget/logged_containers.dart';
@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
           const MyCustomPaint(
-            color: CColors.purpule,
+            color: AppColors.purpule,
             size: 0.85,
           ),
           Padding(

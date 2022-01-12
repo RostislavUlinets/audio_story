@@ -1,14 +1,13 @@
 import 'dart:convert';
-
-import 'package:audio_story/Colors/colors.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
-import 'package:audio_story/widgets/select_list.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +77,7 @@ class _SelectModeListState extends State<SelectModeList> {
                 width: 250,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: CColors.purpule,
+                    color: AppColors.purpule,
                     strokeWidth: 1.5,
                   ),
                 ),
@@ -87,7 +86,7 @@ class _SelectModeListState extends State<SelectModeList> {
               return Stack(
                 children: [
                   const MyCustomPaint(
-                    color: CColors.green,
+                    color: AppColors.green,
                     size: 0.85,
                   ),
                   Padding(
@@ -168,6 +167,13 @@ class _SelectModeListState extends State<SelectModeList> {
                                     child: const Text("Удалить все"),
                                     onTap: () {
                                       dataBase.deleteSounds(index, playList);
+                                      Future.delayed(
+                                        const Duration(seconds: 0),
+                                        () => Navigator.pushNamed(
+                                          context,
+                                          MainScreen.routeName,
+                                        ),
+                                      );
                                     },
                                     value: 4,
                                   ),
@@ -272,7 +278,7 @@ class _SelectModeListState extends State<SelectModeList> {
                                     width: 250,
                                     child: Center(
                                       child: CircularProgressIndicator(
-                                        color: CColors.purpule,
+                                        color: AppColors.purpule,
                                         strokeWidth: 1.5,
                                       ),
                                     ),
