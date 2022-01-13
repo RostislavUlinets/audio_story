@@ -9,16 +9,13 @@ class AnonMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      extendBody: true,
-      body: Center(
-        child: Text(
-          'Данная функция станет\nдоступной после авторизации',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 18,
-          ),
+    return const Center(
+      child: Text(
+        'Данная функция станет\nдоступной после авторизации',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: AppColors.black,
+          fontSize: 18,
         ),
       ),
     );

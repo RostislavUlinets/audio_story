@@ -33,148 +33,145 @@ class _ProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: Stack(
-        children: [
-          const MyCustomPaint(
-            color: AppColors.purpule,
-            size: 0.85,
+    return Stack(
+      children: [
+        const MyCustomPaint(
+          color: AppColors.purpule,
+          size: 0.85,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 40,
+            right: 10,
+            left: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 40,
-              right: 10,
-              left: 10,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Image(
-                              image: AppIcons.arrowLeftInCircle,
-                            ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Image(
+                            image: AppIcons.arrowLeftInCircle,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 55,
-                      ),
-                      const Text(
-                        "Подписка",
-                        style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    "Твоя частичка",
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      child: IconButton(
-                        onPressed: () {
-                          selectFile();
-                        },
-                        icon: Image(
-                          image: AppIcons.camera,
-                        ),
-                      ),
-                      height: 200,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: widget.image.image,
-                          colorFilter: ColorFilter.mode(
-                              Colors.black.withOpacity(0.6), BlendMode.dstATop),
-                          fit: BoxFit.cover,
-                        ),
-                        color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 55,
+                    ),
+                    const Text(
+                      "Подписка",
+                      style: TextStyle(
+                          fontSize: 36,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const Text(
+                  "Твоя частичка",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    child: IconButton(
+                      onPressed: () {
+                        selectFile();
+                      },
+                      icon: Image(
+                        image: AppIcons.camera,
                       ),
                     ),
+                    height: 200,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: widget.image.image,
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.6), BlendMode.dstATop),
+                        fit: BoxFit.cover,
+                      ),
+                      color: Colors.black,
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 100.0, vertical: 30),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 100.0, vertical: 30),
+                  child: TextField(
+                    readOnly: false,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 24),
+                    controller: _userName,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30, bottom: 10, right: 50, left: 50),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(60.0),
+                    elevation: 5,
+                    shadowColor: Colors.grey,
                     child: TextField(
                       readOnly: false,
+                      inputFormatters: [maskFormatter],
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 24),
-                      controller: _userName,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 30, bottom: 10, right: 50, left: 50),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(60.0),
-                      elevation: 5,
-                      shadowColor: Colors.grey,
-                      child: TextField(
-                        readOnly: false,
-                        inputFormatters: [maskFormatter],
-                        textAlign: TextAlign.center,
-                        controller: _phoneController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(60.0),
-                          ),
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(60.0),
                         ),
-                        onEditingComplete: () => _auth.loginUser(
-                            _phoneController.text.trim(), context),
                       ),
+                      onEditingComplete: () => _auth.loginUser(
+                          _phoneController.text.trim(), context),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      if (file != null) {
-                        uploadFile();
-                      }
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (file != null) {
+                      uploadFile();
+                    }
 
-                      if (_userName.text.trim().isNotEmpty) {
-                        dataBase.updateUserName(_userName.text.trim());
-                      }
+                    if (_userName.text.trim().isNotEmpty) {
+                      dataBase.updateUserName(_userName.text.trim());
+                    }
 
-                      if (_phoneController.text.trim().isNotEmpty) {
-                        dataBase.updateUserPhoneNumber(
-                          _phoneController.text.trim(),
-                        );
-                      }
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      "Сохранить",
-                      style: TextStyle(color: AppColors.black),
-                    ),
+                    if (_phoneController.text.trim().isNotEmpty) {
+                      dataBase.updateUserPhoneNumber(
+                        _phoneController.text.trim(),
+                      );
+                    }
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Сохранить",
+                    style: TextStyle(color: AppColors.black),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

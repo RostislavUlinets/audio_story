@@ -19,235 +19,232 @@ class Subscribe extends StatelessWidget {
   Widget build(BuildContext context) {
     return AuthService.isAnonymous()
         ? const AnonMessage()
-        : Scaffold(
-            extendBody: true,
-            body: Stack(
-              children: [
-                const MyCustomPaint(
-                  color: AppColors.purpule,
-                  size: 0.85,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Row(
+        : Stack(
+            children: [
+              const MyCustomPaint(
+                color: AppColors.purpule,
+                size: 0.85,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: [
+                          Builder(
+                            builder: (ctx) => IconButton(
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                                size: 36,
+                              ),
+                              onPressed: () {
+                                Scaffold.of(ctx).openDrawer();
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 55,
+                          ),
+                          const Text(
+                            "Подписка",
+                            style: TextStyle(
+                                fontSize: 36,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Text(
+                      "Расширь возможности",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
                           children: [
-                            Builder(
-                              builder: (ctx) => IconButton(
-                                icon: const Icon(
-                                  Icons.menu,
-                                  color: Colors.white,
-                                  size: 36,
-                                ),
-                                onPressed: () {
-                                  Scaffold.of(ctx).openDrawer();
-                                },
+                            const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text(
+                                "Выбери подписку",
+                                style: TextStyle(fontSize: 24),
                               ),
                             ),
-                            const SizedBox(
-                              width: 55,
-                            ),
-                            const Text(
-                              "Подписка",
-                              style: TextStyle(
-                                  fontSize: 36,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Text(
-                        "Расширь возможности",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      const SizedBox(height: 30),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Text(
-                                  "Выбери подписку",
-                                  style: TextStyle(fontSize: 24),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: const [
-                                          Text(
-                                            "300p",
-                                            style: TextStyle(fontSize: 26),
-                                          ),
-                                          Text(
-                                            "в месяц",
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          OutButton(),
-                                        ],
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.grey,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        Text(
+                                          "300p",
+                                          style: TextStyle(fontSize: 26),
                                         ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(20)),
+                                        Text(
+                                          "в месяц",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        OutButton(),
+                                      ],
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
                                       ),
-                                      height: 215,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20)),
+                                    ),
+                                    height: 215,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        Text(
+                                          "1800р",
+                                          style: TextStyle(fontSize: 26),
+                                        ),
+                                        Text(
+                                          "в год",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        OutButton(),
+                                      ],
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20)),
+                                    ),
+                                    height: 215,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 25.0),
+                                    child: Row(
+                                      children: const [
+                                        Text(
+                                          "Что дает подписка:",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 10,
+                                  Row(
+                                    children: [
+                                      Image(
+                                        image: AppIcons.infinity,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Text(
+                                        "Неограниченая память",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: const [
-                                          Text(
-                                            "1800р",
-                                            style: TextStyle(fontSize: 26),
-                                          ),
-                                          Text(
-                                            "в год",
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          OutButton(),
-                                        ],
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image(
+                                        image: AppIcons.cloudUpload,
                                       ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(20)),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                      height: 215,
+                                      const Text(
+                                        "Все файлы хранятся в облаке",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image(
+                                        image: AppIcons.paperDownload,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      const Text(
+                                        "Возможность скачивать без ограничений",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text("Подписаться на месяц"),
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize:
+                                          const Size(double.infinity, 50),
+                                      primary: Colors.deepOrange[200],
+                                      onPrimary: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(32.0),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 25.0),
-                                      child: Row(
-                                        children: const [
-                                          Text(
-                                            "Что дает подписка:",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image(
-                                          image: AppIcons.infinity,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const Text(
-                                          "Неограниченая память",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image(
-                                          image: AppIcons.cloudUpload,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const Text(
-                                          "Все файлы хранятся в облаке",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Image(
-                                          image: AppIcons.paperDownload,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        const Text(
-                                          "Возможность скачивать без ограничений",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    ElevatedButton(
-                                      child: const Text("Подписаться на месяц"),
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        minimumSize:
-                                            const Size(double.infinity, 50),
-                                        primary: Colors.deepOrange[200],
-                                        onPrimary: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(32.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF6F6F6),
-                          border: Border.all(
-                            color: Colors.grey,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                        ),
-                        height: 520,
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6F6F6),
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                      ),
+                      height: 520,
+                    ),
+                  ],
+                ),
+              )
+            ],
           );
   }
 }

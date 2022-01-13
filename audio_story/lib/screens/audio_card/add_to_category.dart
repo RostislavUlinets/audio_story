@@ -7,7 +7,6 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
 
 class CustomCategory extends StatefulWidget {
-
   static const routeName = '/addToCategory';
   final List<AudioModel> id;
 
@@ -26,55 +25,51 @@ class _CategoryState extends State<CustomCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      drawer: const SideMenu(),
-      body: Stack(
-        children: [
-          const MyCustomPaint(
-            color: AppColors.green,
-            size: 0.85,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      height: 36,
-                      width: 36,
-                    ),
-                    const Text(
-                      "Подборки",
-                      style: TextStyle(
-                          fontSize: 36,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.more_horiz,
+    return Stack(
+      children: [
+        const MyCustomPaint(
+          color: AppColors.green,
+          size: 0.85,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 50.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(
+                    height: 36,
+                    width: 36,
+                  ),
+                  const Text(
+                    "Подборки",
+                    style: TextStyle(
+                        fontSize: 36,
                         color: Colors.white,
-                        size: 36,
-                      ),
-                      onPressed: () {},
+                        fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.more_horiz,
+                      color: Colors.white,
+                      size: 36,
                     ),
-                  ],
-                ),
-                const Text(
-                  "Все в одном месте",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              const Text(
+                "Все в одном месте",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
 
-                CustomListCategory(id: widget.id),
-                //_buildListView()
-              ],
-            ),
-          )
-        ],
-      ),
+              CustomListCategory(id: widget.id),
+              //_buildListView()
+            ],
+          ),
+        )
+      ],
     );
   }
 }

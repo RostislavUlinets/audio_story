@@ -25,107 +25,105 @@ class Audio extends StatelessWidget {
         ? const AnonMessage()
         : BlocProvider(
             create: (context) => ButtonBloc(),
-            child: Scaffold(
-              body: Stack(
-                children: [
-                  const MyCustomPaint(
-                    color: AppColors.blue,
-                    size: 0.7,
+            child: Stack(
+              children: [
+                const MyCustomPaint(
+                  color: AppColors.blue,
+                  size: 0.7,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 60.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0,
-                      vertical: 60.0,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 36,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+                          const Text(
+                            "Аудиозаписи",
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.more_horiz,
+                              color: Colors.white,
+                              size: 36,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        "Все в одном месте",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 40,
+                        ),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.menu,
-                                color: Colors.white,
-                                size: 36,
-                              ),
-                              onPressed: () {
-                                Scaffold.of(context).openDrawer();
-                              },
-                            ),
-                            const Text(
-                              "Аудиозаписи",
+                          children: const [
+                            Text(
+                              "20 аудио\n10:30 часов",
                               style: TextStyle(
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                                 color: Colors.white,
                               ),
                             ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.more_horiz,
-                                color: Colors.white,
-                                size: 36,
-                              ),
-                              onPressed: () {},
-                            ),
+                            AudioButton(),
                           ],
                         ),
-                        const Text(
-                          "Все в одном месте",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 40,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text(
-                                "20 аудио\n10:30 часов",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
+                      ),
+                      FutureBuilder(
+                        future: dataBase.audioListDB(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const SizedBox(
+                                height: 250,
+                                width: 250,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.purpule,
+                                    strokeWidth: 1.5,
+                                  ),
                                 ),
-                              ),
-                              AudioButton(),
-                            ],
-                          ),
-                        ),
-                        FutureBuilder(
-                          future: dataBase.audioListDB(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return const SizedBox(
-                                  height: 250,
-                                  width: 250,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.purpule,
-                                      strokeWidth: 1.5,
-                                    ),
-                                  ),
-                                );
-                              default:
-                                return Expanded(
-                                  child: AudioScreenList(
-                                    audio: snapshot.data,
-                                  ),
-                                );
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+                              );
+                            default:
+                              return Expanded(
+                                child: AudioScreenList(
+                                  audio: snapshot.data,
+                                ),
+                              );
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
   }

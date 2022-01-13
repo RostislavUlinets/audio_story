@@ -23,13 +23,9 @@ class _RecordsState extends State<Records> {
   Widget build(BuildContext context) {
     return BlocProvider<MyBloc>(
       create: (_) => MyBloc(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBody: true,
-        body: BlocBuilder<MyBloc, MyState>(
-          builder: (_, state) =>
-              state is StateA ? const Recorder() : const Player(),
-        ),
+      child: BlocBuilder<MyBloc, MyState>(
+        builder: (_, state) =>
+            state is StateA ? const Recorder() : const Player(),
       ),
     );
   }
