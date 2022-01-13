@@ -67,6 +67,7 @@ class _CardInfoState extends State<CardInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       extendBody: true,
       body: FutureBuilder(
         future: dataBase.getSaveList(index).then(

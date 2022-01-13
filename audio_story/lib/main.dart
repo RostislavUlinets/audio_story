@@ -1,5 +1,7 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'routes/route.dart';
 import 'screens/login_screen/welcome_screen.dart';
 
@@ -10,7 +12,14 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(
-    const MyApp(),
+    MultiProvider(
+      providers: [
+        ListenableProvider<NavigationProvider>(
+          create: (_) => NavigationProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 

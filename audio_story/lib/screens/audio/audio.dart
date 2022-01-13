@@ -42,17 +42,15 @@ class Audio extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Builder(
-                              builder: (ctx) => IconButton(
-                                icon: const Icon(
-                                  Icons.menu,
-                                  color: Colors.white,
-                                  size: 36,
-                                ),
-                                onPressed: () {
-                                  Scaffold.of(ctx).openDrawer();
-                                },
+                            IconButton(
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                                size: 36,
                               ),
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
                             ),
                             const Text(
                               "Аудиозаписи",

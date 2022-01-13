@@ -169,9 +169,10 @@ class LoggedContainers extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const CardInfo(
-                                          index: 2,
-                                        )),
+                                  builder: (context) => const CardInfo(
+                                    index: 2,
+                                  ),
+                                ),
                               );
                             },
                             child: Container(

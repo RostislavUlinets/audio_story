@@ -1,5 +1,7 @@
 import 'package:audio_story/models/navigation_item.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/routes/route.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
@@ -8,6 +10,7 @@ import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/screens/search/search.dart';
 import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SideMenu extends StatelessWidget with RouteAware {
   const SideMenu({Key? key}) : super(key: key);
@@ -107,7 +110,9 @@ class SideMenu extends StatelessWidget with RouteAware {
     required String text,
     required AssetImage image,
   }) {
-    final isSelected = checker(item, ModalRoute.of(context)!.settings.name);
+    NavigationProvider navigation = context.watch<NavigationProvider>();
+
+    final isSelected = checker(item, navigation);
 
     final color = isSelected ? Colors.red : const Color(0xFF3A3A55);
 
@@ -125,28 +130,50 @@ class SideMenu extends StatelessWidget with RouteAware {
         onTap: () {
           switch (item) {
             case NavigationItem.home:
-              Navigator.pushNamed(context, MainScreen.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(MainScreen.routeName);
+              navigation.changeScreen(0);
               break;
             case NavigationItem.profile:
-              Navigator.pushNamed(context, Profile.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(Profile.routeName);
+              navigation.changeScreen(4);
+
               break;
             case NavigationItem.subscribe:
-              Navigator.pushNamed(context, Subscribe.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(Subscribe.routeName);
+              navigation.changeScreen(7);
+
               break;
             case NavigationItem.category:
-              Navigator.pushNamed(context, Category.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(Category.routeName);
+              navigation.changeScreen(1);
+
               break;
             case NavigationItem.audio:
-              Navigator.pushNamed(context, Audio.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(Audio.routeName);
+              navigation.changeScreen(3);
+
               break;
             case NavigationItem.search:
-              Navigator.pushNamed(context, SearchScreen.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(SearchScreen.routeName);
+              navigation.changeScreen(5);
+
               break;
             case NavigationItem.delete:
-              Navigator.pushNamed(context, DeleteScreen.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(DeleteScreen.routeName);
+              navigation.changeScreen(6);
+
               break;
             case NavigationItem.help:
-              Navigator.pushNamed(context, Subscribe.routeName);
+              RouteGenerator.navigationKey.currentState!
+                  .pushNamed(Subscribe.routeName);
+
               break;
           }
         },
@@ -154,31 +181,31 @@ class SideMenu extends StatelessWidget with RouteAware {
     );
   }
 
-  bool checker(NavigationItem item, String? navigation) {
+  bool checker(NavigationItem item, NavigationProvider navigation) {
     switch (item) {
       case NavigationItem.home:
-        if (navigation == MainScreen.routeName) return true;
+        if (navigation.screenIndex == 0) return true;
         break;
       case NavigationItem.profile:
-        if (navigation == Profile.routeName) return true;
+        if (navigation.screenIndex == 4) return true;
         break;
       case NavigationItem.subscribe:
-        if (navigation == Subscribe.routeName) return true;
+        if (navigation.screenIndex == 7) return true;
         break;
       case NavigationItem.category:
-        if (navigation == Category.routeName) return true;
+        if (navigation.screenIndex == 1) return true;
         break;
       case NavigationItem.audio:
-        if (navigation == Audio.routeName) return true;
+        if (navigation.screenIndex == 3) return true;
         break;
       case NavigationItem.search:
-        if (navigation == SearchScreen.routeName) return true;
+        if (navigation.screenIndex == 5) return true;
         break;
       case NavigationItem.help:
-        if (navigation == Profile.routeName) return true;
+        if (navigation.screenIndex == 4) return true;
         break;
       case NavigationItem.delete:
-        if (navigation == DeleteScreen.routeName) return true;
+        if (navigation.screenIndex == 6) return true;
         break;
     }
     return false;
