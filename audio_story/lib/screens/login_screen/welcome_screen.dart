@@ -1,9 +1,11 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const routeName = '/welcome';
@@ -61,9 +63,11 @@ class WelcomeScreen extends StatelessWidget {
                           onPressed: () {
                             if (FirebaseAuth.instance.currentUser?.uid ==
                                 null) {
-                              Navigator.pushNamed(context, LoginScreen.routeName);
+                              Navigator.pushNamed(
+                                  context, LoginScreen.routeName);
                             } else {
-                              Navigator.pushNamed(context, FinalScreen.routeName);
+                              Navigator.pushNamed(
+                                  context, FinalScreen.routeName);
                             }
                           },
                           style: ElevatedButton.styleFrom(

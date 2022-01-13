@@ -63,17 +63,15 @@ class _PlayerState extends State<Player> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Builder(
-                    builder: (ctx) => IconButton(
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 36,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(ctx).openDrawer();
-                      },
+                  IconButton(
+                    icon: const Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 36,
                     ),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
                   ),
                 ],
               ),

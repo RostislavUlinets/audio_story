@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
+import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,10 @@ class _AnonimState extends State<Anonim> {
       onTap: () async {
         CustomUser? res = await _auth.signInAnon();
         if (res != null) {
-          Navigator.pushNamed(context, MainScreen.routeName);
+          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+            Initilizer.routeName,
+            (route) => false,
+          );
         } else {
           log("Error with anonim auth");
         }

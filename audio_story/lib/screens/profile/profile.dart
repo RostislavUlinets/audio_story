@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
@@ -219,7 +220,8 @@ class _ProfileState extends State<Profile> {
                     TextButton(
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
-                        Navigator.pushNamed(context, WelcomeScreen.routeName);
+                        Navigator.of(context, rootNavigator: true)
+                            .pushNamed(WelcomeScreen.routeName);
                       },
                       child: const Text("Выйти из приложения",
                           style: TextStyle(

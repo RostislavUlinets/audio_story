@@ -130,50 +130,40 @@ class SideMenu extends StatelessWidget with RouteAware {
         onTap: () {
           switch (item) {
             case NavigationItem.home:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(MainScreen.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(0);
               break;
             case NavigationItem.profile:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(Profile.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(4);
 
               break;
             case NavigationItem.subscribe:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(Subscribe.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(7);
 
               break;
             case NavigationItem.category:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(Category.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(1);
 
               break;
             case NavigationItem.audio:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(Audio.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(3);
 
               break;
             case NavigationItem.search:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(SearchScreen.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(5);
-
               break;
             case NavigationItem.delete:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(DeleteScreen.routeName);
+              Navigator.pop(context);
               navigation.changeScreen(6);
 
               break;
             case NavigationItem.help:
-              RouteGenerator.navigationKey.currentState!
-                  .pushNamed(Subscribe.routeName);
-
+              Navigator.pop(context);
               break;
           }
         },
@@ -202,7 +192,7 @@ class SideMenu extends StatelessWidget with RouteAware {
         if (navigation.screenIndex == 5) return true;
         break;
       case NavigationItem.help:
-        if (navigation.screenIndex == 4) return true;
+        if (navigation.screenIndex == 10) return true;
         break;
       case NavigationItem.delete:
         if (navigation.screenIndex == 6) return true;

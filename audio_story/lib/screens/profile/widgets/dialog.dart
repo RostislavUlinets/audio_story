@@ -21,7 +21,7 @@ void showAlertDialog(BuildContext context) {
         ),
       ),
     ),
-    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+    onPressed: () => Navigator.pop(context),
   );
   Widget continueButton = TextButton(
     child: const Padding(
@@ -43,8 +43,9 @@ void showAlertDialog(BuildContext context) {
       // FirebaseAuth.instance.currentUser!.delete();
       dataBase.deleteUser();
       FirebaseAuth.instance.signOut();
-      Navigator.of(context, rootNavigator: true).pop();
-      Navigator.pushNamed(context, WelcomeScreen.routeName);
+      Navigator.pop(context);
+      Navigator.of(context, rootNavigator: true)
+          .pushNamed(WelcomeScreen.routeName);
     },
   );
 

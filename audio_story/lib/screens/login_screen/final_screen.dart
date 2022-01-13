@@ -15,7 +15,10 @@ class FinalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: duration), () {
-      Navigator.pushReplacementNamed(context, Initilizer.routeName);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        Initilizer.routeName,
+        (route) => false,
+      );
     });
 
     return Scaffold(

@@ -20,7 +20,7 @@ import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
-  static final navigationKey = GlobalKey<NavigatorState>();
+  
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
