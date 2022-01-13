@@ -3,6 +3,7 @@ import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
+import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
-  
   static final navigationKey = GlobalKey<NavigatorState>();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -92,6 +92,10 @@ class RouteGenerator {
       case DeleteScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const DeleteScreen(),
+        );
+      case SelectMode.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const SelectMode(),
         );
       default:
         return _errorRoute();

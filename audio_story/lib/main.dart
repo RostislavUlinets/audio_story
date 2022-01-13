@@ -1,3 +1,4 @@
+import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,9 @@ void main() async {
       providers: [
         ListenableProvider<NavigationProvider>(
           create: (_) => NavigationProvider(),
+        ),
+        ListenableProvider<CurrentAudio>(
+          create: (_) => CurrentAudio(),
         ),
       ],
       child: const MyApp(),

@@ -1,6 +1,7 @@
 import 'package:audio_story/blocs/delete/delete_bloc.dart';
 import 'package:audio_story/blocs/delete/delete_event.dart';
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
@@ -40,6 +41,7 @@ class _SelectModeState extends State<SelectMode> {
 
   @override
   Widget build(BuildContext context) {
+    final audioProvider = context.watch<CurrentAudio>();
     return Scaffold(
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -71,13 +73,13 @@ class _SelectModeState extends State<SelectMode> {
                   dataBase.recoverAudio(playList).then(
                         (value) => setState(() {}),
                       );
-                  Navigator.pushNamed(context, MainScreen.routeName);
+                  Navigator.pop(context);
                   break;
                 case 1:
                   dataBase.fullDeleteAudio(playList).then(
                         (value) => setState(() {}),
                       );
-                  Navigator.pushNamed(context, MainScreen.routeName);
+                  Navigator.pop(context);
                   break;
               }
             },
@@ -127,7 +129,7 @@ class _SelectModeState extends State<SelectMode> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () => context.read<MyBloc>().add(EventA()),
+                        onPressed: () => Navigator.pop(context),
                         child: const Text(
                           'Отменить',
                           style: TextStyle(
@@ -158,9 +160,15 @@ class _SelectModeState extends State<SelectMode> {
                                 style: TextStyle(color: Color(0x803A3A55)),
                               ),
                               leading: IconButton(
-                                icon: Image(
-                                  image: AppIcons.play,
-                                ),
+                                icon:
+                                    audioProvider.audioName == audio[index].name
+                                        ? Image(
+                                            image: AppIcons.pause,
+                                            color: AppColors.purpule,
+                                          )
+                                        : Image(
+                                            image: AppIcons.play,
+                                          ),
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
                                     (context) => PlayerOnProgress(
@@ -168,6 +176,7 @@ class _SelectModeState extends State<SelectMode> {
                                       index: index,
                                       repeat: false,
                                       cycle: false,
+                                      audioProvider: audioProvider,
                                     ),
                                   );
                                 },

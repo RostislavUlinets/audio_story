@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
+import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
@@ -13,6 +14,7 @@ import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:share/share.dart';
 
 final user = FirebaseAuth.instance.currentUser;
@@ -62,6 +64,7 @@ class _SelectModeListState extends State<SelectModeList> {
 
   @override
   Widget build(BuildContext context) {
+    final audioProvider = context.watch<CurrentAudio>();
     return Scaffold(
       extendBody: true,
       body: FutureBuilder(
@@ -314,9 +317,17 @@ class _SelectModeListState extends State<SelectModeList> {
                                                 child: IconButton(
                                                   padding: EdgeInsets.zero,
                                                   iconSize: 64,
-                                                  icon: Image(
-                                                    image: AppIcons.play,
-                                                  ),
+                                                  icon: audioProvider
+                                                              .audioName ==
+                                                          audio[index].name
+                                                      ? Image(
+                                                          image: AppIcons.pause,
+                                                          color:
+                                                              AppColors.purpule,
+                                                        )
+                                                      : Image(
+                                                          image: AppIcons.play,
+                                                        ),
                                                   onPressed: () {
                                                     Scaffold.of(context)
                                                         .showBottomSheet(
@@ -326,6 +337,8 @@ class _SelectModeListState extends State<SelectModeList> {
                                                         index: index,
                                                         repeat: false,
                                                         soundsList: audio,
+                                                        audioProvider:
+                                                            audioProvider,
                                                       ),
                                                     );
                                                   },

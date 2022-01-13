@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/repositories/database.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/service/local_storage.dart';
@@ -38,6 +40,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
 
   @override
   Widget build(BuildContext context) {
+    final audioProvider = context.watch<CurrentAudio>();
     return BlocBuilder<ButtonBloc, ButtonState>(
       buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
       builder: (context, state) {
@@ -62,9 +65,14 @@ class _AudioScreenListState extends State<AudioScreenList> {
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       iconSize: 64,
-                      icon: Image(
-                        image: AppIcons.play,
-                      ),
+                      icon: audioProvider.audioName == audio[index].name
+                          ? Image(
+                              image: AppIcons.pause,
+                              color: AppColors.purpule,
+                            )
+                          : Image(
+                              image: AppIcons.play,
+                            ),
                       onPressed: () {
                         Scaffold.of(context).showBottomSheet(
                           (context) => PlayerOnProgress(
@@ -72,6 +80,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
                             index: index,
                             repeat: (state is ButtonCycleState),
                             cycle: (state is ButtonPlayAllState),
+                            audioProvider: audioProvider,
                           ),
                         );
                       },

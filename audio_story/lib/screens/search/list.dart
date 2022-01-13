@@ -1,7 +1,10 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/provider/current_audio_provider.dart';
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class SearchCustomList extends StatefulWidget {
   List<AudioModel> audio;
@@ -23,6 +26,7 @@ class _SearchCustomListState extends State<SearchCustomList> {
 
   @override
   Widget build(BuildContext context) {
+    final audioProvider = context.watch<CurrentAudio>();
     return ListView.builder(
       itemCount: audio.length,
       itemBuilder: (_, index) {
@@ -39,9 +43,14 @@ class _SearchCustomListState extends State<SearchCustomList> {
                 style: TextStyle(color: Color(0x803A3A55)),
               ),
               leading: IconButton(
-                icon: Image(
-                  image: AppIcons.play,
-                ),
+                icon: audioProvider.audioName == audio[index].name
+                    ? Image(
+                        image: AppIcons.pause,
+                        color: AppColors.purpule,
+                      )
+                    : Image(
+                        image: AppIcons.play,
+                      ),
                 onPressed: () {
                   Scaffold.of(context).showBottomSheet(
                     (context) => PlayerOnProgress(
@@ -49,6 +58,7 @@ class _SearchCustomListState extends State<SearchCustomList> {
                       index: index,
                       repeat: false,
                       cycle: false,
+                      audioProvider: audioProvider,
                     ),
                   );
                 },
