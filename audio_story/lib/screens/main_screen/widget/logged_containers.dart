@@ -1,8 +1,10 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -31,13 +33,9 @@ class LoggedContainers extends StatelessWidget {
                     Flexible(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const CardInfo(
-                                      index: 0,
-                                    )),
-                          );
+                          final navigationProvider =
+                              context.read<NavigationProvider>();
+                          navigationProvider.changeScreen(1);
                         },
                         child: Container(
                           alignment: Alignment.bottomCenter,
@@ -56,9 +54,9 @@ class LoggedContainers extends StatelessWidget {
                                   ),
                                 ),
                                 const Spacer(),
-                                const Text(
-                                  "n аудио\n1:30 часа",
-                                  style: TextStyle(
+                                 Text(
+                                  "${playListImage[0]['length']} аудио \n1:30 часа",
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     color: Colors.white,
                                   ),
@@ -101,13 +99,9 @@ class LoggedContainers extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CardInfo(
-                                          index: 1,
-                                        )),
-                              );
+                              final navigationProvider =
+                                  context.read<NavigationProvider>();
+                              navigationProvider.changeScreen(1);
                             },
                             child: Container(
                               alignment: Alignment.bottomCenter,
@@ -126,9 +120,9 @@ class LoggedContainers extends StatelessWidget {
                                       ),
                                     ),
                                     const Spacer(),
-                                    const Text(
-                                      "n аудио\n1:30 часа",
-                                      style: TextStyle(
+                                    Text(
+                                      "${playListImage[1]['length']} аудио\n1:30 часа",
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         color: Colors.white,
                                       ),
@@ -166,14 +160,9 @@ class LoggedContainers extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const CardInfo(
-                                    index: 2,
-                                  ),
-                                ),
-                              );
+                              final navigationProvider =
+                                  context.read<NavigationProvider>();
+                              navigationProvider.changeScreen(1);
                             },
                             child: Container(
                               alignment: Alignment.bottomCenter,
@@ -192,9 +181,9 @@ class LoggedContainers extends StatelessWidget {
                                       ),
                                     ),
                                     const Spacer(),
-                                    const Text(
-                                      "n аудио\n1:30 часа",
-                                      style: TextStyle(
+                                    Text(
+                                      "${playListImage[2]['length']} аудио \n1:30 часа",
+                                      style: const TextStyle(
                                         fontSize: 13,
                                         color: Colors.white,
                                       ),

@@ -5,6 +5,7 @@ import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
 import 'routes/route.dart';
@@ -23,40 +24,57 @@ class Initilizer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ListenableProvider<NavigationProvider>(
+          create: (_) => NavigationProvider(),
+        ),
+      ],
+      child: Builder(
+        builder: (context) {
+          return _launchNavigator(context);
+        },
+      ),
+    );
+  }
+
+  Widget _launchNavigator(BuildContext context) {
     final navigationProvider = context.watch<NavigationProvider>();
 
     int _buttonIndex = navigationProvider.screenIndex;
 
     switch (_buttonIndex) {
       case 0:
-        _navigationKey.currentState?.pushNamed(MainScreen.routeName);
+        _navigationKey.currentState?.pushReplacementNamed(MainScreen.routeName);
 
         break;
       case 1:
-        _navigationKey.currentState?.pushNamed(Category.routeName);
+        _navigationKey.currentState?.pushReplacementNamed(Category.routeName);
 
         break;
       case 2:
-        _navigationKey.currentState?.pushNamed(Records.routeName);
+        _navigationKey.currentState?.pushReplacementNamed(Records.routeName);
 
         break;
       case 3:
-        _navigationKey.currentState?.pushNamed(Audio.routeName);
+        _navigationKey.currentState?.pushReplacementNamed(Audio.routeName);
 
         break;
       case 4:
-        _navigationKey.currentState?.pushNamed(Profile.routeName);
+        _navigationKey.currentState?.pushReplacementNamed(Profile.routeName);
 
         break;
       case 5:
-        _navigationKey.currentState?.pushNamed(SearchScreen.routeName);
+        _navigationKey.currentState
+            ?.pushReplacementNamed(SearchScreen.routeName);
 
         break;
       case 6:
-        _navigationKey.currentState?.pushNamed(DeleteScreen.routeName);
-
+        _navigationKey.currentState
+            ?.pushReplacementNamed(DeleteScreen.routeName);
         break;
       default:
+        _navigationKey.currentState?.pushReplacementNamed(MainScreen.routeName);
         break;
     }
 

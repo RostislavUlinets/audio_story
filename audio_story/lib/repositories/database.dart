@@ -327,7 +327,8 @@ class DatabaseService {
           String bytes = playList[i]['image'];
           res.add({
             'name': playList[i]['name'],
-            'image': imageFromBase64String(bytes)
+            'image': imageFromBase64String(bytes),
+            'length': playList[i]['sounds'].length
           });
         }
         return res;

@@ -63,13 +63,6 @@ class _PlayListState extends State<PlayList> {
               padding: const EdgeInsets.all(5.0),
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => CardInfo(
-                  //             index: index,
-                  //           )),
-                  // );
                   Navigator.pushNamed(
                     context,
                     '/cardInfo',
@@ -101,10 +94,10 @@ class _PlayListState extends State<PlayList> {
                             width: 90,
                           ),
                           const Spacer(),
-                          const SizedBox(
+                          SizedBox(
                             child: Text(
-                              "n аудио\n1:30 часа",
-                              style: TextStyle(
+                              "${sounds[index]['sounds'].length} аудио\n1:30 часа",
+                              style: const TextStyle(
                                 fontSize: 13,
                                 color: Colors.white,
                               ),

@@ -221,7 +221,7 @@ class _ProfileState extends State<Profile> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context, rootNavigator: true)
-                            .pushNamed(WelcomeScreen.routeName);
+                            .pushReplacementNamed(WelcomeScreen.routeName);
                       },
                       child: const Text("Выйти из приложения",
                           style: TextStyle(

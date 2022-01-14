@@ -15,9 +15,6 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ListenableProvider<NavigationProvider>(
-          create: (_) => NavigationProvider(),
-        ),
         ListenableProvider<CurrentAudio>(
           create: (_) => CurrentAudio(),
         ),
