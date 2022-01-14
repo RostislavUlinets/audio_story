@@ -21,7 +21,17 @@ void main() async {
           create: (context) => ButtonBloc(),
         ),
       ],
-      child: const MyApp(),
+      child: MultiProvider(
+        providers: [
+          ListenableProvider<NavigationProvider>(
+            create: (_) => NavigationProvider(),
+          ),
+          ListenableProvider<CurrentAudio>(
+            create: (_) => CurrentAudio(),
+          ),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }

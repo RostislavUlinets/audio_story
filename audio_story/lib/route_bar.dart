@@ -25,24 +25,6 @@ class Initilizer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ListenableProvider<NavigationProvider>(
-          create: (_) => NavigationProvider(),
-        ),
-        ListenableProvider<CurrentAudio>(
-          create: (_) => CurrentAudio(),
-        ),
-      ],
-      child: Builder(
-        builder: (context) {
-          return _launchNavigator(context);
-        },
-      ),
-    );
-  }
-
-  Widget _launchNavigator(BuildContext context) {
     final navigationProvider = context.watch<NavigationProvider>();
 
     int _buttonIndex = navigationProvider.screenIndex;
@@ -83,17 +65,18 @@ class Initilizer extends StatelessWidget {
     }
 
     return Scaffold(
-        drawer: const ClipRRect(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
-          child: SideMenu(),
-        ),
-        extendBody: true,
-        bottomNavigationBar: const CustomNavigationBar(),
-        body: Navigator(
-          key: _navigationKey,
-          initialRoute: MainScreen.routeName,
-          onGenerateRoute: RouteGenerator.generateRoute,
-        ));
+      drawer: const ClipRRect(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
+        child: SideMenu(),
+      ),
+      extendBody: true,
+      bottomNavigationBar: const CustomNavigationBar(),
+      body: Navigator(
+        key: _navigationKey,
+        initialRoute: MainScreen.routeName,
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
+    );
   }
 }

@@ -6,6 +6,7 @@ import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
+import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
@@ -71,12 +72,26 @@ class _SearchScreenState extends State<SearchScreen> {
                               Scaffold.of(context).openDrawer();
                             },
                           ),
-                          const Text(
-                            "Поиск",
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                          Container(
+                            child: Column(
+                              children: const [
+                                Text(
+                                  "Поиск",
+                                  style: TextStyle(
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Найди потеряшку",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           IconButton(
@@ -90,10 +105,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 40.0),
+                        padding: const EdgeInsets.symmetric(vertical: 30.0),
                         child: buildSearch(),
                       ),
                       Expanded(
+                        // child: AudioScreenList(audio: allAudio),
                         child: ListView.builder(
                           itemCount: audio.length,
                           itemBuilder: (_, index) {
@@ -112,30 +128,30 @@ class _SearchScreenState extends State<SearchScreen> {
                                     "30 минут",
                                     style: TextStyle(color: Color(0x803A3A55)),
                                   ),
-                                  leading: Builder(builder: (context) {
-                                    return IconButton(
-                                      icon: audioProvider.audioName ==
-                                              audio[index].name
-                                          ? Image(
-                                              image: AppIcons.pause,
-                                              color: AppColors.purpule,
-                                            )
-                                          : Image(
-                                              image: AppIcons.play,
-                                            ),
-                                      onPressed: () {
-                                        Scaffold.of(context).showBottomSheet(
-                                          (context) => PlayerOnProgress(
-                                            soundsList: audio,
-                                            index: index,
-                                            repeat: false,
-                                            cycle: false,
-                                            audioProvider: audioProvider,
+                                  leading: IconButton(
+                                    padding: EdgeInsets.zero,
+                                    iconSize: 64,
+                                    icon: audioProvider.audioName ==
+                                            audio[index].name
+                                        ? Image(
+                                            image: AppIcons.pause,
+                                            color: AppColors.purpule,
+                                          )
+                                        : Image(
+                                            image: AppIcons.play,
                                           ),
-                                        );
-                                      },
-                                    );
-                                  }),
+                                    onPressed: () {
+                                      Scaffold.of(context).showBottomSheet(
+                                        (context) => PlayerOnProgress(
+                                          soundsList: audio,
+                                          index: index,
+                                          repeat: false,
+                                          cycle: false,
+                                          audioProvider: audioProvider,
+                                        ),
+                                      );
+                                    },
+                                  ),
                                   trailing: const Icon(Icons.more_horiz),
                                 ),
                                 decoration: BoxDecoration(
@@ -159,7 +175,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget buildSearch() => SearchWidget(
         text: query,
-        hintText: 'Title or Author Name',
+        hintText: 'Поиск',
         onChanged: searchBook,
       );
 
