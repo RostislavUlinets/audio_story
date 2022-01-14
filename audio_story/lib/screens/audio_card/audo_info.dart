@@ -11,11 +11,9 @@ import 'package:flutter/material.dart';
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
 
-  final String name, url, id;
+  final AudioModel audio;
 
-  const AudioInfo(
-      {Key? key, required this.name, required this.url, required this.id})
-      : super(key: key);
+  const AudioInfo({Key? key, required this.audio}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +24,10 @@ class AudioInfo extends StatelessWidget {
           size: 0.7,
         ),
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Container(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
                   Padding(
@@ -66,7 +64,8 @@ class AudioInfo extends StatelessWidget {
                                     context,
                                     CustomCategory.routeName,
                                     arguments: [
-                                      AudioModel(id: id, name: '', url: '')
+                                      AudioModel(
+                                          id: audio.id, name: '', url: '')
                                     ],
                                   ),
                                 );
@@ -87,8 +86,8 @@ class AudioInfo extends StatelessWidget {
                               onTap: () async {
                                 LocalStorage storage = LocalStorage();
                                 final message = await storage.downloadFile(
-                                  url,
-                                  name,
+                                  audio.url,
+                                  audio.name,
                                   '/sdcard/Download',
                                 );
                                 final snackBar = SnackBar(
@@ -124,13 +123,13 @@ class AudioInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      name,
+                      audio.name,
                       style: const TextStyle(fontSize: 24),
                     ),
                   ),
                   PlayerOnProgress(
-                    name: name,
-                    url: url,
+                    name: audio.name,
+                    url: audio.url,
                   ),
                 ],
               ),

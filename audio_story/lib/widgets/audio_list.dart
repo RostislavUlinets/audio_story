@@ -137,13 +137,10 @@ class _ListWidgetState extends State<ListWidget> {
                     onTap: () {
                       Future.delayed(
                         const Duration(seconds: 0),
-                        () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AudioInfo(
-                            url: audio[index].url,
-                            name: audio[index].name,
-                            id: audio[index].id,
-                          ),
+                        () => Navigator.pushNamed(
+                          context,
+                          AudioInfo.routeName,
+                          arguments: audio[index],
                         ),
                       );
                     },

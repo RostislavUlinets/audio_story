@@ -1,6 +1,7 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
+import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/screens/category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/deleted/select.dart';
@@ -20,8 +21,6 @@ import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
-  
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
@@ -68,6 +67,12 @@ class RouteGenerator {
       case Audio.routeName:
         return MaterialPageRoute(
           builder: (context) => const Audio(),
+        );
+      case AudioInfo.routeName:
+        return MaterialPageRoute(
+          builder: (context) => AudioInfo(
+            audio: settings.arguments as AudioModel,
+          ),
         );
       case Profile.routeName:
         return MaterialPageRoute(

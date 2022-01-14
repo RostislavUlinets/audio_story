@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -185,8 +186,11 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                       IconButton(
                         onPressed: getPlaybackFn(_mPlayer),
                         icon: _mPlayer.isPlaying
-                            ? Image(image: AppIcons.playRec)
-                            : Image(image: AppIcons.pause),
+                            ? Image(
+                                image: AppIcons.pause,
+                                color: AppColors.orange,
+                              )
+                            : Image(image: AppIcons.playRec,height: 64,width: 64,),
                         iconSize: 80,
                       ),
                       IconButton(
