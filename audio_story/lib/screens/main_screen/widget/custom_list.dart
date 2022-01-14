@@ -81,10 +81,8 @@ class CustomList extends StatelessWidget {
                             );
                           default:
                             return Expanded(
-                              child: ListWidget(
+                              child: AudioScreenList(
                                 audio: snapshot.data,
-                                buttonState: false,
-                                cycleState: false,
                               ),
                             );
                         }

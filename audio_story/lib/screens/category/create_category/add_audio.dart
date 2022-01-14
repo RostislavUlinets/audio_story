@@ -8,7 +8,7 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'widget/player.dart';
+import '../widget/player.dart';
 
 class AddAudio extends StatefulWidget {
   const AddAudio({Key? key}) : super(key: key);

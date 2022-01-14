@@ -5,7 +5,9 @@ import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/category/editing_playList.dart';
+import 'package:audio_story/screens/audio/widget/audio_content.dart';
+import 'package:audio_story/widgets/audio_list.dart';
+import 'package:audio_story/screens/category/open_category/editing_playList.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/audio_list.dart';
@@ -18,8 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 import 'list_select_mode.dart';
-import 'widget/delete_audio.dart';
-import 'widget/player.dart';
+import '../widget/delete_audio.dart';
+import '../widget/player.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -219,38 +221,7 @@ class _CardInfoState extends State<CardInfo> {
                                     ),
                                     width: 70,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      playAll = !playAll;
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      height: 50,
-                                      width: 160,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(40),
-                                        color: Colors.white.withOpacity(0.6),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          playAll == false
-                                              ? Image(
-                                                  image: AppIcons.play,
-                                                  color: Colors.white,
-                                                )
-                                              : Image(
-                                                  image: AppIcons.pause,
-                                                  color: Colors.white,
-                                                ),
-                                          const Text(
-                                            "Запустить все",
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  const AudioButton(),
                                 ],
                               ),
                             ),
@@ -295,10 +266,8 @@ class _CardInfoState extends State<CardInfo> {
                                 );
                               default:
                                 return Expanded(
-                                  child: ListWidget(
+                                  child: AudioScreenList(
                                     audio: snapshot.data,
-                                    buttonState: false,
-                                    cycleState: playAll,
                                   ),
                                 );
                             }

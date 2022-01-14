@@ -13,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'widget/description.dart';
+import '../widget/description.dart';
 
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -208,10 +208,8 @@ class _EditingPlayListState extends State<EditingPlayList> {
                                   );
                                 default:
                                   return Expanded(
-                                    child: ListWidget(
+                                    child: AudioScreenList(
                                       audio: snapshot.data,
-                                      buttonState: false,
-                                      cycleState: playAll,
                                     ),
                                   );
                               }

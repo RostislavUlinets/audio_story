@@ -1,7 +1,7 @@
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
-import 'package:audio_story/screens/category/card_info.dart';
+import 'package:audio_story/screens/category/open_category/card_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';

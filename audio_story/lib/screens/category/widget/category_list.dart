@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/screens/category/card_info.dart';
+import 'package:audio_story/screens/category/open_category/card_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

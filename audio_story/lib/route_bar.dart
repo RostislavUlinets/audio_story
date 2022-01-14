@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
+import 'provider/current_audio_provider.dart';
 import 'routes/route.dart';
 import 'screens/category/category.dart';
 import 'screens/deleted/delete_screen.dart';
@@ -28,6 +29,9 @@ class Initilizer extends StatelessWidget {
       providers: [
         ListenableProvider<NavigationProvider>(
           create: (_) => NavigationProvider(),
+        ),
+        ListenableProvider<CurrentAudio>(
+          create: (_) => CurrentAudio(),
         ),
       ],
       child: Builder(

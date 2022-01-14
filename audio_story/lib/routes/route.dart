@@ -2,7 +2,7 @@ import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
-import 'package:audio_story/screens/category/card_info.dart';
+import 'package:audio_story/screens/category/open_category/card_info.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/audio/audio.dart';
 import '../screens/category/category.dart';
-import '../screens/category/create_category.dart';
+import '../screens/category/create_category/create_category.dart';
 import '../screens/login_screen/final_screen.dart';
 import '../screens/main_screen/main_screen.dart';
 import '../screens/profile/profile.dart';
