@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audio_story/models/profile.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/service/auth.dart';
@@ -15,8 +16,9 @@ User? currentUser = FirebaseAuth.instance.currentUser;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
 class EditProfile extends StatefulWidget {
-  Image image;
-  EditProfile({Key? key, required this.image}) : super(key: key);
+  final Profile user;
+
+  const EditProfile({Key? key, required this.user}) : super(key: key);
 
   @override
   State<EditProfile> createState() => _ProfileState();
@@ -25,11 +27,25 @@ class EditProfile extends StatefulWidget {
 class _ProfileState extends State<EditProfile> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  final _userName = TextEditingController();
-  final _phoneController = TextEditingController();
+
+  late final Profile user;
+  TextEditingController _userName = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+
   var maskFormatter = MaskTextInputFormatter(
-      mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
+    mask: '+## (###) ###-##-##',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+
   final _auth = AuthService.instance;
+
+  @override
+  void initState() {
+    user = widget.user;
+    _userName.text = user.name;
+    _phoneController.text = user.phoneNumber;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +117,7 @@ class _ProfileState extends State<EditProfile> {
                     width: 200,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: widget.image.image,
+                        image: user.avatar.image,
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.6), BlendMode.dstATop),
                         fit: BoxFit.cover,
@@ -147,19 +163,11 @@ class _ProfileState extends State<EditProfile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    if (file != null) {
-                      uploadFile();
-                    }
-
-                    if (_userName.text.trim().isNotEmpty) {
-                      dataBase.updateUserName(_userName.text.trim());
-                    }
-
-                    if (_phoneController.text.trim().isNotEmpty) {
-                      dataBase.updateUserPhoneNumber(
-                        _phoneController.text.trim(),
-                      );
-                    }
+                    dataBase.updataUserData(
+                      name: _userName.text,
+                      phoneNumber: _phoneController.text,
+                      avatar: file,
+                    );
                     Navigator.pop(context);
                   },
                   child: const Text(
@@ -176,15 +184,6 @@ class _ProfileState extends State<EditProfile> {
   }
 }
 
-Future<Widget> userName() async {
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  return Text(
-    await dataBase.getCurrentUserData(),
-    style: const TextStyle(fontSize: 24),
-  );
-}
-
 Future selectFile() async {
   final result = await ImagePicker.platform.pickImage(
       source: ImageSource.gallery,
@@ -195,11 +194,4 @@ Future selectFile() async {
   if (result == null) return;
 
   file = File(result.path);
-}
-
-Future uploadFile() async {
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
-  final destination = 'Avatars/$uid/avatar.jpg';
-  dataBase.uploadFile(destination, file!);
 }

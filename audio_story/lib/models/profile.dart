@@ -13,6 +13,6 @@ class Profile {
 
   @override
   String toString() {
-    return "User data:\nUserName: $name,\nPhoneNumber: $phoneNumber";
+    return "User data:\nUserName: $name,\nPhoneNumber: $phoneNumber,\n Avatar: ${avatar.toString()}}";
   }
 }

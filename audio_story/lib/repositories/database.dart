@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/profile.dart';
 import 'package:audio_story/models/sounds.dart';
+import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,13 +59,51 @@ class DatabaseService {
     } catch (e) {}
   }
 
-  Future<void> updataUserData(Profile data) async {
+  Future<Profile> getUserData() async {
+    DocumentSnapshot ds = await userCollection.doc(uid).get();
+    Image avatar;
+    Profile result;
+    if (!FirebaseAuth.instance.currentUser!.isAnonymous) {
+      final String avatarDownloadURL = await FirebaseStorage.instance
+          .ref('Avatars/$uid/avatar.jpg')
+          .getDownloadURL();
+      avatar = Image.network(
+        avatarDownloadURL,
+        fit: BoxFit.cover,
+      );
+      result = Profile(
+        name: ds.get('name'),
+        phoneNumber: ds.get('phone'),
+        avatar: avatar,
+      );
+    } else {
+      avatar = Image(
+        image: AppIcons.defaultAvatar,
+      );
+      result = Profile(
+        name: 'USER',
+        phoneNumber: '',
+        avatar: avatar,
+      );
+    }
+    return result;
+  }
+
+  Future<void> updataUserData({
+    required String name,
+    required String phoneNumber,
+    required File? avatar,
+  }) async {
     await userCollection.doc(uid).update(
       {
-        'name': data.name,
-        'phone': data.phoneNumber,
+        'name': name.trim(),
+        'phone': phoneNumber.trim(),
       },
     );
+    if (avatar != null) {
+      final destination = 'Avatars/$uid/avatar.jpg';
+      uploadFile(destination, avatar);
+    }
   }
 
   Future updateUserName(String name) async {
