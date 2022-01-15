@@ -59,10 +59,10 @@ class DatabaseService {
     } catch (e) {}
   }
 
-  Future<Profile> getUserData() async {
+  Future<ProfileModel> getUserData() async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     Image avatar;
-    Profile result;
+    ProfileModel result;
     if (!FirebaseAuth.instance.currentUser!.isAnonymous) {
       final String avatarDownloadURL = await FirebaseStorage.instance
           .ref('Avatars/$uid/avatar.jpg')
@@ -71,7 +71,7 @@ class DatabaseService {
         avatarDownloadURL,
         fit: BoxFit.cover,
       );
-      result = Profile(
+      result = ProfileModel(
         name: ds.get('name'),
         phoneNumber: ds.get('phone'),
         avatar: avatar,
@@ -80,7 +80,7 @@ class DatabaseService {
       avatar = Image(
         image: AppIcons.defaultAvatar,
       );
-      result = Profile(
+      result = ProfileModel(
         name: 'USER',
         phoneNumber: '',
         avatar: avatar,

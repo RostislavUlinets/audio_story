@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Profile {
+class ProfileModel {
   String name;
   String phoneNumber;
   Image avatar;
 
-  Profile({
+  ProfileModel({
     required this.name,
     required this.phoneNumber,
     required this.avatar,

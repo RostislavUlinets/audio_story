@@ -1,22 +1,12 @@
-import 'dart:developer';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
-import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
 import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:audio_story/screens/profile/widgets/dialog.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
-import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:audio_story/service/auth.dart';
-import 'package:provider/provider.dart';
-
-String downloadURL = 'https://picsum.photos/250?image=9';
+import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
   static const routeName = '/profile';
@@ -136,17 +126,25 @@ class _ProfileState extends State<Profile> {
                         child: TextButton(
                             child: const Text(
                               "Редактировать",
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.black,
+                              ),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProfile(
-                                    user: snapshot.data,
-                                  ),
-                                ),
-                              );
+                              AuthService.isAnonymous()
+                                  ? ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Данная функция станет\nдоступной после авторизации',
+                                        ),
+                                      ),
+                                    )
+                                  : Navigator.pushReplacementNamed(
+                                      context,
+                                      EditProfile.routeName,
+                                      arguments: snapshot.data,
+                                    );
                             }),
                       ),
                       const Padding(

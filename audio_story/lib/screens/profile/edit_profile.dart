@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:audio_story/models/profile.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
@@ -16,7 +19,9 @@ User? currentUser = FirebaseAuth.instance.currentUser;
 String uid = FirebaseAuth.instance.currentUser!.uid;
 
 class EditProfile extends StatefulWidget {
-  final Profile user;
+  static const routeName = '/editProfile';
+
+  final ProfileModel user;
 
   const EditProfile({Key? key, required this.user}) : super(key: key);
 
@@ -28,7 +33,7 @@ class _ProfileState extends State<EditProfile> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  late final Profile user;
+  late final ProfileModel user;
   TextEditingController _userName = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
@@ -75,7 +80,7 @@ class _ProfileState extends State<EditProfile> {
                         padding: const EdgeInsets.all(5.0),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                             Navigator.pushNamed(context, Profile.routeName);
                           },
                           icon: Image(
                             image: AppIcons.arrowLeftInCircle,
@@ -107,7 +112,9 @@ class _ProfileState extends State<EditProfile> {
                   child: Container(
                     child: IconButton(
                       onPressed: () {
-                        selectFile();
+                        selectFile().then(
+                          (value) => setState(() {}),
+                        );
                       },
                       icon: Image(
                         image: AppIcons.camera,
@@ -117,7 +124,8 @@ class _ProfileState extends State<EditProfile> {
                     width: 200,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: user.avatar.image,
+                        image:
+                            file == null ? user.avatar.image : FileImage(file!),
                         colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.6), BlendMode.dstATop),
                         fit: BoxFit.cover,
@@ -163,12 +171,16 @@ class _ProfileState extends State<EditProfile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    dataBase.updataUserData(
-                      name: _userName.text,
-                      phoneNumber: _phoneController.text,
-                      avatar: file,
-                    );
-                    Navigator.pop(context);
+                    dataBase
+                        .updataUserData(
+                          name: _userName.text,
+                          phoneNumber: _phoneController.text,
+                          avatar: file,
+                        )
+                        .then(
+                          (value) =>
+                              Navigator.pushNamed(context, Profile.routeName),
+                        );
                   },
                   child: const Text(
                     "Сохранить",

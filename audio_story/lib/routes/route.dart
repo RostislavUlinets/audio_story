@@ -1,4 +1,5 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/models/profile.dart';
 import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
@@ -7,6 +8,7 @@ import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/login_screen/login_screen_phone.dart';
 import 'package:audio_story/screens/login_screen/welcome_screen.dart';
+import 'package:audio_story/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/audio/audio.dart';
@@ -77,6 +79,12 @@ class RouteGenerator {
       case Profile.routeName:
         return MaterialPageRoute(
           builder: (context) => const Profile(),
+        );
+      case EditProfile.routeName:
+        return MaterialPageRoute(
+          builder: (context) => EditProfile(
+            user: settings.arguments as ProfileModel,
+          ),
         );
       case Subscribe.routeName:
         return MaterialPageRoute(
