@@ -28,17 +28,21 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  
   final user = FirebaseAuth.instance.currentUser;
+
   final AuthService _auth = AuthService.instance;
+
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   String phoneNumber = '', userName = "USER";
+
   Image image = Image(
     image: AppIcons.defaultAvatar,
   );
 
-  var maskFormatter = MaskTextInputFormatter(
+  MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
       mask: '+## (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
 
   @override

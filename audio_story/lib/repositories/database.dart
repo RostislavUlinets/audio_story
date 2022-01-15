@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/models/profile.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,18 +51,20 @@ class DatabaseService {
     await soundCollection.doc(uid).set(myMap);
   }
 
-  Future updateUserData(String name, String? phonenumber) async {
-    return await userCollection.doc(uid).set({
-      'name': name,
-      'phone': phonenumber,
-    });
-  }
-
   Future<void> deleteUser() async {
     try {
       userCollection.doc(uid).delete();
       soundCollection.doc(uid).delete();
     } catch (e) {}
+  }
+
+  Future<void> updataUserData(Profile data) async {
+    await userCollection.doc(uid).update(
+      {
+        'name': data.name,
+        'phone': data.phoneNumber,
+      },
+    );
   }
 
   Future updateUserName(String name) async {
@@ -83,17 +86,6 @@ class DatabaseService {
       DocumentSnapshot ds = await userCollection.doc(uid).get();
       String name = ds.get('name');
       return name;
-    } catch (e) {
-      log(e.toString());
-      return "User";
-    }
-  }
-
-  Future<String> getCurrentUserPhoneNumber() async {
-    try {
-      DocumentSnapshot ds = await userCollection.doc(uid).get();
-      String phoneNumber = ds.get('phone');
-      return phoneNumber;
     } catch (e) {
       log(e.toString());
       return "User";
@@ -122,10 +114,6 @@ class DatabaseService {
       'isDeleted': false
     };
     await soundCollection.doc(uid).update({audioId: audioInfo});
-  }
-
-  ListResult? getAudioList() {
-    return audioList;
   }
 
   Future<void> createPlayList(String image, String name, String info,
@@ -326,31 +314,6 @@ class DatabaseService {
     } catch (e) {
       return [];
     }
-  }
-
-  Future<List<String>> getPlayListNames() async {
-    DocumentSnapshot ds =
-        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-
-    List<dynamic> playList = ds.get('saveList');
-    List<String> result = [];
-    if (playList.length > 2) {
-      for (int i = 0; i < 3; i++) {
-        result.add(playList[i]['name']);
-      }
-      return result;
-    } else {
-      return [];
-    }
-  }
-
-  Future<void> changeSoundName(String id, String text) async {
-    DocumentSnapshot document = await soundCollection.doc(uid).get();
-    Map<String, dynamic> map = document.data() as Map<String, dynamic>;
-    map[id]['name'] = text;
-    await soundCollection.doc(uid).update({
-      id: map[id],
-    });
   }
 
   Future<List<String>> downloadAllAudio(List<AudioModel> sounds) async {
