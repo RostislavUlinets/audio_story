@@ -64,26 +64,30 @@ class AuthService {
         log(exception.toString());
       },
       codeSent: (String verificationId, int? resendToken) async {
-        final code = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CodeSent(),
-            ));
-        AuthCredential credential = PhoneAuthProvider.credential(
-            verificationId: verificationId, smsCode: code);
+        try {
+          final code = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CodeSent(),
+              ));
+          AuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: code);
 
-        UserCredential result = await _auth.signInWithCredential(credential);
+          UserCredential result = await _auth.signInWithCredential(credential);
 
-        User? user = result.user;
+          User? user = result.user;
 
-        if (user != null) {
-          _userFromFirebaseUser(user);
-          DatabaseService _dataBase = DatabaseService(user.uid);
-          _dataBase.initUserData();
-          Navigator.pop(context, result);
-          Navigator.pushNamed(context, FinalScreen.routeName);
-        } else {
-          log("Error");
+          if (user != null) {
+            _userFromFirebaseUser(user);
+            DatabaseService _dataBase = DatabaseService(user.uid);
+            _dataBase.initUserData();
+            Navigator.pop(context, result);
+            Navigator.pushNamed(context, FinalScreen.routeName);
+          } else {
+            log("Error");
+          }
+        } catch (e) {
+          log('Failed with error code: ${e.toString()}');
         }
       },
       codeAutoRetrievalTimeout: (String verificationId) {},

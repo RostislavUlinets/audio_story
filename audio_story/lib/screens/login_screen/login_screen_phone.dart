@@ -81,7 +81,6 @@ class LoginScreen extends StatelessWidget {
                       child: const Text("Продолжить"),
                       onPressed: () {
                         final phone = _phoneController.text.trim();
-
                         _auth.loginUser(phone, context);
                       },
                       style: ElevatedButton.styleFrom(

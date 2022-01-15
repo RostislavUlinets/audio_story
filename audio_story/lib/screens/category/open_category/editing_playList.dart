@@ -197,8 +197,8 @@ class _EditingPlayListState extends State<EditingPlayList> {
                               switch (snapshot.connectionState) {
                                 case ConnectionState.waiting:
                                   return const SizedBox(
-                                    height: 250,
-                                    width: 250,
+                                    height: 100,
+                                    width: 100,
                                     child: Center(
                                       child: CircularProgressIndicator(
                                         color: AppColors.purpule,

@@ -18,20 +18,11 @@ class AddAudio extends StatefulWidget {
 }
 
 class _AddAudioState extends State<AddAudio> {
-  List<AudioModel> playList = [];
-  void _sendDataBack(BuildContext context, var playList) {
-    Navigator.pop(context, playList);
-  }
-
+  
   @override
   void initState() {
     getData();
     super.initState();
-
-    // dataBase.audioListDB().then((value) {
-    //   audio = value;
-    //   allAudio = audio;
-    // });
   }
 
   Future<void> getData() async {
@@ -45,16 +36,32 @@ class _AddAudioState extends State<AddAudio> {
     );
   }
 
+  void searchBook(String query) {
+    final audioList = allAudio.where((element) {
+      final nameToLower = element.name.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return nameToLower.contains(searchLower);
+    }).toList();
+
+    setState(() {
+      this.query = query;
+      audio = audioList;
+    });
+  }
+
+  void _sendDataBack(BuildContext context, var playList) {
+    Navigator.pop(context, playList);
+  }
+
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  List<AudioModel> audio = [];
-
-  List<AudioModel> allAudio = [];
-
-  String query = '';
+  List<AudioModel> playList = [], audio = [], allAudio = [];
 
   List<bool> select = [];
+
+  String query = '';
 
   @override
   Widget build(BuildContext context) {
@@ -199,18 +206,4 @@ class _AddAudioState extends State<AddAudio> {
         hintText: 'Title or Author Name',
         onChanged: searchBook,
       );
-
-  void searchBook(String query) {
-    final audioList = allAudio.where((element) {
-      final nameToLower = element.name.toLowerCase();
-      final searchLower = query.toLowerCase();
-
-      return nameToLower.contains(searchLower);
-    }).toList();
-
-    setState(() {
-      this.query = query;
-      audio = audioList;
-    });
-  }
 }
