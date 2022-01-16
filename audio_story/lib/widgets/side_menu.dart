@@ -1,14 +1,6 @@
 import 'package:audio_story/models/navigation_item.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/routes/route.dart';
-import 'package:audio_story/screens/audio/audio.dart';
-import 'package:audio_story/screens/category/category.dart';
-import 'package:audio_story/screens/deleted/delete_screen.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/screens/profile/profile.dart';
-import 'package:audio_story/screens/search/search.dart';
-import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

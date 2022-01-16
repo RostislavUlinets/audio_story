@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:audio_story/models/user.dart';
 import 'package:audio_story/route_bar.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Anonim extends StatefulWidget {
   const Anonim({Key? key}) : super(key: key);

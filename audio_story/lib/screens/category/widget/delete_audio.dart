@@ -4,7 +4,7 @@ import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAlert extends StatelessWidget {
-  final index;
+  final int index;
 
   const DeleteAlert({Key? key, required this.index}) : super(key: key);
 
@@ -13,7 +13,7 @@ class DeleteAlert extends StatelessWidget {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
-      content: Container(
+      content: SizedBox(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(

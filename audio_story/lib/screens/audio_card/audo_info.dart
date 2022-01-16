@@ -4,7 +4,6 @@ import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +58,7 @@ class AudioInfo extends StatelessWidget {
                               child: const Text("Добавить в подборку"),
                               onTap: () {
                                 Future.delayed(
-                                  Duration(seconds: 0),
+                                  const Duration(seconds: 0),
                                   () => Navigator.pushNamed(
                                     context,
                                     CustomCategory.routeName,

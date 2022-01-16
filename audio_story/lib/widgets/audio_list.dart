@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/current_audio_provider.dart';
@@ -6,18 +5,15 @@ import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
-import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
 
 class AudioScreenList extends StatefulWidget {
-  List<AudioModel> audio;
+  final List<AudioModel> audio;
 
-  AudioScreenList({
+  const AudioScreenList({
     Key? key,
     required this.audio,
   }) : super(key: key);
@@ -100,12 +96,11 @@ class _AudioScreenListState extends State<AudioScreenList> {
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         child: const Text("Переименовать"),
-                        //TODO: Question
                         onTap: () {},
                         value: 1,
                       ),
                       PopupMenuItem(
-                        child: Text("Подробнее об аудиозаписи"),
+                        child: const Text("Подробнее об аудиозаписи"),
                         onTap: () {
                           Future.delayed(
                             const Duration(seconds: 0),
@@ -120,7 +115,6 @@ class _AudioScreenListState extends State<AudioScreenList> {
                       ),
                       PopupMenuItem(
                         child: const Text("Удалить"),
-                        //TODO: Question
                         onTap: () {
                           dataBase.deleteAudio(audio[index].id);
                           setState(() {
@@ -132,19 +126,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
                       ),
                       PopupMenuItem(
                         child: const Text("Поделиться"),
-                        //TODO: Question
                         onTap: () async {
-                          LocalStorage storage = LocalStorage();
-                          Directory dir = await getTemporaryDirectory();
-                          final message = await storage
-                              .downloadFile(
-                                audio[index].url,
-                                audio[index].name,
-                                dir.path,
-                              )
-                              .then(
-                                (value) => Share.shareFiles([value]),
-                              );
                         },
                         value: 4,
                       ),

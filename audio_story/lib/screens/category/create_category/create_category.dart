@@ -11,7 +11,6 @@ import 'package:audio_story/screens/category/create_category/add_audio.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 
 import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -217,7 +216,7 @@ class _CreateCategoryState extends State<CreateCategory> {
   // }
 
   Future selectFile() async {
-    final result = await ImagePicker.platform.pickImage(
+    final result = await ImagePicker().pickImage(
         source: ImageSource.gallery,
         imageQuality: 25,
         maxHeight: 300,

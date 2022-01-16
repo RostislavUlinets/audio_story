@@ -15,21 +15,21 @@ class PlayerOnProgress extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PlayerOnProgressState createState() => _PlayerOnProgressState(url, name);
+  _PlayerOnProgressState createState() => _PlayerOnProgressState();
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
-  _PlayerOnProgressState(this.url, this.name);
-
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
   int duration = 0;
-  final String url, name;
+  late final String url, name;
 
   @override
   void initState() {
+    url = widget.url;
+    name = widget.name;
     super.initState();
     init().then((value) {
       setState(() {
@@ -190,7 +190,11 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                                 image: AppIcons.pause,
                                 color: AppColors.orange,
                               )
-                            : Image(image: AppIcons.playRec,height: 64,width: 64,),
+                            : Image(
+                                image: AppIcons.playRec,
+                                height: 64,
+                                width: 64,
+                              ),
                         iconSize: 80,
                       ),
                       IconButton(

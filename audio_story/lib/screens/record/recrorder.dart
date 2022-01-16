@@ -141,8 +141,8 @@ class _RecorderState extends State<Recorder> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 100.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 100.0),
                     child: SizedBox(
                       child: MusicVisualizer(),
                       height: 60,

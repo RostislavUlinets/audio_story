@@ -11,7 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -56,7 +55,9 @@ class DatabaseService {
     try {
       userCollection.doc(uid).delete();
       soundCollection.doc(uid).delete();
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<ProfileModel> getUserData() async {
@@ -371,7 +372,6 @@ class DatabaseService {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> saveList;
 
-    List<String> sounds = [];
     try {
       saveList = ds.get('saveList');
     } catch (e) {

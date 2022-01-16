@@ -2,18 +2,17 @@ import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
-class CustomList extends StatelessWidget {
-  CustomList({Key? key}) : super(key: key);
+DatabaseService dataBase =
+    DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-  DatabaseService dataBase =
-      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+class CustomList extends StatelessWidget {
+  const CustomList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

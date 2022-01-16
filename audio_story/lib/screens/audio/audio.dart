@@ -1,16 +1,11 @@
-import 'package:audio_story/blocs/repeat_cycle/repeat_bloc.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
-import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'widget/audio_content.dart';
 

@@ -7,10 +7,8 @@ import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,19 +36,18 @@ class SelectModeList extends StatefulWidget {
   const SelectModeList({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<SelectModeList> createState() => _SelectModeListState(index);
+  State<SelectModeList> createState() => _SelectModeListState();
 }
 
 class _SelectModeListState extends State<SelectModeList> {
-  final int index;
+  late final int index;
   List<AudioModel> playList = [];
   List<AudioModel> audio = [];
   List<bool> select = [];
 
-  _SelectModeListState(this.index);
-
   @override
   void initState() {
+    index = widget.index;
     select = List.filled(50, false);
     dataBase.getSaveList(index).then((value) => setState(() {
           audioPropeperty = value;
@@ -138,7 +135,7 @@ class _SelectModeListState extends State<SelectModeList> {
                                     value: 1,
                                   ),
                                   PopupMenuItem(
-                                    child: Text("Добавить в подборку"),
+                                    child: const Text("Добавить в подборку"),
                                     onTap: () {
                                       Future.delayed(
                                         const Duration(seconds: 0),
@@ -160,7 +157,7 @@ class _SelectModeListState extends State<SelectModeList> {
                                     value: 3,
                                   ),
                                   PopupMenuItem(
-                                    child: Text("Скачать все"),
+                                    child: const Text("Скачать все"),
                                     onTap: () {
                                       dataBase.downloadAllAudio(playList);
                                     },
@@ -251,13 +248,8 @@ class _SelectModeListState extends State<SelectModeList> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                image: audioPropeperty.image != null
-                                    ? DecorationImage(
+                                image: DecorationImage(
                                         image: audioPropeperty.image.image,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : const DecorationImage(
-                                        image: AssetImage('assets/story.jpg'),
                                         fit: BoxFit.cover,
                                       ),
                                 color: Colors.black,

@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:audio_story/models/audio.dart';
-import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
-import 'package:provider/src/provider.dart';
 
 const int tSampleRate = 44000;
 typedef Fn = void Function();

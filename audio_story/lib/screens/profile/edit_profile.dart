@@ -1,13 +1,10 @@
 import 'dart:io';
 import 'package:audio_story/models/profile.dart';
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/screens/profile/profile.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/repositories/database.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +31,8 @@ class _ProfileState extends State<EditProfile> {
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
   late final ProfileModel user;
-  TextEditingController _userName = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   var maskFormatter = MaskTextInputFormatter(
     mask: '+## (###) ###-##-##',

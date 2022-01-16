@@ -1,19 +1,14 @@
+import 'dart:developer';
+
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MusicVisualizer extends StatelessWidget {
-  MusicVisualizer({Key? key}) : super(key: key);
-
-  // List<Color> colors = [
-  //   Colors.blueAccent,
-  //   Colors.greenAccent,
-  //   Colors.redAccent,
-  //   Colors.yellowAccent
-  // ];
-  List<int> duration = [900, 700, 600, 800, 500];
+  const MusicVisualizer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<int> duration = [900, 700, 600, 800, 500];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List<Widget>.generate(
@@ -59,7 +54,9 @@ class _VisualizerComponentState extends State<VisualizerComponent>
       ..addListener(() {
         try {
           setState(() {});
-        } catch (e) {}
+        } catch (e) {
+          log(e.toString());
+        }
       });
     animationController!.repeat(reverse: true);
   }

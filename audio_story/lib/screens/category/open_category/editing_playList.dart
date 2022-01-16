@@ -6,14 +6,11 @@ import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../widget/description.dart';
 
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -30,15 +27,15 @@ Image imageFromBase64String(String base64String) {
 class EditingPlayList extends StatefulWidget {
   final int index;
 
-  EditingPlayList({Key? key, required this.index}) : super(key: key);
+  const EditingPlayList({Key? key, required this.index}) : super(key: key);
 
   @override
   _EditingPlayListState createState() => _EditingPlayListState();
 }
 
 class _EditingPlayListState extends State<EditingPlayList> {
-  TextEditingController _nameField = TextEditingController();
-  TextEditingController _infoField = TextEditingController();
+  final TextEditingController _nameField = TextEditingController();
+  final TextEditingController _infoField = TextEditingController();
   String img64 = '';
   File? image;
 
@@ -228,7 +225,7 @@ class _EditingPlayListState extends State<EditingPlayList> {
   }
 
   Future selectFile() async {
-    final result = await ImagePicker.platform.pickImage(
+    final result = await ImagePicker().pickImage(
         source: ImageSource.gallery,
         imageQuality: 25,
         maxHeight: 300,

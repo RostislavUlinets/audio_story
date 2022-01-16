@@ -12,9 +12,9 @@ final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
 class SelectList extends StatefulWidget {
-  List<AudioModel> audio;
+  final List<AudioModel> audio;
 
-  SelectList({Key? key, required this.audio}) : super(key: key);
+  const SelectList({Key? key, required this.audio}) : super(key: key);
 
   @override
   _ListWidgetState createState() => _ListWidgetState();

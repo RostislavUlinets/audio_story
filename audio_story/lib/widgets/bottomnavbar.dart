@@ -1,12 +1,6 @@
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/routes/route.dart';
-import 'package:audio_story/screens/audio/audio.dart';
-import 'package:audio_story/screens/category/category.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/screens/profile/profile.dart';
-import 'package:audio_story/screens/record/record.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
@@ -85,7 +79,7 @@ class CustomNavigationBar extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Image(
                       color: Colors.white,
                       image: AppIcons.voice,

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/current_audio_provider.dart';
@@ -8,18 +7,12 @@ import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
 import 'package:audio_story/screens/search/search_field.dart';
 import 'package:audio_story/service/auth.dart';
-import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/anon_message.dart';
-import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/src/provider.dart';
-import 'package:share/share.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = '/search';
@@ -78,27 +71,25 @@ class _SearchScreenState extends State<SearchScreen> {
                               Scaffold.of(context).openDrawer();
                             },
                           ),
-                          Container(
-                            child: Column(
-                              children: const [
-                                Text(
-                                  "Поиск",
-                                  style: TextStyle(
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                          Column(
+                            children: const [
+                              Text(
+                                "Поиск",
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Найди потеряшку",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Найди потеряшку",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                           IconButton(
                             icon: const Icon(
@@ -172,12 +163,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                     itemBuilder: (context) => [
                                       PopupMenuItem(
                                         child: const Text("Переименовать"),
-                                        //TODO: Question
                                         onTap: () {},
                                         value: 1,
                                       ),
                                       PopupMenuItem(
-                                        child: Text("Подробнее об аудиозаписи"),
+                                        child: const Text("Подробнее об аудиозаписи"),
                                         onTap: () {
                                           Future.delayed(
                                             const Duration(seconds: 0),
@@ -192,7 +182,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                       PopupMenuItem(
                                         child: const Text("Удалить"),
-                                        //TODO: Question
                                         onTap: () {
                                           dataBase.deleteAudio(audio[index].id);
                                           setState(() {
@@ -204,21 +193,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ),
                                       PopupMenuItem(
                                         child: const Text("Поделиться"),
-                                        //TODO: Question
                                         onTap: () async {
-                                          LocalStorage storage = LocalStorage();
-                                          Directory dir =
-                                              await getTemporaryDirectory();
-                                          final message = await storage
-                                              .downloadFile(
-                                                audio[index].url,
-                                                audio[index].name,
-                                                dir.path,
-                                              )
-                                              .then(
-                                                (value) =>
-                                                    Share.shareFiles([value]),
-                                              );
                                         },
                                         value: 4,
                                       ),

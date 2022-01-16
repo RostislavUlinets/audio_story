@@ -1,7 +1,6 @@
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void showAlertDialog(BuildContext context) {
   // set up the buttons

@@ -1,12 +1,8 @@
-import 'package:audio_story/blocs/delete/delete_bloc.dart';
-import 'package:audio_story/blocs/delete/delete_event.dart';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/current_audio_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/deleted/delete_screen.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,7 +51,7 @@ class _SelectModeState extends State<SelectMode> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -142,83 +138,81 @@ class _SelectModeState extends State<SelectMode> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: audio.length,
-                      itemBuilder: (_, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Container(
-                            child: ListTile(
-                              title: Text(
-                                audio[index].name,
-                                style:
-                                    const TextStyle(color: Color(0xFF3A3A55)),
-                              ),
-                              subtitle: const Text(
-                                "30 минут",
-                                style: TextStyle(color: Color(0x803A3A55)),
-                              ),
-                              leading: IconButton(
-                                icon:
-                                    audioProvider.audioName == audio[index].name
-                                        ? Image(
-                                            image: AppIcons.pause,
-                                            color: AppColors.purpule,
-                                          )
-                                        : Image(
-                                            image: AppIcons.play,
-                                          ),
-                                onPressed: () {
-                                  Scaffold.of(context).showBottomSheet(
-                                    (context) => PlayerOnProgress(
-                                      soundsList: audio,
-                                      index: index,
-                                      repeat: false,
-                                      cycle: false,
-                                      audioProvider: audioProvider,
-                                    ),
-                                  );
-                                },
-                              ),
-                              trailing: GestureDetector(
-                                onTap: () {
-                                  if (select[index] == false) {
-                                    select[index] = true;
-                                    playList.add(audio[index].id);
-                                    setState(() {});
-                                  } else {
-                                    select[index] = false;
-                                    playList.removeWhere(
-                                      (element) => element == audio[index].id,
-                                    );
-                                    setState(() {});
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      border: Border.all(
-                                          width: 2, color: Colors.black)),
-                                  child: Image(
-                                    image: AppIcons.complite,
-                                    color: select[index]
-                                        ? Colors.black
-                                        : Colors.white,
+                  child: ListView.builder(
+                    itemCount: audio.length,
+                    itemBuilder: (_, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Container(
+                          child: ListTile(
+                            title: Text(
+                              audio[index].name,
+                              style:
+                                  const TextStyle(color: Color(0xFF3A3A55)),
+                            ),
+                            subtitle: const Text(
+                              "30 минут",
+                              style: TextStyle(color: Color(0x803A3A55)),
+                            ),
+                            leading: IconButton(
+                              icon:
+                                  audioProvider.audioName == audio[index].name
+                                      ? Image(
+                                          image: AppIcons.pause,
+                                          color: AppColors.purpule,
+                                        )
+                                      : Image(
+                                          image: AppIcons.play,
+                                        ),
+                              onPressed: () {
+                                Scaffold.of(context).showBottomSheet(
+                                  (context) => PlayerOnProgress(
+                                    soundsList: audio,
+                                    index: index,
+                                    repeat: false,
+                                    cycle: false,
+                                    audioProvider: audioProvider,
                                   ),
+                                );
+                              },
+                            ),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                if (select[index] == false) {
+                                  select[index] = true;
+                                  playList.add(audio[index].id);
+                                  setState(() {});
+                                } else {
+                                  select[index] = false;
+                                  playList.removeWhere(
+                                    (element) => element == audio[index].id,
+                                  );
+                                  setState(() {});
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                        width: 2, color: Colors.black)),
+                                child: Image(
+                                  image: AppIcons.complite,
+                                  color: select[index]
+                                      ? Colors.black
+                                      : Colors.white,
                                 ),
                               ),
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(75),
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(75),
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

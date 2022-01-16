@@ -24,7 +24,6 @@ import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
 
     switch (settings.name) {
       case WelcomeScreen.routeName:
@@ -119,7 +118,7 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("ERROR"),
+          title: const Text("ERROR"),
           centerTitle: true,
         ),
         body: const Center(

@@ -8,8 +8,9 @@ import 'package:provider/src/provider.dart';
 import 'player.dart';
 
 class SelectList extends StatefulWidget {
-  List<AudioModel> audio = [];
-  SelectList({Key? key, required this.audio}) : super(key: key);
+  final List<AudioModel> audio;
+
+  const SelectList({Key? key, required this.audio}) : super(key: key);
 
   @override
   _SelectListState createState() => _SelectListState();

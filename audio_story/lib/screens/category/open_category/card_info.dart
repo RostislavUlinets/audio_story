@@ -1,27 +1,20 @@
 import 'dart:convert';
 
-import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio/widget/audio_content.dart';
 import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/screens/category/open_category/editing_playList.dart';
+import 'package:audio_story/screens/category/open_category/editing_playlist.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
-import 'package:audio_story/widgets/audio_list.dart';
-import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
-import 'package:audio_story/widgets/side_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
 
 import 'list_select_mode.dart';
 import '../widget/delete_audio.dart';
-import '../widget/player.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 DatabaseService dataBase =
@@ -46,16 +39,15 @@ class CardInfo extends StatefulWidget {
   const CardInfo({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<CardInfo> createState() => _CardInfoState(index);
+  State<CardInfo> createState() => _CardInfoState();
 }
 
 class _CardInfoState extends State<CardInfo> {
-  final int index;
-
-  _CardInfoState(this.index);
+  late final int index;
 
   @override
   void initState() {
+    index = widget.index;
     dataBase.getSaveList(index).then((value) => setState(() {
           audioPropeperty = value;
         }));
@@ -133,10 +125,10 @@ class _CardInfoState extends State<CardInfo> {
                               ),
                               itemBuilder: (context) => [
                                 PopupMenuItem(
-                                  child: Text("Редактировать"),
+                                  child: const Text("Редактировать"),
                                   onTap: () {
                                     Future.delayed(
-                                      Duration(seconds: 0),
+                                      const Duration(seconds: 0),
                                       () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -153,7 +145,7 @@ class _CardInfoState extends State<CardInfo> {
                                   child: const Text("Выбрать несколько"),
                                   onTap: () {
                                     Future.delayed(
-                                      Duration(seconds: 0),
+                                      const Duration(seconds: 0),
                                       () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -226,15 +218,10 @@ class _CardInfoState extends State<CardInfo> {
                               ),
                             ),
                             decoration: BoxDecoration(
-                              image: audioPropeperty.image != null
-                                  ? DecorationImage(
-                                      image: audioPropeperty.image.image,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : const DecorationImage(
-                                      image: AssetImage('assets/story.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
+                              image: DecorationImage(
+                                image: audioPropeperty.image.image,
+                                fit: BoxFit.cover,
+                              ),
                               color: Colors.black,
                             ),
                             height: 210,
