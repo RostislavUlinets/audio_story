@@ -109,11 +109,10 @@ class _AudioScreenListState extends State<AudioScreenList> {
                         onTap: () {
                           Future.delayed(
                             const Duration(seconds: 0),
-                            () => showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AudioInfo(
-                                audio: audio[index],
-                              ),
+                            () => Navigator.pushNamed(
+                              context,
+                              AudioInfo.routeName,
+                              arguments: audio[index],
                             ),
                           );
                         },

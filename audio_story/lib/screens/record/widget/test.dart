@@ -31,7 +31,6 @@ class PlayerOnProgress extends StatefulWidget {
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
   final pathToSaveAudio = '/sdcard/Download/audio.mp3';
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
-  late FlutterSoundHelper _helper;
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
   int pos = 0;
@@ -39,7 +38,6 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
 
   @override
   void initState() {
-    _helper = FlutterSoundHelper();
     super.initState();
     init().then((value) {
       setState(() {
@@ -73,9 +71,19 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       setPos(e.position.inMilliseconds);
       setState(() {});
     });
-    await _helper
-        .duration(pathToSaveAudio)
-        .then((value) => duration = value!.inMilliseconds);
+    await getAudioDuration();
+  }
+
+  Future<void> getAudioDuration() async {
+    await FlutterSoundHelper().duration(pathToSaveAudio).then(
+      (value) async {
+        if (value != null) {
+          duration = value.inMilliseconds;
+        } else {
+          return await getAudioDuration();
+        }
+      },
+    );
   }
 
   Future<Uint8List> getAssetData(String path) async {
@@ -200,6 +208,8 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                           height: 64,
                           width: 64,
                         ),
+
+                  iconSize: 64,
                 ),
                 IconButton(
                   onPressed: () {

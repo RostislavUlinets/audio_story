@@ -50,6 +50,7 @@ void showAlertDialog(BuildContext context) {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -58,15 +59,6 @@ void showAlertDialog(BuildContext context) {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.red)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                "Ваш файл перенесется в папку\n“Недавно удаленные”.\nЧерез 15 дней он исчезнет.",
-                style: TextStyle(
-                    fontSize: 14, color: AppColors.black.withOpacity(0.5)),
-                textAlign: TextAlign.center,
-              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35.0),

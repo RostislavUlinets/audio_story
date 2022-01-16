@@ -97,10 +97,11 @@ class _PlayerState extends State<Player> {
                         IconButton(
                           onPressed: () async {
                             await helper.convertFile(
-                                pathToSaveTemp,
-                                Codec.aacADTS,
-                                '/storage/sdcard0/Downloads/${audioName.text}',
-                                Codec.mp3);
+                              pathToSaveTemp,
+                              Codec.aacADTS,
+                              '/sdcard/Download/${audioName.text}.mp3',
+                              Codec.mp3,
+                            );
                           },
                           icon: Image(
                             image: AppIcons.paperDownload,

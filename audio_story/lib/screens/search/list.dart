@@ -1,10 +1,18 @@
+import 'dart:io';
+
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/current_audio_provider.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/audio_card/audo_info.dart';
+import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/src/provider.dart';
+import 'package:share/share.dart';
 
 class SearchCustomList extends StatefulWidget {
   List<AudioModel> audio;
@@ -16,6 +24,10 @@ class SearchCustomList extends StatefulWidget {
 }
 
 class _SearchCustomListState extends State<SearchCustomList> {
+  
+  DatabaseService dataBase =
+      DatabaseService(FirebaseAuth.instance.currentUser!.uid);
+
   late List<AudioModel> audio;
 
   @override
@@ -63,7 +75,71 @@ class _SearchCustomListState extends State<SearchCustomList> {
                   );
                 },
               ),
-              trailing: const Icon(Icons.more_horiz),
+              trailing: PopupMenuButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
+                  ),
+                ),
+                icon: const Icon(
+                  Icons.more_horiz,
+                  size: 32,
+                  color: Colors.black54,
+                ),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: const Text("Переименовать"),
+                    //TODO: Question
+                    onTap: () {},
+                    value: 1,
+                  ),
+                  PopupMenuItem(
+                    child: Text("Подробнее об аудиозаписи"),
+                    onTap: () {
+                      Future.delayed(
+                        const Duration(seconds: 0),
+                        () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AudioInfo(
+                            audio: audio[index],
+                          ),
+                        ),
+                      );
+                    },
+                    value: 2,
+                  ),
+                  PopupMenuItem(
+                    child: const Text("Удалить"),
+                    //TODO: Question
+                    onTap: () {
+                      dataBase.deleteAudio(audio[index].id);
+                      setState(() {
+                        audio[index];
+                      });
+                    },
+
+                    value: 3,
+                  ),
+                  PopupMenuItem(
+                    child: const Text("Поделиться"),
+                    //TODO: Question
+                    onTap: () async {
+                      LocalStorage storage = LocalStorage();
+                      Directory dir = await getTemporaryDirectory();
+                      final message = await storage
+                          .downloadFile(
+                            audio[index].url,
+                            audio[index].name,
+                            dir.path,
+                          )
+                          .then(
+                            (value) => Share.shareFiles([value]),
+                          );
+                    },
+                    value: 4,
+                  ),
+                ],
+              ),
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(75),
