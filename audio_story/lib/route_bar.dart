@@ -1,6 +1,7 @@
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/subscribe/subscribe.dart';
 import 'package:audio_story/widgets/bottomnavbar.dart';
 import 'package:audio_story/widgets/side_menu.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,10 @@ class Initilizer extends StatelessWidget {
       case 6:
         _navigationKey.currentState
             ?.pushReplacementNamed(DeleteScreen.routeName);
+        break;
+      case 7:
+        _navigationKey.currentState
+            ?.pushReplacementNamed(Subscribe.routeName);
         break;
       default:
         _navigationKey.currentState?.pushReplacementNamed(MainScreen.routeName);

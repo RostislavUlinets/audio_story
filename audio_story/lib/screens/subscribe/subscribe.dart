@@ -58,7 +58,7 @@ class Subscribe extends StatelessWidget {
                       "Расширь возможности",
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     Container(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -71,74 +71,10 @@ class Subscribe extends StatelessWidget {
                                 style: TextStyle(fontSize: 24),
                               ),
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
-                                        Text(
-                                          "300p",
-                                          style: TextStyle(fontSize: 26),
-                                        ),
-                                        Text(
-                                          "в месяц",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        OutButton(),
-                                      ],
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20)),
-                                    ),
-                                    height: 215,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
-                                        Text(
-                                          "1800р",
-                                          style: TextStyle(fontSize: 26),
-                                        ),
-                                        Text(
-                                          "в год",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        OutButton(),
-                                      ],
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20)),
-                                    ),
-                                    height: 215,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            const SelectButton(),
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 30),
+                                  const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -159,6 +95,8 @@ class Subscribe extends StatelessWidget {
                                   Row(
                                     children: [
                                       Image(
+                                        height: 16,
+                                        width: 16,
                                         image: AppIcons.infinity,
                                       ),
                                       const SizedBox(
@@ -176,6 +114,8 @@ class Subscribe extends StatelessWidget {
                                   Row(
                                     children: [
                                       Image(
+                                        height: 16,
+                                        width: 16,
                                         image: AppIcons.cloudUpload,
                                       ),
                                       const SizedBox(
@@ -193,6 +133,8 @@ class Subscribe extends StatelessWidget {
                                   Row(
                                     children: [
                                       Image(
+                                        height: 16,
+                                        width: 16,
                                         image: AppIcons.paperDownload,
                                       ),
                                       const SizedBox(
