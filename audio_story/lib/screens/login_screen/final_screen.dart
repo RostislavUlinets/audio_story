@@ -15,7 +15,7 @@ class FinalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: duration), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
+      Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
         Initilizer.routeName,
         (route) => false,
       );
@@ -24,11 +24,9 @@ class FinalScreen extends StatelessWidget {
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const MainScreen(),
-            ),
+          Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+            Initilizer.routeName,
+            (route) => false,
           );
         },
         child: Stack(

@@ -192,7 +192,14 @@ class _ProfileState extends State<Profile> {
                             const Spacer(),
                             TextButton(
                               onPressed: () {
+                                if(AuthService.isAnonymous()){
+                                  FirebaseAuth.instance.signOut();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushReplacementNamed(
+                                        WelcomeScreen.routeName);
+                                }else{
                                 showAlertDialog(context);
+                                }
                               },
                               child: const Text(
                                 "Удалить аккаунт",

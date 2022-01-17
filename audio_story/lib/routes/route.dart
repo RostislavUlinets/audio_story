@@ -23,6 +23,10 @@ import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';
 
 class RouteGenerator {
+
+  static final GlobalKey<NavigatorState> navigationKey =
+      GlobalKey<NavigatorState>();
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
 
     switch (settings.name) {

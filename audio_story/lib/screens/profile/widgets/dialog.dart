@@ -45,7 +45,7 @@ void showAlertDialog(BuildContext context) {
       FirebaseAuth.instance.signOut();
       Navigator.pop(context);
       Navigator.of(context, rootNavigator: true)
-          .pushNamed(WelcomeScreen.routeName);
+          .pushReplacementNamed(WelcomeScreen.routeName);
     },
   );
 

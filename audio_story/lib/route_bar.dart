@@ -15,54 +15,55 @@ import 'screens/record/record.dart';
 import 'screens/search/search.dart';
 
 class Initilizer extends StatelessWidget {
-  static final _navigationKey = GlobalKey<NavigatorState>();
+  const Initilizer({Key? key}) : super(key: key);
 
   static const routeName = '/initilize';
 
-  const Initilizer({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final navigationProvider = context.watch<NavigationProvider>();
-
-    int _buttonIndex = navigationProvider.screenIndex;
+    int _buttonIndex =
+        context.select((NavigationProvider nc) => nc.screenIndex);
 
     switch (_buttonIndex) {
       case 0:
-        _navigationKey.currentState?.pushReplacementNamed(MainScreen.routeName);
+        RouteGenerator.navigationKey.currentState
+            ?.pushReplacementNamed(MainScreen.routeName);
 
         break;
       case 1:
-        _navigationKey.currentState?.pushReplacementNamed(Category.routeName);
+        RouteGenerator.navigationKey.currentState
+            ?.pushReplacementNamed(Category.routeName);
 
         break;
       case 2:
-        _navigationKey.currentState?.pushReplacementNamed(Records.routeName);
+        RouteGenerator.navigationKey.currentState
+            ?.pushReplacementNamed(Records.routeName);
 
         break;
       case 3:
-        _navigationKey.currentState?.pushReplacementNamed(Audio.routeName);
+        RouteGenerator.navigationKey.currentState
+            ?.pushReplacementNamed(Audio.routeName);
 
         break;
       case 4:
-        _navigationKey.currentState?.pushReplacementNamed(Profile.routeName);
+        RouteGenerator.navigationKey.currentState
+            ?.pushReplacementNamed(Profile.routeName);
 
         break;
       case 5:
-        _navigationKey.currentState
+        RouteGenerator.navigationKey.currentState
             ?.pushReplacementNamed(SearchScreen.routeName);
 
         break;
       case 6:
-        _navigationKey.currentState
+        RouteGenerator.navigationKey.currentState
             ?.pushReplacementNamed(DeleteScreen.routeName);
         break;
       case 7:
-        _navigationKey.currentState
+        RouteGenerator.navigationKey.currentState
             ?.pushReplacementNamed(Subscribe.routeName);
         break;
       default:
-        _navigationKey.currentState?.pushReplacementNamed(MainScreen.routeName);
         break;
     }
 
@@ -75,7 +76,7 @@ class Initilizer extends StatelessWidget {
       extendBody: true,
       bottomNavigationBar: const CustomNavigationBar(),
       body: Navigator(
-        key: _navigationKey,
+        key: RouteGenerator.navigationKey,
         initialRoute: MainScreen.routeName,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
