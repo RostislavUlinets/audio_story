@@ -117,17 +117,13 @@ class _AudioScreenListState extends State<AudioScreenList> {
                         child: const Text("Удалить"),
                         onTap: () {
                           dataBase.deleteAudio(audio[index].id);
-                          setState(() {
-                            audio[index];
-                          });
+                          setState(() {});
                         },
-
                         value: 3,
                       ),
                       PopupMenuItem(
                         child: const Text("Поделиться"),
-                        onTap: () async {
-                        },
+                        onTap: () async {},
                         value: 4,
                       ),
                     ],

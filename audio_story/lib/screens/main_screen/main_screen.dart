@@ -88,11 +88,19 @@ class _MainScreenState extends State<MainScreen> {
               ),
               emptyList ? const AnonimContainers() : const LoggedContainers(),
               const SizedBox(height: 10),
-              const CustomList(),
+              RefreshIndicator(
+                onRefresh: _refresh,
+                child: CustomList(),
+              ),
             ],
           ),
         )
       ],
     );
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {});
   }
 }

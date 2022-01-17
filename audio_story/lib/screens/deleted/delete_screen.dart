@@ -115,9 +115,13 @@ class _DeleteScreenState extends State<DeleteScreen> {
                             );
                           default:
                             return Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: _refresh,
                                 child: ListWidget(
-                              audio: snapshot.data,
-                            ));
+                                  audio: snapshot.data,
+                                ),
+                              ),
+                            );
                         }
                       },
                     ),
@@ -126,5 +130,10 @@ class _DeleteScreenState extends State<DeleteScreen> {
               ),
             ],
           );
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {});
   }
 }

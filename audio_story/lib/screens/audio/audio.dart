@@ -12,11 +12,16 @@ import 'widget/audio_content.dart';
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-class Audio extends StatelessWidget {
+class Audio extends StatefulWidget {
   static const routeName = '/audio';
 
   const Audio({Key? key}) : super(key: key);
 
+  @override
+  State<Audio> createState() => _AudioState();
+}
+
+class _AudioState extends State<Audio> {
   @override
   Widget build(BuildContext context) {
     return AuthService.isAnonymous()
@@ -110,8 +115,11 @@ class Audio extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: AudioScreenList(
-                                audio: snapshot.data,
+                              child: RefreshIndicator(
+                                onRefresh: _refresh,
+                                child: AudioScreenList(
+                                  audio: snapshot.data,
+                                ),
                               ),
                             ),
                           ],
@@ -122,5 +130,10 @@ class Audio extends StatelessWidget {
               ),
             ],
           );
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 3));
+    setState(() {});
   }
 }
