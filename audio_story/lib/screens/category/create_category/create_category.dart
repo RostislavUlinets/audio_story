@@ -35,177 +35,180 @@ class _CreateCategoryState extends State<CreateCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            const MyCustomPaint(
-              color: AppColors.green,
-              size: 0.85,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                  context, MainScreen.routeName);
-                            },
-                            icon: Image(
-                              image: AppIcons.arrowLeftInCircle,
-                            ),
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          const MyCustomPaint(
+            color: AppColors.green,
+            size: 0.85,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, MainScreen.routeName);
+                          },
+                          icon: Image(
+                            image: AppIcons.arrowLeftInCircle,
                           ),
                         ),
                       ),
-                      const Text(
-                        "Создание",
-                        style: TextStyle(
-                            fontSize: 36,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      TextButton(
-                        onPressed: () {
+                    ),
+                    const Text(
+                      "Создание",
+                      style: TextStyle(
+                          fontSize: 36,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (image == null || soundList == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Пожалуйста, заполните все поля'),
+                            ),
+                          );
+                        } else {
                           final db = DatabaseService(
                               FirebaseAuth.instance.currentUser!.uid);
-                          // db.updatePlayList(img64, _Name.text, _Info.text);
                           db.createPlayList(
                               img64, _name.text, _info.text, soundList);
                           Navigator.pushNamed(context, MainScreen.routeName);
-                        },
-                        child: const Text(
-                          "Готово",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: TextField(
-                      maxLength: 14,
-                      readOnly: false,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      controller: _name,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
+                        }
+                      },
+                      child: const Text(
+                        "Готово",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () => selectFile(),
-                    child: Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Image(
-                        image: AppIcons.camera,
-                        color: Colors.black,
-                      ),
-                      decoration: BoxDecoration(
-                        image: image != null
-                            ? DecorationImage(
-                                image: FileImage(image!),
-                                fit: BoxFit.cover,
-                              )
-                            : null,
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(30)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                          ),
-                        ],
-                      ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    maxLength: 14,
+                    readOnly: false,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text("Введите описание..."),
-                  ),
-                  TextField(
-                    maxLength: 120,
-                    controller: _info,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                    controller: _name,
                     decoration: const InputDecoration(
-                      helperText: "Готово",
-                      helperStyle: TextStyle(fontSize: 14, color: Colors.black),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.black),
-                      ),
+                      border: InputBorder.none,
                     ),
-                    onTap: () {
-                      FocusScopeNode currentFocus = FocusScope.of(context);
-
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                    },
                   ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 35.0,
-                      ),
-                      child: soundList == null
-                          ? TextButton(
-                              onPressed: () async {
-                                soundList = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const AddAudio(),
-                                  ),
-                                ).whenComplete(
-                                  () => setState(() {}),
-                                );
-                              },
-                              child: const Text(
-                                "Добавить аудиофайл",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.black,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
+                ),
+                GestureDetector(
+                  onTap: () => selectFile(),
+                  child: Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image(
+                      image: AppIcons.camera,
+                      color: Colors.black,
+                    ),
+                    decoration: BoxDecoration(
+                      image: image != null
+                          ? DecorationImage(
+                              image: FileImage(image!),
+                              fit: BoxFit.cover,
                             )
-                          : SizedBox(
-                              height: 250,
-                              width: double.infinity - 50,
-                              child: AudioScreenList(
-                                audio: soundList!,
+                          : null,
+                      color: Colors.white.withOpacity(0.9),
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text("Введите описание..."),
+                ),
+                TextField(
+                  maxLength: 120,
+                  controller: _info,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    helperText: "Готово",
+                    helperStyle: TextStyle(fontSize: 14, color: Colors.black),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
+                  },
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 35.0,
+                    ),
+                    child: soundList == null
+                        ? TextButton(
+                            onPressed: () async {
+                              soundList = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AddAudio(),
+                                ),
+                              ).whenComplete(
+                                () => setState(() {}),
+                              );
+                            },
+                            child: const Text(
+                              "Добавить аудиофайл",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.black,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
-                    ),
-                  )
-                ],
-              ),
+                          )
+                        : SizedBox(
+                            height: 250,
+                            width: double.infinity - 50,
+                            child: AudioScreenList(
+                              audio: soundList!,
+                            ),
+                          ),
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

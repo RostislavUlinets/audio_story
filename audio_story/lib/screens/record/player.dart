@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
@@ -7,6 +8,7 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:provider/src/provider.dart';
 import 'package:share/share.dart';
 
 import 'widget/dialog.dart';
@@ -120,8 +122,11 @@ class _PlayerState extends State<Player> {
                         ),
                         TextButton(
                           onPressed: () {
-                            saveAudio();
-                            Navigator.pushNamed(context, Audio.routeName);
+                            final navigator =
+                                context.read<NavigationProvider>();
+                            saveAudio().then(
+                              (value) => navigator.changeScreen(3),
+                            );
                           },
                           child: const Text("Сохранить"),
                         ),
