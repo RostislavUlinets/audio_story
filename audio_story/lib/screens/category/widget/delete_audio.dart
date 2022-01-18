@@ -1,7 +1,10 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
+import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/category/open_category/card_info.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class DeleteAlert extends StatelessWidget {
   final int index;
@@ -56,20 +59,21 @@ class DeleteAlert extends StatelessWidget {
 
   Widget _cancelButton(BuildContext context) {
     return TextButton(
-      child: const Text(
-        "Нет",
-        style: TextStyle(color: AppColors.purpule),
-      ),
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: const BorderSide(color: AppColors.purpule),
+        child: const Text(
+          "Нет",
+          style: TextStyle(color: AppColors.purpule),
+        ),
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: const BorderSide(color: AppColors.purpule),
+            ),
           ),
         ),
-      ),
-      onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-    );
+        onPressed: () {
+          Navigator.pop(context);
+        });
   }
 
   Widget _continueButton(BuildContext context, int index) {
@@ -90,14 +94,9 @@ class DeleteAlert extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all(AppColors.purpule),
       ),
       onPressed: () {
-        dataBase
-            .deletePlayList(index)
-            .then(
-              (value) => Navigator.pop(context),
-            )
-            .then(
-              (value) => Navigator.pushNamed(context, MainScreen.routeName),
-            );
+        dataBase.deletePlayList(index).whenComplete(() {
+          Navigator.pop(context);
+        });
       },
     );
   }

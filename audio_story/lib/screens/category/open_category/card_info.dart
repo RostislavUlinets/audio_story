@@ -4,6 +4,7 @@ import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/widgets/audio_content.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/screens/category/open_category/editing_playlist.dart';
@@ -21,9 +22,6 @@ DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 final CollectionReference userCollection =
     FirebaseFirestore.instance.collection('users');
-
-bool selectFlag = true;
-late List<int> eraseList;
 
 late SoundModel audioPropeperty;
 
@@ -48,15 +46,8 @@ class _CardInfoState extends State<CardInfo> {
   @override
   void initState() {
     index = widget.index;
-    dataBase.getSaveList(index).then((value) => setState(() {
-          audioPropeperty = value;
-        }));
-    eraseList = [];
-    selectFlag = true;
     super.initState();
   }
-
-  bool playAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +141,7 @@ class _CardInfoState extends State<CardInfo> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => SelectModeList(
+                                            audioPropeperty: audioPropeperty,
                                             index: index,
                                           ),
                                         ),
@@ -170,6 +162,10 @@ class _CardInfoState extends State<CardInfo> {
                                             index: index,
                                           );
                                         },
+                                      ).then(
+                                        (value) =>
+                                            Navigator.pushReplacementNamed(
+                                                context, Category.routeName),
                                       ),
                                     );
                                   },
@@ -234,31 +230,10 @@ class _CardInfoState extends State<CardInfo> {
                             text: audioPropeperty.info,
                           ),
                         ),
-                        FutureBuilder(
-                          future:
-                              dataBase.getPlayListAudio(audioPropeperty.sounds),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<dynamic> snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return const SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.purpule,
-                                      strokeWidth: 1.5,
-                                    ),
-                                  ),
-                                );
-                              default:
-                                return Expanded(
-                                  child: AudioScreenList(
-                                    audio: snapshot.data,
-                                  ),
-                                );
-                            }
-                          },
+                        Expanded(
+                          child: AudioScreenList(
+                            audio: snapshot.data.sounds,
+                          ),
                         ),
                       ],
                     ),

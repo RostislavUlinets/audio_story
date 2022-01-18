@@ -6,6 +6,7 @@ import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/category/category.dart';
 
 import 'package:audio_story/screens/category/create_category/add_audio.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -85,9 +86,16 @@ class _CreateCategoryState extends State<CreateCategory> {
                         } else {
                           final db = DatabaseService(
                               FirebaseAuth.instance.currentUser!.uid);
-                          db.createPlayList(
-                              img64, _name.text, _info.text, soundList);
-                          Navigator.pushNamed(context, MainScreen.routeName);
+                          db
+                              .createPlayList(
+                            img64,
+                            _name.text,
+                            _info.text,
+                            soundList,
+                          )
+                              .whenComplete(() {
+                            Navigator.pushNamed(context, Category.routeName);
+                          });
                         }
                       },
                       child: const Text(

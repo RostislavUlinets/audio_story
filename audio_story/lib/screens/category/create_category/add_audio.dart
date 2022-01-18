@@ -17,7 +17,6 @@ class AddAudio extends StatefulWidget {
 }
 
 class _AddAudioState extends State<AddAudio> {
-  
   @override
   void initState() {
     getData();
@@ -89,7 +88,7 @@ class _AddAudioState extends State<AddAudio> {
                         padding: const EdgeInsets.all(5.0),
                         child: IconButton(
                           onPressed: () {
-                            _sendDataBack(context, playList);
+                            _sendDataBack(context, null);
                           },
                           icon: Image(
                             image: AppIcons.arrowLeftInCircle,

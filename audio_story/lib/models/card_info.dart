@@ -1,7 +1,7 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:flutter/material.dart';
 
-class SoundModel {
+class CardInfoModel {
   final List<AudioModel> sounds;
   final String name;
   final String info;
@@ -9,7 +9,7 @@ class SoundModel {
 
   get getSounds => sounds;
 
-  SoundModel({
+  CardInfoModel({
     required this.sounds,
     required this.name,
     required this.info,

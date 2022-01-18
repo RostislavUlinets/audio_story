@@ -328,18 +328,32 @@ class DatabaseService {
   }
 
   Future<SoundModel> getSaveList(int index) async {
-    DocumentSnapshot ds =
-        await userCollection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-    var sounds = ds.get('saveList');
-    sounds = sounds[index];
-    String bytes = sounds['image'];
-    SoundModel audioBase = SoundModel(
-      sounds: sounds['sounds'],
-      name: sounds['name'],
-      info: sounds['info'],
-      image: imageFromBase64String(bytes),
-    );
-    return audioBase;
+    try {
+      DocumentSnapshot ds = await userCollection
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      var sounds = ds.get('saveList');
+      sounds = sounds[index];
+      String bytes = sounds['image'];
+      List<AudioModel> audio = await getPlayListAudio(sounds['sounds']);
+      SoundModel audioBase = SoundModel(
+        sounds: audio,
+        name: sounds['name'],
+        info: sounds['info'],
+        image: imageFromBase64String(bytes),
+      );
+      return audioBase;
+    } catch (e) {
+      log('Handling Error');
+      return SoundModel(
+        name: 'Error',
+        info: 'Error',
+        sounds: [],
+        image: Image(
+          image: AppIcons.defaultAvatar,
+        ),
+      );
+    }
   }
 
   Future<List<Map<String, dynamic>>> getPlayListImages() async {
@@ -379,8 +393,8 @@ class DatabaseService {
     return sendFiles;
   }
 
-  void updatePlayList(String img64, String text, String text2, List soundList,
-      int index) async {
+  void updatePlayList(String img64, String text, String text2,
+      List<AudioModel> soundList, int index) async {
     DocumentSnapshot ds = await userCollection.doc(uid).get();
     List<dynamic> saveList;
 
@@ -393,12 +407,17 @@ class DatabaseService {
     if (img64.isEmpty) {
       img64 = saveList[index]['image'];
     }
+    List<String> id = [];
+
+    for (int i = 0; i < soundList.length; i++) {
+      id.add(soundList[i].id);
+    }
 
     Map<String, dynamic> playList = {
       'image': img64,
       'name': text,
       'info': text2,
-      'sounds': soundList,
+      'sounds': id,
     };
 
     saveList[index] = playList;
