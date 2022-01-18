@@ -65,18 +65,30 @@ class DatabaseService {
     Image avatar;
     ProfileModel result;
     if (!FirebaseAuth.instance.currentUser!.isAnonymous) {
-      final String avatarDownloadURL = await FirebaseStorage.instance
-          .ref('Avatars/$uid/avatar.jpg')
-          .getDownloadURL();
-      avatar = Image.network(
-        avatarDownloadURL,
-        fit: BoxFit.cover,
-      );
-      result = ProfileModel(
-        name: ds.get('name'),
-        phoneNumber: ds.get('phone'),
-        avatar: avatar,
-      );
+      try {
+        final String avatarDownloadURL = await FirebaseStorage.instance
+            .ref('Avatars/$uid/avatar.jpg')
+            .getDownloadURL();
+        avatar = Image.network(
+          avatarDownloadURL,
+          fit: BoxFit.cover,
+        );
+        result = ProfileModel(
+          name: ds.get('name'),
+          phoneNumber: ds.get('phone'),
+          avatar: avatar,
+        );
+      } catch (e) {
+        log('Can not find user avatar');
+        result = ProfileModel(
+          name: ds.get('name'),
+          phoneNumber: ds.get('phone'),
+          avatar: Image(
+            image: AppIcons.defaultAvatar,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
     } else {
       avatar = Image(
         image: AppIcons.defaultAvatar,

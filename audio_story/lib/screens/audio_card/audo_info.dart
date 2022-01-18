@@ -7,6 +7,16 @@ import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
 
+// class AudioInfoArguments {
+//   final int something;
+//   final String stringSomething;
+
+//   AudioInfoArguments({
+//     required this.something,
+//     required this.stringSomething,
+//   });
+// }
+
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
 

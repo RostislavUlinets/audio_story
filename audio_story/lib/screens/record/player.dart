@@ -124,9 +124,11 @@ class _PlayerState extends State<Player> {
                           onPressed: () {
                             final navigator =
                                 context.read<NavigationProvider>();
-                            saveAudio().then(
-                              (value) => navigator.changeScreen(3),
-                            );
+                            saveAudio().then((value) {
+                              Future.delayed(Duration(seconds: 1), () {
+                                navigator.changeScreen(3);
+                              });
+                            });
                           },
                           child: const Text("Сохранить"),
                         ),

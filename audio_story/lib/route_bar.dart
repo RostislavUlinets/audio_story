@@ -74,6 +74,7 @@ class Initilizer extends StatelessWidget {
         child: SideMenu(),
       ),
       extendBody: true,
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: const CustomNavigationBar(),
       body: Navigator(
         key: RouteGenerator.navigationKey,

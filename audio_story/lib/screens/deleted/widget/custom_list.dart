@@ -77,6 +77,9 @@ class _ListWidgetState extends State<ListWidget> {
                 trailing: GestureDetector(
                   onTap: () {
                     dataBase.fullDeleteAudio([audio[index].id]);
+                    setState(() {
+                      audio.removeAt(index);
+                    });
                   },
                   child: Image(
                     image: AppIcons.delete,

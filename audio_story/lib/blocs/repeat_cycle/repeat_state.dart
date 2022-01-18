@@ -30,3 +30,8 @@ class ButtonPlayAllState extends ButtonState {
   const ButtonPlayAllState(bool buttonCycle, bool buttonPlayAll)
       : super(buttonCycle: buttonCycle, buttonPlayAll: buttonPlayAll);
 }
+
+// class ButtonRebuildState extends ButtonState {
+//   const ButtonRebuildState(bool buttonCycle, bool buttonPlayAll)
+//       : super(buttonCycle: buttonCycle, buttonPlayAll: buttonPlayAll);
+// }

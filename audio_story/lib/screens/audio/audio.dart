@@ -7,7 +7,7 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'widget/audio_content.dart';
+import '../../widgets/audio_content.dart';
 
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);

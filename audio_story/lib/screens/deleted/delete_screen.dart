@@ -21,6 +21,7 @@ class DeleteScreen extends StatefulWidget {
 }
 
 class _DeleteScreenState extends State<DeleteScreen> {
+  
   bool selectMode = false;
 
   @override

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AppIcons {
   const AppIcons._();
 
-  static AssetImage defaultAvatar = const AssetImage('assets/anon_ava.jpg');
+  static const String _path = 'assets';
+
+  static AssetImage defaultAvatar = const AssetImage('$_path/anon_ava.jpg');
   static AssetImage arrowDown = const AssetImage('assets/Arrow - Down.png');
   static AssetImage arrowDownInCircle =
       const AssetImage('assets/Arrow - Left Circle.png');

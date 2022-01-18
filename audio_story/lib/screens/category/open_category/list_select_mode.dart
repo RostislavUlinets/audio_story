@@ -249,9 +249,9 @@ class _SelectModeListState extends State<SelectModeList> {
                               ),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                        image: audioPropeperty.image.image,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  image: audioPropeperty.image.image,
+                                  fit: BoxFit.cover,
+                                ),
                                 color: Colors.black,
                               ),
                               height: 210,
@@ -303,56 +303,46 @@ class _SelectModeListState extends State<SelectModeList> {
                                                 style: TextStyle(
                                                     color: Color(0x803A3A55)),
                                               ),
-                                              leading: SizedBox(
-                                                height: 64,
-                                                width: 64,
-                                                child: IconButton(
-                                                  padding: EdgeInsets.zero,
-                                                  iconSize: 64,
-                                                  icon: audioProvider
-                                                              .audioName ==
-                                                          audio[index].name
-                                                      ? Image(
-                                                          image: AppIcons.pause,
-                                                          color:
-                                                              AppColors.purpule,
-                                                        )
-                                                      : Image(
-                                                          image: AppIcons.play,
-                                                        ),
-                                                  onPressed: () {
-                                                    Scaffold.of(context)
-                                                        .showBottomSheet(
-                                                      (context) =>
-                                                          PlayerOnProgress(
-                                                        cycle: false,
-                                                        index: index,
-                                                        repeat: false,
-                                                        soundsList: audio,
-                                                        audioProvider:
-                                                            audioProvider,
+                                              leading: IconButton(
+                                                icon: audioProvider.audioName ==
+                                                        audio[index].name
+                                                    ? Image(
+                                                        image: AppIcons.pause,
+                                                        color:
+                                                            AppColors.purpule,
+                                                      )
+                                                    : Image(
+                                                        image: AppIcons.play,
                                                       ),
-                                                    );
-                                                  },
-                                                ),
+                                                onPressed: () {
+                                                  Scaffold.of(context)
+                                                      .showBottomSheet(
+                                                    (context) =>
+                                                        PlayerOnProgress(
+                                                      soundsList: audio,
+                                                      index: index,
+                                                      repeat: false,
+                                                      cycle: false,
+                                                      audioProvider:
+                                                          audioProvider,
+                                                    ),
+                                                  );
+                                                },
                                               ),
                                               trailing: GestureDetector(
                                                 onTap: () {
                                                   if (select[index] == false) {
-                                                    setState(() {
-                                                      select[index] = true;
-                                                      playList
-                                                          .add(audio[index]);
-                                                    });
+                                                    select[index] = true;
+                                                    playList.add(audio[index]);
+                                                    setState(() {});
                                                   } else {
-                                                    setState(() {
-                                                      select[index] = false;
-                                                      playList.removeWhere(
-                                                        (element) =>
-                                                            element.id ==
-                                                            audio[index].id,
-                                                      );
-                                                    });
+                                                    select[index] = false;
+                                                    playList.removeWhere(
+                                                      (element) =>
+                                                          element ==
+                                                          audio[index].id,
+                                                    );
+                                                    setState(() {});
                                                   }
                                                 },
                                                 child: Container(

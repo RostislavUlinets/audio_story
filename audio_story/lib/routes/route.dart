@@ -74,6 +74,7 @@ class RouteGenerator {
           builder: (context) => const Audio(),
         );
       case AudioInfo.routeName:
+      // final AudioInfoArguments args = settings.arguments as AudioInfoArguments;
         return MaterialPageRoute(
           builder: (context) => AudioInfo(
             audio: settings.arguments as AudioModel,

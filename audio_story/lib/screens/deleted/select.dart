@@ -1,8 +1,11 @@
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/provider/current_audio_provider.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/deleted/delete_screen.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,16 +69,12 @@ class _SelectModeState extends State<SelectMode> {
             onTap: (buttonIndex) {
               switch (buttonIndex) {
                 case 0:
-                  dataBase.recoverAudio(playList).then(
-                        (value) => setState(() {}),
-                      );
-                  Navigator.pop(context);
+                  dataBase.recoverAudio(playList);
+                  Navigator.of(context).pop(true);
                   break;
                 case 1:
-                  dataBase.fullDeleteAudio(playList).then(
-                        (value) => setState(() {}),
-                      );
-                  Navigator.pop(context);
+                  dataBase.fullDeleteAudio(playList);
+                  Navigator.of(context).pop(true);
                   break;
               }
             },
@@ -147,23 +146,21 @@ class _SelectModeState extends State<SelectMode> {
                           child: ListTile(
                             title: Text(
                               audio[index].name,
-                              style:
-                                  const TextStyle(color: Color(0xFF3A3A55)),
+                              style: const TextStyle(color: Color(0xFF3A3A55)),
                             ),
                             subtitle: const Text(
                               "30 минут",
                               style: TextStyle(color: Color(0x803A3A55)),
                             ),
                             leading: IconButton(
-                              icon:
-                                  audioProvider.audioName == audio[index].name
-                                      ? Image(
-                                          image: AppIcons.pause,
-                                          color: AppColors.purpule,
-                                        )
-                                      : Image(
-                                          image: AppIcons.play,
-                                        ),
+                              icon: audioProvider.audioName == audio[index].name
+                                  ? Image(
+                                      image: AppIcons.pause,
+                                      color: AppColors.purpule,
+                                    )
+                                  : Image(
+                                      image: AppIcons.play,
+                                    ),
                               onPressed: () {
                                 Scaffold.of(context).showBottomSheet(
                                   (context) => PlayerOnProgress(

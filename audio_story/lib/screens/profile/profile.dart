@@ -18,6 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 

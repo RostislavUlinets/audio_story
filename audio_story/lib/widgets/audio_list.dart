@@ -42,7 +42,7 @@ class _AudioScreenListState extends State<AudioScreenList> {
       builder: (context, state) {
         return ListView.builder(
           itemCount: audio.length,
-          itemBuilder: (_, index) {
+          itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Container(
@@ -117,7 +117,9 @@ class _AudioScreenListState extends State<AudioScreenList> {
                         child: const Text("Удалить"),
                         onTap: () {
                           dataBase.deleteAudio(audio[index].id);
-                          setState(() {});
+                          setState(() {
+                            audio.removeAt(index);
+                          });
                         },
                         value: 3,
                       ),

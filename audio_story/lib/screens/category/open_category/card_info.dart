@@ -4,7 +4,7 @@ import 'package:audio_story/models/sounds.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/audio/widget/audio_content.dart';
+import 'package:audio_story/widgets/audio_content.dart';
 import 'package:audio_story/widgets/audio_list.dart';
 import 'package:audio_story/screens/category/open_category/editing_playlist.dart';
 import 'package:audio_story/screens/category/widget/description.dart';
