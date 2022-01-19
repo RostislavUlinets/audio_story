@@ -1,12 +1,15 @@
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/deleted/widget/custom_list.dart';
+import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 final DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
@@ -21,7 +24,6 @@ class DeleteScreen extends StatefulWidget {
 }
 
 class _DeleteScreenState extends State<DeleteScreen> {
-  
   bool selectMode = false;
 
   @override
@@ -79,7 +81,12 @@ class _DeleteScreenState extends State<DeleteScreen> {
                                 child: const Text("Выбрать несколько"),
                                 onTap: () {
                                   Navigator.of(context, rootNavigator: true)
-                                      .pushNamed(SelectMode.routeName);
+                                      .pushNamed(SelectMode.routeName)
+                                      .then((value) {
+                                    final nav =
+                                        context.read<NavigationProvider>();
+                                    nav.changeScreen(0);
+                                  });
                                 },
                                 value: 1,
                               ),

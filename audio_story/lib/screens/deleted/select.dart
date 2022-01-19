@@ -4,6 +4,7 @@ import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/route_bar.dart';
 import 'package:audio_story/screens/deleted/delete_screen.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -70,13 +71,13 @@ class _SelectModeState extends State<SelectMode> {
               switch (buttonIndex) {
                 case 0:
                   dataBase.recoverAudio(playList);
-                  Navigator.of(context).pop(true);
                   break;
                 case 1:
                   dataBase.fullDeleteAudio(playList);
-                  Navigator.of(context).pop(true);
                   break;
               }
+              Navigator.pop(context);
+              
             },
             items: [
               BottomNavigationBarItem(
