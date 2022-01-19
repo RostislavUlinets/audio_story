@@ -77,7 +77,7 @@ class _ProfileState extends State<EditProfile> {
                         padding: const EdgeInsets.all(5.0),
                         child: IconButton(
                           onPressed: () {
-                             Navigator.pushNamed(context, Profile.routeName);
+                            Navigator.pushNamed(context, Profile.routeName);
                           },
                           icon: Image(
                             image: AppIcons.arrowLeftInCircle,
@@ -170,14 +170,16 @@ class _ProfileState extends State<EditProfile> {
                   onPressed: () {
                     dataBase
                         .updataUserData(
-                          name: _userName.text,
-                          phoneNumber: _phoneController.text,
-                          avatar: file,
-                        )
-                        .then(
-                          (value) =>
-                              Navigator.pushNamed(context, Profile.routeName),
-                        );
+                      name: _userName.text,
+                      phoneNumber: _phoneController.text,
+                      avatar: file,
+                    )
+                        .whenComplete(
+                      () {
+                        Navigator.pushReplacementNamed(
+                            context, Profile.routeName);
+                      },
+                    );
                   },
                   child: const Text(
                     "Сохранить",

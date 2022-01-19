@@ -28,6 +28,11 @@ class _AudioScreenListState extends State<AudioScreenList> {
   DatabaseService dataBase =
       DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
+  TextEditingController text = TextEditingController();
+  bool _onlyRead = true;
+  bool buttonState = false;
+  bool cycleState = false;
+
   @override
   initState() {
     super.initState();
@@ -43,13 +48,33 @@ class _AudioScreenListState extends State<AudioScreenList> {
         return ListView.builder(
           itemCount: audio.length,
           itemBuilder: (context, index) {
+            TextEditingController _editingController =
+                TextEditingController(text: audio[index].name);
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Container(
                 child: ListTile(
-                  title: Text(
-                    audio[index].name,
+                  title: TextField(
+                    controller: _editingController,
+                    readOnly: _onlyRead,
                     style: const TextStyle(color: Color(0xFF3A3A55)),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    onEditingComplete: () {
+                      dataBase.changeSoundName(
+                        audio[index].id,
+                        _editingController.text,
+                      );
+                      setState(() {
+                        audio[index] = AudioModel(
+                          id: audio[index].id,
+                          name: _editingController.text,
+                          url: audio[index].url,
+                        );
+                        _onlyRead = true;
+                      });
+                    },
                   ),
                   subtitle: const Text(
                     "30 минут",
@@ -96,7 +121,11 @@ class _AudioScreenListState extends State<AudioScreenList> {
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         child: const Text("Переименовать"),
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            _onlyRead = !_onlyRead;
+                          });
+                        },
                         value: 1,
                       ),
                       PopupMenuItem(

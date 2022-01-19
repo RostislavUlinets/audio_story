@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 
 /*
  *
@@ -15,6 +17,9 @@ import 'package:flutter_sound/flutter_sound.dart';
  *
  */
 
+Directory? path;
+String _downloadPath = '';
+
 const int tSampleRate = 44000;
 
 ///
@@ -22,14 +27,19 @@ typedef Fn = void Function();
 
 /// Example app.
 class PlayerOnProgress extends StatefulWidget {
-  const PlayerOnProgress({Key? key}) : super(key: key);
+  final pathToSaveAudio;
+
+  const PlayerOnProgress({
+    Key? key,
+    required this.pathToSaveAudio,
+  }) : super(key: key);
 
   @override
   _PlayerOnProgressState createState() => _PlayerOnProgressState();
 }
 
 class _PlayerOnProgressState extends State<PlayerOnProgress> {
-  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
+  String? pathToSaveAudio;
   final FlutterSoundPlayer _mPlayer = FlutterSoundPlayer();
   bool _mPlayerIsInited = false;
   StreamSubscription? _mPlayerSubscription;
@@ -39,6 +49,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   @override
   void initState() {
     super.initState();
+    pathToSaveAudio = widget.pathToSaveAudio;
     init().then((value) {
       setState(() {
         _mPlayerIsInited = true;
@@ -71,11 +82,17 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
       setPos(e.position.inMilliseconds);
       setState(() {});
     });
+    await initPathForData();
+  }
+
+  Future<void> initPathForData() async {
+    Directory? path = await getExternalStorageDirectory();
+    pathToSaveAudio = path!.path + '/audio.mp3';
     await getAudioDuration();
   }
 
   Future<void> getAudioDuration() async {
-    await FlutterSoundHelper().duration(pathToSaveAudio).then(
+    await FlutterSoundHelper().duration(pathToSaveAudio!).then(
       (value) async {
         if (value != null) {
           duration = value.inMilliseconds;
@@ -208,7 +225,6 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
                           height: 64,
                           width: 64,
                         ),
-
                   iconSize: 64,
                 ),
                 IconButton(

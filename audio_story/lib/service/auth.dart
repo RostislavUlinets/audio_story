@@ -54,7 +54,10 @@ class AuthService {
         User? user = res.user;
 
         if (user != null) {
-          Navigator.pushNamed(context, MainScreen.routeName);
+          _userFromFirebaseUser(user);
+          DatabaseService _dataBase = DatabaseService(user.uid);
+          _dataBase.initUserData();
+          Navigator.pushNamed(context, FinalScreen.routeName);
         } else {
           log("Error");
         }

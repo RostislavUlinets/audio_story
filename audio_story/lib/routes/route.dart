@@ -98,10 +98,6 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const Records(),
         );
-      case Player.routeName:
-        return MaterialPageRoute(
-          builder: (context) => const Player(),
-        );
       case SearchScreen.routeName:
         return MaterialPageRoute(
           builder: (context) => const SearchScreen(),

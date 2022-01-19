@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
@@ -8,6 +9,7 @@ import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/src/provider.dart';
 import 'package:share/share.dart';
 
@@ -17,7 +19,9 @@ import 'widget/test.dart';
 class Player extends StatefulWidget {
   static const routeName = '/player';
 
-  const Player({Key? key}) : super(key: key);
+  const Player({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Player> createState() => _PlayerState();
@@ -28,15 +32,29 @@ class _PlayerState extends State<Player> {
 
   TextEditingController audioName =
       TextEditingController(text: 'Аудиозапись 1');
-  final pathToSaveTemp = '/sdcard/Download/temp.aac';
-  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
+  String? pathToSaveAudio;
+  String? pathToSaveTemp;
+  String? pathToDownloadFolder;
+
+  @override
+  void initState() {
+    super.initState();
+    _initPathForFiles();
+  }
+
+  Future<void> _initPathForFiles() async {
+    Directory? path = await getExternalStorageDirectory();
+    pathToDownloadFolder = path!.path;
+    pathToSaveAudio = path.path + '/audio.mp3';
+    pathToSaveTemp = path.path + '/temp.aac';
+  }
 
   Future<void> saveAudio() async {
     if (FirebaseAuth.instance.currentUser!.isAnonymous) {
       await helper.convertFile(pathToSaveTemp, Codec.aacADTS,
-          '/sdcard/Download/${audioName.text}.mp3', Codec.mp3);
+          '$pathToDownloadFolder${audioName.text}.mp3', Codec.mp3);
     } else {
-      File file = File(pathToSaveAudio);
+      File file = File(pathToSaveAudio!);
       String uid = FirebaseAuth.instance.currentUser!.uid;
       DatabaseService dataBase = DatabaseService(uid);
       final destination = 'Sounds/$uid/${audioName.text}_${DateTime.now()}.mp3';
@@ -45,8 +63,8 @@ class _PlayerState extends State<Player> {
       });
     }
     Future.delayed(const Duration(seconds: 3), () {
-      File(pathToSaveTemp).delete();
-      File(pathToSaveAudio).delete();
+      File(pathToSaveTemp!).delete();
+      File(pathToSaveAudio!).delete();
     });
   }
 
@@ -93,7 +111,7 @@ class _PlayerState extends State<Player> {
                             image: AppIcons.upload,
                           ),
                           onPressed: () {
-                            Share.shareFiles([pathToSaveAudio]);
+                            Share.shareFiles([pathToSaveAudio!]);
                           },
                         ),
                         IconButton(
@@ -101,7 +119,7 @@ class _PlayerState extends State<Player> {
                             await helper.convertFile(
                               pathToSaveTemp,
                               Codec.aacADTS,
-                              '/sdcard/Download/${audioName.text}.mp3',
+                              '$pathToDownloadFolder${audioName.text}.mp3',
                               Codec.mp3,
                             );
                           },
@@ -125,7 +143,7 @@ class _PlayerState extends State<Player> {
                             final navigator =
                                 context.read<NavigationProvider>();
                             saveAudio().then((value) {
-                              Future.delayed(Duration(seconds: 1), () {
+                              Future.delayed(Duration(seconds: 2), () {
                                 navigator.changeScreen(3);
                               });
                             });
@@ -149,7 +167,9 @@ class _PlayerState extends State<Player> {
                       ),
                     ),
                   ),
-                  const PlayerOnProgress(),
+                  PlayerOnProgress(
+                    pathToSaveAudio: pathToSaveAudio,
+                  ),
                 ],
               ),
               decoration: BoxDecoration(

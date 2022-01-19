@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:audio_story/blocs/record/record_bloc.dart';
 import 'package:audio_story/blocs/record/record_event.dart';
 import 'package:audio_story/resources/app_colors.dart';
@@ -6,6 +9,7 @@ import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -14,15 +18,17 @@ import 'widget/animation.dart';
 typedef _Fn = void Function();
 
 class Recorder extends StatefulWidget {
-  const Recorder({Key? key}) : super(key: key);
+  const Recorder({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _RecorderState createState() => _RecorderState();
 }
 
 class _RecorderState extends State<Recorder> {
-  final pathToSaveAudio = '/sdcard/Download/audio.mp3';
-  final pathToSaveTemp = '/sdcard/Download/temp.aac';
+  String? pathToSaveAudio;
+  String? pathToSaveTemp;
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mRecorderIsInited = false;
   TextEditingController audioName =
@@ -46,6 +52,7 @@ class _RecorderState extends State<Recorder> {
   void initState() {
     super.initState();
     _openRecorder();
+    _initPathForFiles();
   }
 
   @override
@@ -56,20 +63,28 @@ class _RecorderState extends State<Recorder> {
     super.dispose();
   }
 
-  void record() {
-    _mRecorder!
-        .startRecorder(
+  void record() async {
+    log(pathToSaveTemp!);
+    await _mRecorder!.startRecorder(
       toFile: pathToSaveTemp,
-    )
-        .then((value) {
-      setState(() {});
-    });
+    );
+    setState(() {});
+  }
+
+  Future<void> _initPathForFiles() async {
+    Directory? path = await getExternalStorageDirectory();
+    pathToSaveAudio = path!.path + '/audio.mp3';
+    pathToSaveTemp = path.path + '/temp.aac';
   }
 
   Future<void> stopRecorder() async {
     await _mRecorder!.stopRecorder();
-    await FlutterSoundHelper()
-        .convertFile(pathToSaveTemp, Codec.aacADTS, pathToSaveAudio, Codec.mp3);
+    await FlutterSoundHelper().convertFile(
+      pathToSaveTemp,
+      Codec.aacADTS,
+      pathToSaveAudio!,
+      Codec.mp3,
+    );
   }
 
   _Fn? getRecorderFn() {
@@ -170,6 +185,7 @@ class _RecorderState extends State<Recorder> {
 
   Widget buildStart() {
     final isRecording = _mRecorder!.isRecording;
+    print(_mRecorder!.isRecording.toString());
 
     final image = isRecording
         ? Image(

@@ -39,63 +39,71 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const MyCustomPaint(
-          color: AppColors.purpule,
-          size: 0.85,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 50.0),
-          child: Column(
-            children: [
-              Row(
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            const MyCustomPaint(
+              color: AppColors.purpule,
+              size: 0.85,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Column(
                 children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                      size: 36,
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                          size: 36,
+                        ),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Подборки",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {
+                            final navigationProvider =
+                                context.read<NavigationProvider>();
+                            navigationProvider.changeScreen(1);
+                          },
+                          child: const Text(
+                            "Открыть все",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
+                  ),
+                  emptyList
+                      ? const AnonimContainers()
+                      : const LoggedContainers(),
+                  const SizedBox(height: 10),
+                  RefreshIndicator(
+                    onRefresh: _refresh,
+                    child: const CustomList(),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  children: [
-                    const Text(
-                      "Подборки",
-                      style: TextStyle(fontSize: 24, color: Colors.white),
-                    ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        final navigationProvider =
-                            context.read<NavigationProvider>();
-                        navigationProvider.changeScreen(1);
-                      },
-                      child: const Text(
-                        "Открыть все",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              emptyList ? const AnonimContainers() : const LoggedContainers(),
-              const SizedBox(height: 10),
-              RefreshIndicator(
-                onRefresh: _refresh,
-                child: CustomList(),
-              ),
-            ],
-          ),
-        )
-      ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
