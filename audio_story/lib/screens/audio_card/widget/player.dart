@@ -87,8 +87,10 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
   }
 
   Future<void> seekBack(double d) async {
-    await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor() - 600));
-    await setPos(d.floor() - 600);
+    if (Duration(milliseconds: d.floor()) > const Duration(milliseconds: 600)) {
+      await _mPlayer.seekToPlayer(Duration(milliseconds: d.floor() - 600));
+      await setPos(d.floor() - 600);
+    }
   }
 
   Future<void> seekFoward(double d) async {

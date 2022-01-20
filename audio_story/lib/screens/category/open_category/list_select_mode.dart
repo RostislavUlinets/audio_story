@@ -142,6 +142,11 @@ class _SelectModeListState extends State<SelectModeList> {
                             child: const Text("Скачать все"),
                             onTap: () {
                               dataBase.downloadAllAudio(playList);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Download complete'),
+                                ),
+                              );
                             },
                             value: 4,
                           ),
@@ -225,15 +230,14 @@ class _SelectModeListState extends State<SelectModeList> {
                                 style: TextStyle(color: Color(0x803A3A55)),
                               ),
                               leading: IconButton(
-                                icon:
-                                    audioProvider.audioId == audio[index].id
-                                        ? Image(
-                                            image: AppIcons.pause,
-                                            color: AppColors.purpule,
-                                          )
-                                        : Image(
-                                            image: AppIcons.play,
-                                          ),
+                                icon: audioProvider.audioId == audio[index].id
+                                    ? Image(
+                                        image: AppIcons.pause,
+                                        color: AppColors.purpule,
+                                      )
+                                    : Image(
+                                        image: AppIcons.play,
+                                      ),
                                 onPressed: () {
                                   Scaffold.of(context).showBottomSheet(
                                     (context) => PlayerOnProgress(

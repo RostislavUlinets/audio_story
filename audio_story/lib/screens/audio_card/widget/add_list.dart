@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/category/category.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 
 class CustomListCategory extends StatefulWidget {
   final List<AudioModel> id;
@@ -63,7 +65,8 @@ class _CustomListCategoryState extends State<CustomListCategory> {
           TextButton(
             onPressed: () {
               dataBase.addToPlayList(playList, widget.id);
-              Navigator.pushNamed(context, Category.routeName);
+              final nav = context.read<NavigationProvider>();
+              nav.changeScreen(1);
             },
             child: const Text(
               'Добавить',

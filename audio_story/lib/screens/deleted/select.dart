@@ -152,6 +152,7 @@ class _SelectModeState extends State<SelectMode> {
                               style: TextStyle(color: Color(0x803A3A55)),
                             ),
                             leading: IconButton(
+                              padding: const EdgeInsets.all(1.0),
                               icon: audioProvider.audioId == audio[index].id
                                   ? Image(
                                       image: AppIcons.pause,
@@ -161,13 +162,10 @@ class _SelectModeState extends State<SelectMode> {
                                       image: AppIcons.play,
                                     ),
                               onPressed: () {
-                                Scaffold.of(context).showBottomSheet(
-                                  (context) => PlayerOnProgress(
-                                    soundsList: audio,
-                                    index: index,
-                                    repeat: false,
-                                    cycle: false,
-                                    audioProvider: audioProvider,
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Невозможно воспроизвести аудио в режиме выбора.'),
                                   ),
                                 );
                               },

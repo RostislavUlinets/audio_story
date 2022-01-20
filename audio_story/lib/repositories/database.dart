@@ -393,12 +393,11 @@ class DatabaseService {
   }
 
   Future<List<String>> downloadAllAudio(List<AudioModel> sounds) async {
-    Directory? path = await getExternalStorageDirectory();
     LocalStorage local = LocalStorage();
     List<String> sendFiles = [];
     for (int i = 0; i < sounds.length; i++) {
       await local
-          .downloadFile(sounds[i].url, sounds[i].name, path!.path)
+          .downloadFile(sounds[i].url, sounds[i].name, '/sdcard/Download')
           .then((value) => sendFiles.add(value));
     }
     return sendFiles;

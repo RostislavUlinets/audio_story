@@ -5,10 +5,12 @@ import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/audo_info.dart';
+import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/player.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share/share.dart';
 
 class AudioScreenList extends StatefulWidget {
   final List<AudioModel> audio;
@@ -154,7 +156,10 @@ class _AudioScreenListState extends State<AudioScreenList> {
                       ),
                       PopupMenuItem(
                         child: const Text("Поделиться"),
-                        onTap: () async {},
+                        onTap: () async {
+                          dataBase.downloadAllAudio([audio[index]]).then(
+                              (value) => Share.shareFiles(value));
+                        },
                         value: 4,
                       ),
                     ],

@@ -176,8 +176,10 @@ class _ProfileState extends State<EditProfile> {
                     )
                         .whenComplete(
                       () {
-                        Navigator.pushReplacementNamed(
-                            context, Profile.routeName);
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Navigator.pushReplacementNamed(
+                              context, Profile.routeName);
+                        });
                       },
                     );
                   },

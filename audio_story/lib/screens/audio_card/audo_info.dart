@@ -64,7 +64,7 @@ class _AudioInfoState extends State<AudioInfo> {
                             final nav = context.read<NavigationProvider>();
                             if (nav.screenIndex != 0) {
                               nav.changeScreen(0);
-                            }else{
+                            } else {
                               nav.changeScreen(3);
                             }
                           },
@@ -138,7 +138,19 @@ class _AudioInfoState extends State<AudioInfo> {
                             ),
                             PopupMenuItem(
                               child: const Text("Удалить"),
-                              onTap: () {},
+                              onTap: () {
+                                dataBase.deleteAudio(audio!.id).whenComplete(
+                                  () {
+                                    final nav =
+                                        context.read<NavigationProvider>();
+                                    if (nav.screenIndex != 0) {
+                                      nav.changeScreen(0);
+                                    } else {
+                                      nav.changeScreen(3);
+                                    }
+                                  },
+                                );
+                              },
                               value: 5,
                             ),
                           ],
