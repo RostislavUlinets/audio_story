@@ -70,14 +70,16 @@ class _SelectModeState extends State<SelectMode> {
             onTap: (buttonIndex) {
               switch (buttonIndex) {
                 case 0:
-                  dataBase.recoverAudio(playList);
+                  dataBase.recoverAudio(playList).whenComplete(
+                        () => Navigator.pop(context),
+                      );
                   break;
                 case 1:
-                  dataBase.fullDeleteAudio(playList);
+                  dataBase.fullDeleteAudio(playList).whenComplete(
+                        () => Navigator.pop(context),
+                      );
                   break;
               }
-              Navigator.pop(context);
-              
             },
             items: [
               BottomNavigationBarItem(

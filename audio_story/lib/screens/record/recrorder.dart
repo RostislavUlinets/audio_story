@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audio_story/blocs/record/record_bloc.dart';
 import 'package:audio_story/blocs/record/record_event.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
@@ -140,7 +141,8 @@ class _RecorderState extends State<Recorder> {
                         TextButton(
                           child: const Text("Отменить"),
                           onPressed: () {
-                            Navigator.pushNamed(context, MainScreen.routeName);
+                            final nav = context.read<NavigationProvider>();
+                            nav.changeScreen(0);
                           },
                         ),
                       ],

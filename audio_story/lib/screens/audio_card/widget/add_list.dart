@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:audio_story/models/audio.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_icons.dart';
+import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +64,7 @@ class _CustomListCategoryState extends State<CustomListCategory> {
           TextButton(
             onPressed: () {
               dataBase.addToPlayList(playList, widget.id);
-              Navigator.pushNamed(context, MainScreen.routeName);
+              Navigator.pushNamed(context, Category.routeName);
             },
             child: const Text(
               'Добавить',

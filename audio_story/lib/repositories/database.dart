@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -392,11 +393,12 @@ class DatabaseService {
   }
 
   Future<List<String>> downloadAllAudio(List<AudioModel> sounds) async {
+    Directory? path = await getExternalStorageDirectory();
     LocalStorage local = LocalStorage();
     List<String> sendFiles = [];
     for (int i = 0; i < sounds.length; i++) {
       await local
-          .downloadFile(sounds[i].url, sounds[i].name, '/sdcard/Download')
+          .downloadFile(sounds[i].url, sounds[i].name, path!.path)
           .then((value) => sendFiles.add(value));
     }
     return sendFiles;

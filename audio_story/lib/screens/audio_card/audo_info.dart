@@ -1,21 +1,17 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
 import 'package:audio_story/screens/audio_card/add_to_category.dart';
 import 'package:audio_story/screens/audio_card/widget/player.dart';
 import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
-// class AudioInfoArguments {
-//   final int something;
-//   final String stringSomething;
-
-//   AudioInfoArguments({
-//     required this.something,
-//     required this.stringSomething,
-//   });
-// }
+DatabaseService dataBase =
+    DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
 class AudioInfo extends StatelessWidget {
   static const routeName = '/audioInfo';
@@ -87,7 +83,10 @@ class AudioInfo extends StatelessWidget {
                             ),
                             PopupMenuItem(
                               child: const Text("Поделиться"),
-                              onTap: () {},
+                              onTap: () {
+                                dataBase.downloadAllAudio([audio]).then(
+                                    (value) => Share.shareFiles(value));
+                              },
                               value: 3,
                             ),
                             PopupMenuItem(

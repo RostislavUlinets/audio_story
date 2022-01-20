@@ -119,7 +119,7 @@ class _PlayerState extends State<Player> {
                             await helper.convertFile(
                               pathToSaveTemp,
                               Codec.aacADTS,
-                              '$pathToDownloadFolder${audioName.text}.mp3',
+                              '/sdcard/Download/${audioName.text}.mp3',
                               Codec.mp3,
                             );
                           },

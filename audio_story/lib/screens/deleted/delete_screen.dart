@@ -82,7 +82,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
                                 onTap: () {
                                   Navigator.of(context, rootNavigator: true)
                                       .pushNamed(SelectMode.routeName)
-                                      .then((value) {
+                                      .then((vaue) {
                                     final nav =
                                         context.read<NavigationProvider>();
                                     nav.changeScreen(0);

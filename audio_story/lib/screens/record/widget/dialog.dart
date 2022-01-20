@@ -1,5 +1,6 @@
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/main_screen/main_screen.dart';
+import 'package:audio_story/screens/record/record.dart';
 import 'package:flutter/material.dart';
 
 void showAlertDialog(BuildContext context) {
@@ -37,7 +38,7 @@ void showAlertDialog(BuildContext context) {
     ),
     onPressed: () {
       Navigator.of(context, rootNavigator: true).pop();
-      Navigator.pushNamed(context, MainScreen.routeName);
+      Navigator.pushNamed(context, Records.routeName);
     },
   );
 
