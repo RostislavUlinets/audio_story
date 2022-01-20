@@ -1,10 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/audio/audio.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +141,7 @@ class _PlayerState extends State<Player> {
                             final navigator =
                                 context.read<NavigationProvider>();
                             saveAudio().then((value) {
-                              Future.delayed(Duration(seconds: 2), () {
+                              Future.delayed(const Duration(seconds: 2), () {
                                 navigator.changeScreen(3);
                               });
                             });

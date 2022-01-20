@@ -1,10 +1,6 @@
-import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
-import 'package:audio_story/screens/category/category.dart';
 import 'package:audio_story/screens/category/open_category/card_info.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
 
 class DeleteAlert extends StatelessWidget {
   final int index;

@@ -17,7 +17,6 @@ import '../screens/category/create_category/create_category.dart';
 import '../screens/login_screen/final_screen.dart';
 import '../screens/main_screen/main_screen.dart';
 import '../screens/profile/profile.dart';
-import '../screens/record/player.dart';
 import '../screens/record/record.dart';
 import '../screens/search/search.dart';
 import '../screens/subscribe/subscribe.dart';

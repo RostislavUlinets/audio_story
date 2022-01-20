@@ -18,7 +18,6 @@ import 'package:path_provider/path_provider.dart';
  */
 
 Directory? path;
-String _downloadPath = '';
 
 const int tSampleRate = 44000;
 

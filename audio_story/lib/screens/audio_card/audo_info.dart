@@ -1,4 +1,5 @@
 import 'package:audio_story/models/audio.dart';
+import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
@@ -8,17 +9,35 @@ import 'package:audio_story/service/local_storage.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
 import 'package:share/share.dart';
 
 DatabaseService dataBase =
     DatabaseService(FirebaseAuth.instance.currentUser!.uid);
 
-class AudioInfo extends StatelessWidget {
+class AudioInfo extends StatefulWidget {
   static const routeName = '/audioInfo';
 
   final AudioModel audio;
 
   const AudioInfo({Key? key, required this.audio}) : super(key: key);
+
+  @override
+  State<AudioInfo> createState() => _AudioInfoState();
+}
+
+class _AudioInfoState extends State<AudioInfo> {
+  AudioModel? audio;
+  final TextEditingController _editingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    audio = widget.audio;
+    _editingController.text = audio!.name;
+  }
+
+  bool _onlyRead = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +61,12 @@ class AudioInfo extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            final nav = context.read<NavigationProvider>();
+                            if (nav.screenIndex != 0) {
+                              nav.changeScreen(0);
+                            }else{
+                              nav.changeScreen(3);
+                            }
                           },
                           icon: Image(
                             image: AppIcons.arrowDownInCircle,
@@ -70,21 +94,26 @@ class AudioInfo extends StatelessWidget {
                                     CustomCategory.routeName,
                                     arguments: [
                                       AudioModel(
-                                          id: audio.id, name: '', url: '')
+                                          id: audio!.id, name: '', url: '')
                                     ],
                                   ),
                                 );
                               },
                               value: 1,
                             ),
-                            const PopupMenuItem(
-                              child: Text("Редактировать название"),
+                            PopupMenuItem(
+                              child: const Text("Редактировать название"),
+                              onTap: () {
+                                setState(() {
+                                  _onlyRead = !_onlyRead;
+                                });
+                              },
                               value: 2,
                             ),
                             PopupMenuItem(
                               child: const Text("Поделиться"),
                               onTap: () {
-                                dataBase.downloadAllAudio([audio]).then(
+                                dataBase.downloadAllAudio([audio!]).then(
                                     (value) => Share.shareFiles(value));
                               },
                               value: 3,
@@ -94,8 +123,8 @@ class AudioInfo extends StatelessWidget {
                               onTap: () async {
                                 LocalStorage storage = LocalStorage();
                                 final message = await storage.downloadFile(
-                                  audio.url,
-                                  audio.name,
+                                  audio!.url,
+                                  audio!.name,
                                   '/sdcard/Download',
                                 );
                                 final snackBar = SnackBar(
@@ -130,14 +159,36 @@ class AudioInfo extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      audio.name,
-                      style: const TextStyle(fontSize: 24),
+                    child: TextField(
+                      controller: _editingController,
+                      readOnly: _onlyRead,
+                      style: const TextStyle(
+                        color: Color(0xFF3A3A55),
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      onEditingComplete: () {
+                        dataBase.changeSoundName(
+                          audio!.id,
+                          _editingController.text,
+                        );
+                        setState(() {
+                          audio = AudioModel(
+                            id: audio!.id,
+                            name: _editingController.text,
+                            url: audio!.url,
+                          );
+                          _onlyRead = true;
+                        });
+                      },
                     ),
                   ),
                   PlayerOnProgress(
-                    name: audio.name,
-                    url: audio.url,
+                    name: audio!.name,
+                    url: audio!.url,
                   ),
                 ],
               ),

@@ -6,12 +6,10 @@ import 'package:audio_story/screens/record/player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'recrorder.dart';
 
 Directory? path;
-String? _downloadPath;
 
 class Records extends StatefulWidget {
   static const routeName = '/record';
@@ -34,9 +32,9 @@ class _RecordsState extends State<Records> {
       create: (_) => MyBloc(),
       child: BlocBuilder<MyBloc, MyState>(
         builder: (_, state) => state is StateA
-            ? Recorder(
+            ? const Recorder(
               )
-            : Player(
+            : const Player(
               ),
       ),
     );

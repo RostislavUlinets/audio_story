@@ -4,7 +4,6 @@ import 'package:audio_story/models/user.dart';
 import 'package:audio_story/screens/login_screen/code_sent.dart';
 import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/screens/login_screen/final_screen.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

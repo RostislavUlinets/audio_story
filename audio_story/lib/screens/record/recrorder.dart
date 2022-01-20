@@ -6,7 +6,6 @@ import 'package:audio_story/blocs/record/record_event.dart';
 import 'package:audio_story/provider/navigation_provider.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/resources/app_icons.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -187,8 +186,6 @@ class _RecorderState extends State<Recorder> {
 
   Widget buildStart() {
     final isRecording = _mRecorder!.isRecording;
-    print(_mRecorder!.isRecording.toString());
-
     final image = isRecording
         ? Image(
             image: AppIcons.pause,

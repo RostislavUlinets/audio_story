@@ -3,7 +3,6 @@ import 'package:audio_story/repositories/database.dart';
 import 'package:audio_story/resources/app_colors.dart';
 import 'package:audio_story/screens/deleted/select.dart';
 import 'package:audio_story/screens/deleted/widget/custom_list.dart';
-import 'package:audio_story/screens/main_screen/main_screen.dart';
 import 'package:audio_story/service/auth.dart';
 import 'package:audio_story/widgets/anon_message.dart';
 import 'package:audio_story/widgets/custom_paint.dart';
@@ -141,7 +140,7 @@ class _DeleteScreenState extends State<DeleteScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     setState(() {});
   }
 }
