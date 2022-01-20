@@ -43,9 +43,11 @@ void showAlertDialog(BuildContext context) {
       // FirebaseAuth.instance.currentUser!.delete();
       dataBase.deleteUser();
       FirebaseAuth.instance.signOut();
-      Navigator.pop(context);
-      Navigator.of(context, rootNavigator: true)
-          .pushReplacementNamed(WelcomeScreen.routeName);
+
+      Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+        WelcomeScreen.routeName,
+        (route) => false,
+      );
     },
   );
 

@@ -102,7 +102,7 @@ class _PlayerOnProgressState extends State<PlayerOnProgress> {
             play(player);
           }
         });
-    widget.audioProvider.changeScreen(soundsList[index].name);
+    widget.audioProvider.changeScreen(soundsList[index].id);
     setState(() {});
   }
 

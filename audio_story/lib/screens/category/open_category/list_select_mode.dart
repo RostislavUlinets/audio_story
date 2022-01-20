@@ -226,7 +226,7 @@ class _SelectModeListState extends State<SelectModeList> {
                               ),
                               leading: IconButton(
                                 icon:
-                                    audioProvider.audioName == audio[index].name
+                                    audioProvider.audioId == audio[index].id
                                         ? Image(
                                             image: AppIcons.pause,
                                             color: AppColors.purpule,

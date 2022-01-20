@@ -46,7 +46,7 @@ class _SelectListState extends State<SelectList> {
               style: TextStyle(color: Color(0x803A3A55)),
             ),
             leading: IconButton(
-              icon: audioProvider.audioName == audio[index].name
+              icon: audioProvider.audioId == audio[index].id
                   ? Image(
                       image: AppIcons.pause,
                       color: AppColors.purpule,

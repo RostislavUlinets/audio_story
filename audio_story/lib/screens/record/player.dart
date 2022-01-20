@@ -50,7 +50,7 @@ class _PlayerState extends State<Player> {
   Future<void> saveAudio() async {
     if (FirebaseAuth.instance.currentUser!.isAnonymous) {
       await helper.convertFile(pathToSaveTemp, Codec.aacADTS,
-          '$pathToDownloadFolder${audioName.text}.mp3', Codec.mp3);
+          '/sdcard/Download/${audioName.text}.mp3', Codec.mp3);
     } else {
       File file = File(pathToSaveAudio!);
       String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -119,6 +119,11 @@ class _PlayerState extends State<Player> {
                               Codec.aacADTS,
                               '/sdcard/Download/${audioName.text}.mp3',
                               Codec.mp3,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Download complete'),
+                              ),
                             );
                           },
                           icon: Image(

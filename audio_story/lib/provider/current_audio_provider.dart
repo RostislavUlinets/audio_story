@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CurrentAudio extends ChangeNotifier {
-  String? audioName;
+  String? audioId;
 
   void changeScreen(String newAudioName) {
-    audioName = newAudioName;
+    audioId = newAudioName;
     notifyListeners();
   }
 }

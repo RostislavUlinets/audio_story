@@ -128,8 +128,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   leading: IconButton(
                                     padding: EdgeInsets.zero,
                                     iconSize: 64,
-                                    icon: audioProvider.audioName ==
-                                            audio[index].name
+                                    icon: audioProvider.audioId ==
+                                            audio[index].id
                                         ? Image(
                                             image: AppIcons.pause,
                                             color: AppColors.purpule,
